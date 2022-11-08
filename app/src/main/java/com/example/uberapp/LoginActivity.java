@@ -23,4 +23,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.registerButton:
+                Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
+                startActivity(registerActivity);
+        }
+    }
 }
