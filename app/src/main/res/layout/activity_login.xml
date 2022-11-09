@@ -13,7 +13,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:hint="Email Address"
+        android:hint="@string/email_address"
+        android:backgroundTint="@color/yellowish"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -25,8 +26,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
+        android:backgroundTint="@color/yellowish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginEmailAddress" />
@@ -39,7 +41,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_below="@id/forgotPassword"
-        android:text="Login"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
@@ -67,8 +69,8 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="40dp"
         android:layout_below="@id/loginButton"
-        android:text="OR"
-        android:textColor="#9F9F9F"
+        android:text="@string/or"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +84,7 @@
         android:layout_toStartOf="@id/orLb"
         android:layout_below="@+id/loginButton"
         android:layout_marginTop="48dp"
-        android:background="#9f9f9f"
+        android:background="?attr/colorSecondaryVariant"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -92,7 +94,7 @@
         android:layout_height="2dp"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/orLb"
-        android:background="#9f9f9f"
+        android:background="?attr/colorSecondaryVariant"
         android:layout_below="@+id/loginButton"
         android:layout_marginTop="48dp"
         android:layout_marginLeft="20dp"
@@ -104,9 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginPassword"
         android:layout_marginTop="20dp"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textColor="#00008B"/>
+        android:textColor="@color/dark_blue"/>
 
 </RelativeLayout>
