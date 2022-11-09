@@ -5,10 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".PassengerHistoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/card_driver_history_list_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="passenger_history_fragment" />
+        android:layout_height="wrap_content" />
 
 </FrameLayout>
