@@ -19,26 +19,26 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.driver_home);
+        bottomNavigationView.setSelectedItemId(R.id.driverHome);
     }
     DriverHomeFragment driverHomeFragment = new DriverHomeFragment();
-    DriverChatFragment driverChatFragment = new DriverChatFragment();
+    DriverInboxFragment driverInboxFragment = new DriverInboxFragment();
     DriverHistoryFragment driverHistoryFragment = new DriverHistoryFragment();
     DriverAccountFragment driverAccountFragment = new DriverAccountFragment();
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.driver_home:
+            case R.id.driverHome:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverHomeFragment).commit();
                 return true;
-            case R.id.driver_chat:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverChatFragment).commit();
+            case R.id.driverInbox:
+                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverInboxFragment).commit();
                 return true;
-            case R.id.driver_history:
+            case R.id.driverHistory:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverHistoryFragment).commit();
                 return true;
-            case R.id.driver_account:
+            case R.id.driverAccount:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverAccountFragment).commit();
                 return true;
         }
