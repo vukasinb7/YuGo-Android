@@ -21,10 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="?attr/colorBackgroundFloating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/driver_nav_menu"/>
+        app:menu="@menu/driver_nav_menu"
+        app:itemIconTint="?attr/colorOnSecondaryContainer"
+        app:itemTextColor="?attr/colorOnSecondaryContainer"/>
 
 </RelativeLayout>

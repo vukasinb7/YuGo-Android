@@ -4,6 +4,7 @@
         android:id="@+id/driver_home"
         android:title="Home"
         android:icon="@drawable/home_icon"/>
+
     <item
         android:id="@+id/driver_chat"
         android:title="Chat"
