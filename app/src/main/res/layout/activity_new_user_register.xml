@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/editTextEmail"
-        android:text="@string/e_mail"
+        android:text="@string/email"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="15dp"
