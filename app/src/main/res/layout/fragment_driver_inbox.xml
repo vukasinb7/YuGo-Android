@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DriverInboxFragment">
 
 
     <SearchView
-        android:id="@+id/messageSearch"
+        android:id="@+id/messageSearchBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="15dp"
@@ -18,9 +19,30 @@
         android:queryHint="Search message..."
         android:iconifiedByDefault="true"/>
 
-    <include layout="@layout/message_list_item"
-        android:layout_below="@+id/messageSearch"
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/inboxTabLayout"
+        android:layout_below="@+id/messageSearchBar"
+        app:tabBackground="?attr/colorBackgroundFloating">
+        
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Messages"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notifications"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/driverInboxViewPager"
+        android:layout_below="@+id/inboxTabLayout"
+        android:saveEnabled="false">
+    </androidx.viewpager2.widget.ViewPager2>
 
 </RelativeLayout>
