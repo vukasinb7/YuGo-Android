@@ -6,9 +6,9 @@
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/passenger_chat"
-        android:title="Chat"
-        android:icon="@drawable/chat_icon"/>
+        android:id="@+id/passenger_inbox"
+        android:title="Inbox"
+        android:icon="@drawable/inbox_icon"/>
     <item
         android:id="@+id/passanger_history"
         android:title="History"

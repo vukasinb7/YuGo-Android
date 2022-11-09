@@ -14,7 +14,7 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
     BottomNavigationView navigation;
     PassengerHomeFragment homeFragment = new PassengerHomeFragment();
     PassengerAccountFragment accountFragment = new PassengerAccountFragment();
-    PassengerChatFragment chatFragment = new PassengerChatFragment();
+    PassengerInboxFragment inboxFragment = new PassengerInboxFragment();
     PassengerHistoryFragment historyFragment = new PassengerHistoryFragment();
 
     @Override
@@ -36,8 +36,8 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
             case R.id.passanger_account:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, accountFragment).commit();
                 break;
-            case R.id.passenger_chat:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, chatFragment).commit();
+            case R.id.passenger_inbox:
+                getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, inboxFragment).commit();
                 break;
             case R.id.passanger_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, historyFragment).commit();

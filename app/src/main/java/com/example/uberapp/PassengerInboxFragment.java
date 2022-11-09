@@ -10,19 +10,19 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PassengerChatFragment#newInstance} factory method to
+ * Use the {@link PassengerInboxFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PassengerChatFragment extends Fragment {
+public class PassengerInboxFragment extends Fragment {
 
 
-    public PassengerChatFragment() {
+    public PassengerInboxFragment() {
         // Required empty public constructor
     }
 
 
-    public static PassengerChatFragment newInstance(String param1, String param2) {
-        PassengerChatFragment fragment = new PassengerChatFragment();
+    public static PassengerInboxFragment newInstance(String param1, String param2) {
+        PassengerInboxFragment fragment = new PassengerInboxFragment();
 //        Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -43,6 +43,6 @@ public class PassengerChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_passenger_chat, container, false);
+        return inflater.inflate(R.layout.fragment_passenger_inbox, container, false);
     }
 }
