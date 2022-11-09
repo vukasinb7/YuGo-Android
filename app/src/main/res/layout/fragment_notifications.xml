@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverChatFragment">
+    tools:context=".NotificationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/message_list_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Driver chat fragment"/>
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>
