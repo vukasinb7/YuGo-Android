@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".home.DriverCurrentRideFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/controlMenu"
+        android:id="@+id/driverControlMenu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="15dp"
@@ -16,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/remainingTime"
+                android:id="@+id/driverRemainingTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hr 3 min"
@@ -29,10 +31,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/remainingTime"
+                android:layout_below="@id/driverRemainingTime"
                 android:layout_centerHorizontal="true">
                 <TextView
-                    android:id="@+id/remainingDist"
+                    android:id="@+id/driverRemainingDist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="55 km"
@@ -42,7 +44,7 @@
                     android:textSize="20sp"
                     android:textColor="?attr/colorSecondaryVariant"/>
                 <View
-                    android:id="@+id/lineLeft"
+                    android:id="@+id/driverLineLeft"
                     android:layout_width="2dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="20dp"
@@ -50,7 +52,7 @@
                     android:layout_marginRight="5dp"
                     android:background="?attr/colorSecondaryVariant"/>
                 <TextView
-                    android:id="@+id/durationDist"
+                    android:id="@+id/driverDurationDist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00:13"
@@ -73,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:id="@+id/panicText"
+                        android:id="@+id/driverPanicText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -86,7 +88,7 @@
             </androidx.cardview.widget.CardView>
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/profilePic"
+                android:id="@+id/passengerProfilePic"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="10dp"
@@ -98,5 +100,4 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
-</RelativeLayout>
+</FrameLayout>

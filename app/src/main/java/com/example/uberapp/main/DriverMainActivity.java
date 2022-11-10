@@ -35,16 +35,16 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.driverHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverHomeFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
                 return true;
             case R.id.driverInbox:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverInboxFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverInboxFragment).commit();
                 return true;
             case R.id.driverHistory:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverHistoryFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHistoryFragment).commit();
                 return true;
             case R.id.driverAccount:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, driverAccountFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverAccountFragment).commit();
                 return true;
         }
         return false;
