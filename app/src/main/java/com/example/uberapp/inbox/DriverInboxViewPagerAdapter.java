@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.inbox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

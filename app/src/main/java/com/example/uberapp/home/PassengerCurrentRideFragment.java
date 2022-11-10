@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.home;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.uberapp.R;
 
 public class PassengerCurrentRideFragment extends Fragment {
 

@@ -1,10 +1,12 @@
-package com.example.uberapp;
+package com.example.uberapp.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.uberapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

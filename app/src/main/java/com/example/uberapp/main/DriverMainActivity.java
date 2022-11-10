@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.uberapp.account.DriverAccountFragment;
+import com.example.uberapp.R;
+import com.example.uberapp.history.DriverHistoryFragment;
+import com.example.uberapp.home.DriverHomeFragment;
+import com.example.uberapp.inbox.DriverInboxFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

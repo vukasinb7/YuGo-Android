@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.account;
 
 import android.os.Bundle;
 
@@ -8,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class PassengerHistoryFragment extends Fragment {
+import com.example.uberapp.R;
 
-    public PassengerHistoryFragment() {
+public class DriverAccountFragment extends Fragment {
+    public DriverAccountFragment() {
         // Required empty public constructor
     }
 
@@ -23,6 +24,6 @@ public class PassengerHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_passenger_history, container, false);
+        return inflater.inflate(R.layout.fragment_driver_account, container, false);
     }
 }
