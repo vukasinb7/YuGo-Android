@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,7 @@ public class PassengerHomeFragment extends Fragment {
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
 //        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -42,6 +44,15 @@ public class PassengerHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_passenger_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_passenger_home, container, false);
+        Button button = view.findViewById(R.id.buttonCreateRide);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CreateRideFragment().show(getChildFragmentManager().beginTransaction(), CreateRideFragment.TAG);
+            }
+        });
+        return view;
     }
+
 }

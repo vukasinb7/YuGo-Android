@@ -15,4 +15,11 @@
     <string name="create_account">Create Account</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="new_ride">New Ride</string>
+    <string name="current_location">Current Location</string>
+    <string name="starting_location">Starting location</string>
+    <string name="where_to">Where to?</string>
+    <string name="include_baby">Include baby</string>
+    <string name="include_pets">Include pets</string>
+    <string name="number_of_passengers">Number of passengers</string>
+    <string name="category">Category</string>
 </resources>
