@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DriverHistoryFragment">
+    tools:context=".history.DriverHistoryFragment">
 
     <include layout="@layout/card_driver_history_list_item"
         android:layout_width="match_parent"

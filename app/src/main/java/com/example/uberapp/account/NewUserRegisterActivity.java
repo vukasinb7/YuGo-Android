@@ -1,10 +1,13 @@
-package com.example.uberapp;
+package com.example.uberapp.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.uberapp.R;
+import com.example.uberapp.main.PassengerMainActivity;
 
 public class NewUserRegisterActivity extends AppCompatActivity {
 
