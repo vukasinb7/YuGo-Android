@@ -4,7 +4,6 @@
         android:id="@+id/passenger_home"
         android:title="Home"
         android:icon="@drawable/home_icon"/>
-
     <item
         android:id="@+id/passenger_inbox"
         android:title="Inbox"
