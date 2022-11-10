@@ -97,16 +97,7 @@
                 android:src="@color/blue_gray"
                 android:onClick="onClick"/>
         </RelativeLayout>
-
-
     </androidx.cardview.widget.CardView>
-
-    <include layout="@layout/driver_popup_menu"
-        android:id="@+id/driverPopupMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/controlMenu"
-        android:visibility="gone"/>
 
 
 </RelativeLayout>

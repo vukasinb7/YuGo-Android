@@ -25,6 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_alignParentBottom="true"
         app:menu="@menu/passenger_nav_menu"
-        app:itemIconTint="?attr/colorOnSecondaryContainer"
-        app:itemTextColor="?attr/colorOnSecondaryContainer"/>
+        app:itemIconTint="@color/dark_blue_yellowish"
+        app:itemTextColor="@color/dark_blue_yellowish"/>
 </RelativeLayout>
