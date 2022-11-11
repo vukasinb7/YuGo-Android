@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".account.LoginActivity">
+
     <EditText
         android:id="@+id/loginEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginTop="200dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_below="@id/logoLogin"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/email_address"
         android:backgroundTint="@color/yellowish"
@@ -111,5 +113,13 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"/>
+
+    <ImageView
+        android:id="@+id/logoLogin"
+        android:layout_width="169dp"
+        android:layout_height="194dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/logoflat" />
 
 </RelativeLayout>
