@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateRideFragment">
+
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:id="@+id/createRideFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/nextSubfragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:backgroundTint="#3e4247"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/arrow_right_icon"/>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</FrameLayout>
