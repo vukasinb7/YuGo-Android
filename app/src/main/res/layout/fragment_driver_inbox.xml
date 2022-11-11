@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/inboxTabLayout"
         android:layout_below="@+id/messageSearchBar"
-        app:tabBackground="@color/dark_gray_white">
+        app:tabBackground="@color/white_dark_gray">
         
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"

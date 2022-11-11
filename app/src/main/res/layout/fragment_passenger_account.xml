@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/passengerAccountTabLayout"
-                app:tabBackground="@color/dark_gray_white"
+                app:tabBackground="@color/white_dark_gray"
                 android:layout_below="@+id/profilePic">
 
                 <com.google.android.material.tabs.TabItem
