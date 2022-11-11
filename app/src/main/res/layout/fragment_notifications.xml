@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".inbox.NotificationsFragment">
 
-    <include layout="@layout/message_list_item"
+    <include layout="@layout/notification_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

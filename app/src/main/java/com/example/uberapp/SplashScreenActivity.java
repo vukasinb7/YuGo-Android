@@ -1,9 +1,12 @@
 package com.example.uberapp;
 
+import static java.security.AccessController.getContext;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,7 +28,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         },5500);
         VideoView videoView = (VideoView) findViewById(R.id.videoView);  //casting to VideoView is not Strictly required above API level 26
-        videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.splashscreen);
+        if (getResources().getConfiguration().uiMode== 33)
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.splashscreen);
+        else
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.splashscreen_white);
         setDimension(videoView);//set the path of the video that we need to use in our VideoView
         videoView.start();  //start() method of the VideoView class will start the video to play
 
