@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DriverInboxFragment">
+    tools:context=".inbox.DriverInboxFragment">
 
 
     <SearchView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/inboxTabLayout"
         android:layout_below="@+id/messageSearchBar"
-        app:tabBackground="?attr/colorBackgroundFloating">
+        app:tabBackground="@color/dark_gray_white">
         
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/controlMenu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/remainingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hr 3 min"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="?attr/colorSecondaryVariant"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/remainingTime"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/remainingDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="55 km"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="?attr/colorSecondaryVariant"/>
+                <View
+                    android:id="@+id/lineLeft"
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="?attr/colorSecondaryVariant"/>
+                <TextView
+                    android:id="@+id/durationDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:13"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="?attr/colorSecondaryVariant"/>
+
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FF4C4C"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="30dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/panicText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:text="PANIC" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:shapeAppearanceOverlay="@style/circleimageview"
+                android:src="@color/blue_gray"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

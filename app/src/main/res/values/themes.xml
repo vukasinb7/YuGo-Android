@@ -15,7 +15,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-        <item name="colorOnSecondaryContainer">@color/dark_blue</item>
-        <item name="colorBackgroundFloating">@color/white</item>
+        <!-- popup menu style-->
+        <item name="popupMenuBackground">@drawable/driver_options_menu_bg</item>
+        <item name="android:popupMenuStyle">@style/popupBgStyle</item>
     </style>
+
 </resources>

@@ -4,7 +4,6 @@
         android:id="@+id/driverHome"
         android:title="Home"
         android:icon="@drawable/home_icon"/>
-
     <item
         android:id="@+id/driverInbox"
         android:title="Inbox"

@@ -6,15 +6,17 @@
         <item name="colorPrimaryVariant">@color/yellowish</item>
         <item name="colorOnPrimary">@color/dark_blue</item>
         <item name="android:colorBackground">@color/dark_blue</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_gray</item>
         <item name="colorSecondaryVariant">@color/pewter</item>
-
         <item name="colorOnSecondary">@color/dark_blue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="colorOnSecondaryContainer">@color/yellowish</item>
-        <item name="colorBackgroundFloating">@color/darker_blue</item>
+
+        <!-- popup menu style-->
+        <item name="popupMenuBackground">@drawable/driver_options_menu_bg</item>
+        <item name="android:popupMenuStyle">@style/popupBgStyle</item>
     </style>
+
 </resources>

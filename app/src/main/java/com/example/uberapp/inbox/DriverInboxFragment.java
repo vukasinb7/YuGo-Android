@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.inbox;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.uberapp.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class DriverInboxFragment extends Fragment {

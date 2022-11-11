@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/passengerNameGroup">
+        <item
+            android:id="@+id/passengerName"
+            android:title="Passenger name" />
+    </group>
+
+    <group android:id="@+id/messagePassengerGroup">
+        <item
+            android:id="@+id/messagePassenger"
+            android:title="Message Passenger"/>
+    </group>
+
+    <group android:id="@+id/callPassengerGroup">
+        <item
+            android:id="@+id/callPassenger"
+            android:title="Call Passenger"/>
+    </group>
+
+    <item
+        android:id="@+id/reportPassenger"
+        android:title="Report Passenger"/>
+</menu>

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DriverMainActivity">
+    tools:context=".main.DriverMainActivity">
 
     <FrameLayout
-        android:id="@+id/flFragment"
+        android:id="@+id/flDriverFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp"
@@ -21,13 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="?attr/colorBackgroundFloating"
+        android:background="@color/dark_gray_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_alignParentBottom="true"
         app:menu="@menu/driver_nav_menu"
-        app:itemIconTint="?attr/colorOnSecondaryContainer"
-        app:itemTextColor="?attr/colorOnSecondaryContainer"/>
+        app:itemIconTint="@color/dark_blue_yellowish"
+        app:itemTextColor="@color/dark_blue_yellowish"/>
 
 </RelativeLayout>
