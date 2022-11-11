@@ -32,7 +32,6 @@ public class CreateRideFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         View view = inflater.inflate(R.layout.fragment_create_ride, container, false);
         FloatingActionButton button = view.findViewById(R.id.nextSubfragmentButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +48,7 @@ public class CreateRideFragment extends DialogFragment {
                         break;
                     case 2:
                         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment04()).commit();
+                        button.setVisibility(View.GONE);
                         currentSubfragment = 3;
                         break;
                 }
