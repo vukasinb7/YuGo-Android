@@ -1,4 +1,4 @@
-package com.example.uberapp.inbox;
+package com.example.uberapp.account;
 
 import android.os.Bundle;
 
@@ -7,17 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.uberapp.R;
 
-public class PassengerInboxFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link PassengerFavouritesFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class PassengerFavouritesFragment extends Fragment {
 
-
-    public PassengerInboxFragment() {
+    public PassengerFavouritesFragment() {
         // Required empty public constructor
     }
 
@@ -30,7 +30,6 @@ public class PassengerInboxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_passenger_inbox, container, false);
+        return inflater.inflate(R.layout.fragment_passenger_favourites, container, false);
     }
-
 }
