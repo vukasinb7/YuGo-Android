@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/controlMenu"
         android:layout_width="match_parent"
@@ -94,7 +96,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 app:shapeAppearanceOverlay="@style/circleimageview"
-                android:src="@color/blue_gray"/>
+                android:src="@drawable/account_round_icon"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
