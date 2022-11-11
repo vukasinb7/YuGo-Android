@@ -101,9 +101,4 @@
                 tools:layout_editor_absoluteX="21dp" />
         </LinearLayout>
     </ScrollView>
-
-
-
-
-
 </RelativeLayout>

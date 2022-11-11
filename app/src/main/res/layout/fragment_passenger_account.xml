@@ -19,7 +19,6 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@color/blue_gray"
-            app:shapeAppearanceOverlay="@style/accountBackgroundView"
             tools:ignore="ImageContrastCheck" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -34,7 +33,8 @@
             app:shapeAppearanceOverlay="@style/accountImageView"
             app:srcCompat="@color/black"/>
 
-            <com.google.android.material.tabs.TabLayout
+        <com.google.android.material.tabs.TabLayout
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/passengerAccountTabLayout"
@@ -57,6 +57,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
+            android:paddingVertical="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/passengerAccountViewPager"
