@@ -36,17 +36,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         float videoProportion = getVideoProportion();
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        System.out.println(screenWidth);
+        System.out.println(screenHeight);
         float screenProportion = (float) screenHeight / (float) screenWidth;
         android.view.ViewGroup.LayoutParams lp = videoView.getLayoutParams();
-
-        if (videoProportion < screenProportion) {
-            lp.height= screenHeight;
-            lp.width = (int) ((float) screenHeight / videoProportion);
-        } else {
-            lp.width = screenWidth;
-            lp.height = (int) ((float) screenWidth * videoProportion);
-        }
-        videoView.setLayoutParams(lp);
+        System.out.println(lp.height);
+        System.out.println(lp.width);
+        int width=1080;
+        int height=1920;
+        videoView.setScaleX((float)screenHeight/1920+0.2f);
+        videoView.setScaleY((float)screenHeight/1920+0.2f);
     }
 
     // This method gets the proportion of the video that you want to display.
