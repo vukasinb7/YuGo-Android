@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".home.CreateRideSubfragment02"
-    android:background="?attr/colorPrimaryVariant">
+    android:background="?attr/colorPrimaryVariant"
+    tools:context=".gui.home.CreateRideSubfragment02">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
