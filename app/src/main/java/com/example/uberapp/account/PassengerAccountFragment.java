@@ -10,35 +10,14 @@ import android.view.ViewGroup;
 
 import com.example.uberapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PassengerAccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PassengerAccountFragment extends Fragment {
-
-
 
     public PassengerAccountFragment() {
         // Required empty public constructor
     }
-
-    public static PassengerAccountFragment newInstance(String param1, String param2) {
-        PassengerAccountFragment fragment = new PassengerAccountFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override

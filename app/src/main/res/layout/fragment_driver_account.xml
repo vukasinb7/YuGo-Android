@@ -3,12 +3,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".account.DriverAccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Driver account fragment" />
+        android:layout_height="500dp"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="5dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/bannerPic"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@color/blue_gray"
+                app:shapeAppearanceOverlay="@style/accountBackgroundView"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePic"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_below="@id/bannerPic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-70dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:shapeAppearanceOverlay="@style/accountImageView"
+                app:srcCompat="@color/black"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profilePic"
+                android:layout_marginTop="25dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/ridesCountLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="123"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/ridesLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Rides"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/ratingCountLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="123"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/ratingLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Rating"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/dayCountLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="123"
+                        android:textSize="30sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/dayLb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Day"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

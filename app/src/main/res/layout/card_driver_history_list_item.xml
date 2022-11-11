@@ -25,7 +25,7 @@
                 android:scaleType="fitCenter"
                 app:shapeAppearanceOverlay="@style/roundimageview"
                 tools:ignore="ImageContrastCheck"
-                android:src="@color/blue_gray" />
+                android:src="@color/blue_gray"/>
 
             <TextView
                 android:id="@+id/nameLb"

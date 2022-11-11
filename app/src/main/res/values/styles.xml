@@ -3,14 +3,25 @@
     <style name="roundimageview" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
-
     </style>
+
     <style name="circleimageview" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">30dp</item>
-
     </style>
 
+    <style name="accountBackgroundView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="accountImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">70dp</item>
+    </style>
 
     <style name="popupBgStyle">
         <item name="android:popupBackground">@drawable/driver_options_menu_bg</item>
