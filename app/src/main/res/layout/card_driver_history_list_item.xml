@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:shapeAppearanceOverlay="@style/roundimageview"
+                tools:ignore="ImageContrastCheck"
+                android:src="@color/blue_gray" />
+
+            <TextView
+                android:id="@+id/nameLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/profilePic"
+                android:text="Vukasin Bogdanovic"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/ratingBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameLb"
+                android:layout_toEndOf="@id/profilePic"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:isIndicator="true"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                />
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/profilePic"
+                android:layout_marginTop="10dp"
+                android:background="?attr/colorPrimary"
+                android:alpha="0.6"/>
+
+            <ImageView
+                android:id="@+id/startIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/location"
+                android:layout_below="@id/line"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+            <ImageView
+                android:id="@+id/destIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/location"
+                android:layout_below="@id/startIcon"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="25dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+            <TextView
+                android:id="@+id/startText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/startIcon"
+                android:layout_below="@id/line"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="Kralja Petra I"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/destText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/destIcon"
+                android:layout_below="@id/startText"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="Radnicka 54"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="09:15"
+                android:alpha="0.7"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startTime"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="09:15"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:alpha="0.7"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+            <View
+                android:id="@+id/bottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/destIcon"
+                android:layout_marginTop="15dp"
+                android:background="?attr/colorPrimary"
+                android:alpha="0.6"/>
+
+            <TextView
+                android:id="@+id/durationLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bottomLine"
+                android:layout_toEndOf="@id/durationIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="Duration"
+                android:textAlignment="center"
+
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/durationTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bottomLine"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="09:15"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:alpha="0.7"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/durationIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/duration"
+                android:layout_below="@id/bottomLine"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+            <View
+                android:id="@+id/delimiterLine"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/durationIcon"
+                android:layout_marginTop="15dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <TextView
+                android:id="@+id/priceTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/delimiterLine"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="$15.60"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
