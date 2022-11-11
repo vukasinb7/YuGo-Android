@@ -4,12 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< Updated upstream
-    tools:context=".home.CreateRideFragment"
-    android:background="?attr/colorPrimaryVariant">
-=======
+    android:background="?attr/colorPrimaryVariant"
     tools:context=".gui.home.CreateRideFragment">
->>>>>>> Stashed changes
 
 
     <LinearLayout
@@ -34,12 +30,6 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/arrow_right_icon"
             android:contentDescription="TODO" />
-
-
-
-
-
-
     </LinearLayout>
 
 
