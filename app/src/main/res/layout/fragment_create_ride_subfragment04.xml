@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateRideSubfragment04">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_gravity=""
+        android:textColor="@color/black"
+        android:text="Confirm your ride"/>
+    <include
+        layout="@layout/vehicle_type_card"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/checkBoxIncludeBaby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/include_baby"/>
+        <CheckBox
+            android:id="@+id/checkBoxIncludePets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:enabled="false"
+            android:text="@string/include_pets"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:text="Time: 2.03pm"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:text="Date: 11.11.2022."/>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:useDefaultMargins="true"
+        android:rowCount="4"
+        android:columnCount="2">
+
+        <ImageView
+            android:id="@+id/startingLocationIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/circle_icon"
+            android:layout_gravity="center"
+            android:layout_row="0"
+            android:layout_marginTop="15dp"
+            android:layout_column="0"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="25dp"
+            android:background="@color/black"
+            android:layout_row="1"
+            android:layout_gravity="center"
+            android:layout_column="0"/>
+
+        <ImageView
+            android:id="@+id/destinationIcon"
+            android:layout_gravity="center"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/circle_icon"
+            android:layout_row="2"
+            android:layout_marginBottom="15dp"
+            android:layout_column="0" />
+
+        <LinearLayout
+            android:layout_row="0"
+            android:layout_rowSpan="3"
+            android:layout_column="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_gravity="top">
+            <EditText
+                android:id="@+id/editTextStartingLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/starting_location"
+                android:text="@string/current_location"
+                android:background="@drawable/editview_rounded_corners"
+                android:autofillHints="starting location"
+                android:inputType="textFilter" />
+            <EditText
+                android:id="@+id/editTextDestination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:enabled="false"
+                android:hint="Woodpoint Rd. 23"
+                android:background="@drawable/editview_rounded_corners"/>
+        </LinearLayout>
+
+    </GridLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:text="Total: $9.99"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Accept"/>
+
+</LinearLayout>

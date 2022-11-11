@@ -14,22 +14,23 @@
         android:background="@color/white"
         android:padding="10dp">
 
-        <include
-            layout="@layout/destination_picker_layout"
+        <FrameLayout
+            android:id="@+id/createRideFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/checkBoxIncludeBaby"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/nextSubfragmentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:backgroundTint="#3e4247"
+            android:layout_gravity="end"
             android:layout_marginTop="10dp"
-            android:text="@string/include_baby"/>
-        <CheckBox
-            android:id="@+id/checkBoxIncludePets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/include_pets"/>
+            android:src="@drawable/arrow_right_icon"/>
+
+
+
 
 
 

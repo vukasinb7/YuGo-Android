@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PassengerHomeFragment#newInstance} factory method to
@@ -45,7 +48,7 @@ public class PassengerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_passenger_home, container, false);
-        Button button = view.findViewById(R.id.buttonCreateRide);
+        ExtendedFloatingActionButton button = view.findViewById(R.id.buttonCreateRide);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
