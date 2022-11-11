@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,73 +7,64 @@
     tools:context=".account.PassengerAccountFragment">
 
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="5dp">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <RelativeLayout
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/bannerPic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@color/blue_gray"
+            app:shapeAppearanceOverlay="@style/accountBackgroundView"
+            tools:ignore="ImageContrastCheck" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/bannerPic"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@color/blue_gray"
-                app:shapeAppearanceOverlay="@style/accountBackgroundView"
-                tools:ignore="ImageContrastCheck" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profilePic"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_below="@id/bannerPic"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:shapeAppearanceOverlay="@style/accountImageView"
+            app:srcCompat="@color/black"/>
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/profilePic"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_below="@id/bannerPic"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="-100dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                app:shapeAppearanceOverlay="@style/accountImageView"
-                app:srcCompat="@color/black"/>
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passengerAccountTabLayout"
+            app:tabBackground="@color/dark_gray_white"
+            android:layout_below="@+id/profilePic">
 
-            <com.google.android.material.tabs.TabLayout
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/passengerAccountTabLayout"
-                app:tabBackground="@color/dark_gray_white"
-                android:layout_below="@+id/profilePic">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Info"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Favourites"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Report"/>
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
+                android:text="Info"/>
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/passengerAccountViewPager"
-                android:layout_below="@+id/passengerAccountTabLayout"
-                android:saveEnabled="false">
-            </androidx.viewpager2.widget.ViewPager2>
+                android:layout_height="wrap_content"
+                android:text="Favourites"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Report"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/passengerAccountViewPager"
+            android:layout_below="@+id/passengerAccountTabLayout"
+            android:saveEnabled="false">
+        </androidx.viewpager2.widget.ViewPager2>
 
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
-
-
-</RelativeLayout>
+</FrameLayout>
