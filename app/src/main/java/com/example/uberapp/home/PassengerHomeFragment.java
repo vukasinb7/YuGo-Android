@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.uberapp.CreateRideFragment;
 import com.example.uberapp.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 

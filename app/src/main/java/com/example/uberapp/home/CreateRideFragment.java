@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.home;
 
 import android.os.Bundle;
 
@@ -7,8 +7,8 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.example.uberapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 

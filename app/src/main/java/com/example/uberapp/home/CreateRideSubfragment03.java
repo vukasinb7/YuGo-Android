@@ -1,4 +1,4 @@
-package com.example.uberapp;
+package com.example.uberapp.home;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import com.example.uberapp.R;
 
 public class CreateRideSubfragment03 extends Fragment {
 
