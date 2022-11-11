@@ -6,19 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreenActivity">
 
-    <TextView
-        android:id="@+id/splashScreenLb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UberApp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:layout_marginTop="220dp"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_below="@id/splashScreenLb"
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 </RelativeLayout>
