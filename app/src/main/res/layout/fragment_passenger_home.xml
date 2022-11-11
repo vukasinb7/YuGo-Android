@@ -23,10 +23,12 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="25dp"
         app:icon="@drawable/add_icon"
+        app:iconTint="@color/dark_gray_white"
         android:text="@string/new_ride"
+        android:textColor="@color/dark_gray_white"
         android:textSize="15sp"
         app:iconSize="25dp"
-        android:backgroundTint="#3e4247"
+        android:backgroundTint="@color/white_dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </FrameLayout>

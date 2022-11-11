@@ -3,4 +3,5 @@
     <color name="dark_gray_white">#FEFEFE</color>
     <color name="white_dark_gray">#424242</color>
     <color name="dark_blue_yellowish">@color/yellowish</color>
+    <color name="black_white">@color/white</color>
 </resources>

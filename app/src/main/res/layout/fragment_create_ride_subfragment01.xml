@@ -11,13 +11,14 @@
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray_white"
         android:textSize="20sp"
         android:text="@string/pick_your_destination"/>
     <include
         layout="@layout/destination_picker_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/dark_gray_white"/>
 
 </LinearLayout>

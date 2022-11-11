@@ -9,7 +9,8 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimaryVariant">
 
             <ImageView
                 android:id="@+id/imageViewVehicle"
@@ -26,6 +27,7 @@
                 android:textSize="18sp"
                 android:text="@string/category"
                 android:textStyle="bold"
+                android:textColor="@color/dark_gray_white"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/imageViewVehicle" />
 
@@ -44,6 +46,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_alignBottom="@+id/textViewVehicleCategory"
                 android:layout_toEndOf="@+id/textViewVehicleCategory"
+                app:tint="@color/dark_gray_white"
                 app:srcCompat="@drawable/person_icon"/>
             <TextView
                 android:id="@+id/textViewPersonCount"

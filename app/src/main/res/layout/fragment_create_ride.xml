@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.CreateRideFragment">
+    tools:context=".home.CreateRideFragment"
+    android:background="?attr/colorPrimaryVariant">
 
 
     <LinearLayout
         android:layout_width="350dp"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:textColor="@color/dark_gray_white"
         android:padding="10dp">
 
         <FrameLayout
@@ -24,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"
-            android:backgroundTint="#3e4247"
+            android:backgroundTint="@color/dark_gray_white"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:src="@drawable/arrow_right_icon"

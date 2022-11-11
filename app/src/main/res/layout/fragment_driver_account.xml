@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:id="@+id/driverAccountTabLayout"
-            app:tabBackground="@color/dark_gray_white"
+            app:tabBackground="@color/white_dark_gray"
             android:layout_below="@+id/driverStatsLayout">
 
             <com.google.android.material.tabs.TabItem
