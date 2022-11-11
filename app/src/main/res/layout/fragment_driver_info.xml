@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="10dp"
+    tools:context=".account.DriverInfoFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextFirstName"
+                android:text="@string/first_name"/>
+
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColorHint="#616161" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextLastName"
+                android:text="@string/last_name"/>
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="@string/last_name"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColorHint="#616161" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextPhone"
+                android:text="@string/phone_number"/>
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="@string/phone_number"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="phone"
+                android:textColorHint="#616161" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextEmail"
+                android:text="@string/email"/>
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="@string/email"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:textColorHint="#616161" />
+
+            <Button
+                android:id="@+id/buttonCreateAccount"
+                android:layout_width="match_parent"
+                android:text="@string/save_changes"
+                android:layout_height="58dp"
+                android:layout_marginTop="10dp"
+                tools:layout_editor_absoluteX="21dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>
