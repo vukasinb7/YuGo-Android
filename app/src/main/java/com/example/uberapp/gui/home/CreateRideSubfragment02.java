@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.uberapp.R;
+import com.example.uberapp.gui.adapters.VehicleTypeAdapter;
 
 public class CreateRideSubfragment02 extends Fragment {
 
@@ -26,7 +29,10 @@ public class CreateRideSubfragment02 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_ride_subfragment02, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_ride_subfragment02, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.listViewVehicleType);
+        VehicleTypeAdapter adapter = new VehicleTypeAdapter((Activity) getContext());
+        listView.setAdapter(adapter);
+        return view;
     }
 }
