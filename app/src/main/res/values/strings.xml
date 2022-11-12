@@ -26,11 +26,13 @@
     <string name="pick_time_of_the_ride">Pick time of the ride</string>
     <string name="now">Now</string>
     <string name="or_book_in_advance">or book in advance</string>
-    <string name="time">Time:</string>
-    <string name="date">Date:</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
     <string name="save_changes">save changes</string>
     <string name="sign_in">Sign in</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="continue_with_facebook">Continue with Facebook</string>
     <string name="address">Address</string>
+    <string name="confirm_your_ride">Confirm your ride</string>
+    <string name="accept">Accept</string>
 </resources>
