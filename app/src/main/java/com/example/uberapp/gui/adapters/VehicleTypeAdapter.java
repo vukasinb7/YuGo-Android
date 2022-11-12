@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleType;
-import com.example.uberapp.core.tools.Mockup;
+import com.example.uberapp.core.tools.VehicleTypeMockup;
 
 public class VehicleTypeAdapter extends BaseAdapter {
 
@@ -21,12 +21,12 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Mockup.getVehicleTypes().size();
+        return VehicleTypeMockup.getVehicleTypes().size();
     }
 
     @Override
     public Object getItem(int i) {
-        return Mockup.getVehicleTypes().get(i);
+        return VehicleTypeMockup.getVehicleTypes().get(i);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        VehicleType vht = Mockup.getVehicleTypes().get(i);
+        VehicleType vht = VehicleTypeMockup.getVehicleTypes().get(i);
         View v = view;
 
         if(view == null){

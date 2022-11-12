@@ -7,16 +7,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        app:cardCornerRadius="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        app:cardCornerRadius="20dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/messageIcon"
@@ -34,7 +30,7 @@
                 android:src="@drawable/account_round_icon" />
 
             <TextView
-                android:id="@+id/messageTitle"
+                android:id="@+id/senderName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -44,12 +40,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/messageIcon" />
 
-            <TextView android:id="@+id/messageSubTitle"
+            <TextView android:id="@+id/messageContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="message"
                 android:layout_toEndOf="@+id/messageIcon"
-                android:layout_below="@+id/messageTitle"
+                android:layout_below="@+id/senderName"
                 android:layout_alignParentEnd="true" />
 
             <TextView
@@ -61,7 +57,7 @@
                 android:layout_alignParentEnd="true"
                 android:text="09:15"
                 android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
