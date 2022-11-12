@@ -1,8 +1,5 @@
 package com.example.uberapp.core.tools;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleCategory;
 import com.example.uberapp.core.model.VehicleType;
@@ -10,7 +7,7 @@ import com.example.uberapp.core.model.VehicleType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mockup {
+public class VehicleTypeMockup {
     public static List<VehicleType> getVehicleTypes(){
         List<VehicleType> vehicleTypes = new ArrayList<>();
 

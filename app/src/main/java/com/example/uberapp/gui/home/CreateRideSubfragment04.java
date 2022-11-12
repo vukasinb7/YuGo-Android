@@ -10,11 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.uberapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateRideSubfragment04#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreateRideSubfragment04 extends Fragment {
 
 
