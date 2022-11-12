@@ -52,7 +52,7 @@
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:layout_below="@id/profilePic"
                 android:layout_marginTop="10dp"
                 android:background="?attr/colorPrimary"
@@ -64,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/location"
                 android:layout_below="@id/line"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                app:tint="@color/dark_gray_pewter"
                 android:layout_marginTop="15dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
@@ -74,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/location"
                 android:layout_below="@id/startIcon"
-                android:layout_marginLeft="30dp"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="25dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
@@ -130,7 +132,7 @@
             <View
                 android:id="@+id/bottomLine"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:layout_below="@id/destIcon"
                 android:layout_marginTop="15dp"
                 android:background="?attr/colorPrimary"
@@ -170,14 +172,15 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/duration"
                 android:layout_below="@id/bottomLine"
-                android:layout_marginLeft="30dp"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
             <View
                 android:id="@+id/delimiterLine"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:layout_below="@id/durationIcon"
                 android:layout_marginTop="15dp"
                 android:alpha="0.6"

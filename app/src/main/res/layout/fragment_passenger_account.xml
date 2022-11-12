@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".gui.account.PassengerAccountFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,8 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@color/blue_gray"
+            android:scaleType="centerCrop"
+            android:src="@raw/cover_photo_mockup"
+
             tools:ignore="ImageContrastCheck" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -38,13 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/passengerAccountTabLayout"
-            app:tabBackground="@color/white_dark_gray"
+            app:tabBackground="@color/pewter_dark_blue"
             android:layout_below="@+id/profilePic">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Info"/>
+                android:text="Info"
+                />
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,5 +71,5 @@
 
 
     </RelativeLayout>
-
+    </ScrollView>
 </FrameLayout>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center"
-        android:textColor="@color/dark_gray_white"
+        android:textColor="@color/dark_gray_pewter"
         android:textSize="20sp"
         android:text="@string/pick_your_destination"/>
     <include
@@ -19,6 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:textColor="@color/dark_gray_white"/>
+        android:textColor="@color/dark_gray_pewter"/>
 
 </LinearLayout>

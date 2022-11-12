@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".gui.account.DriverAccountFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,10 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@color/blue_gray"
-
-            tools:ignore="ImageContrastCheck" />
+            android:scaleType="centerCrop"
+            android:src="@raw/cover_photo_mockup"/>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profilePic"
@@ -58,7 +58,7 @@
                     android:text="123"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/dark_gray_pewter"/>
 
                 <TextView
                     android:id="@+id/ridesLb"
@@ -66,8 +66,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="Rides"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="2dp"
@@ -87,7 +86,7 @@
                     android:text="123"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/dark_gray_pewter"/>
 
                 <TextView
                     android:id="@+id/ratingLb"
@@ -95,8 +94,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="Rating"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
 
@@ -117,7 +115,7 @@
                     android:textAlignment="center"
                     android:text="123"
                     android:textSize="30sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_gray_pewter"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -126,8 +124,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="Day"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -136,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:id="@+id/driverAccountTabLayout"
-            app:tabBackground="@color/white_dark_gray"
+            app:tabBackground="@color/pewter_dark_blue"
             android:layout_below="@+id/driverStatsLayout">
 
             <com.google.android.material.tabs.TabItem
@@ -160,7 +157,17 @@
             android:layout_height="match_parent"
             android:id="@+id/driverAccountViewPager"
             android:layout_below="@+id/driverAccountTabLayout"
-            android:saveEnabled="false">
+            android:saveEnabled="false"
+            >
         </androidx.viewpager2.widget.ViewPager2>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
     </RelativeLayout>
+</ScrollView>
 </FrameLayout>

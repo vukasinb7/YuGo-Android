@@ -43,7 +43,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_below="@id/forgotPassword"
-        android:text="@string/login"
+        android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
@@ -52,17 +52,46 @@
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_below="@+id/orLb"
-        android:text="Register"
+        android:text="@string/sign_up"
         android:onClick="onClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orLb"
-        app:layout_constraintVertical_bias="0.166" />
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/registerButton">
+        <Button
+            android:id="@+id/continueGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#FFFFFF"
+            android:drawableLeft="@drawable/google_logo"
+            android:text="@string/continue_with_google"
+            android:textSize="12sp"/>
+        <Button
+            android:id="@+id/continueFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
+            android:backgroundTint="#4267B2"
+            android:drawableLeft="@drawable/facebook_logo"
+            android:textColor="@color/white"
+            android:text="@string/continue_with_facebook"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/orLb"
@@ -70,10 +99,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/loginButton"
         android:text="@string/or"
-        android:textColor="?attr/colorSecondaryVariant"
+        android:textColor="@color/dark_gray_pewter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,8 +115,8 @@
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/orLb"
         android:layout_below="@+id/loginButton"
-        android:layout_marginTop="48dp"
-        android:background="?attr/colorSecondaryVariant"
+        android:layout_marginTop="30dp"
+        android:background="@color/dark_gray_pewter"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
@@ -97,9 +126,9 @@
         android:layout_height="2dp"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/orLb"
-        android:background="?attr/colorSecondaryVariant"
+        android:background="@color/dark_gray_pewter"
         android:layout_below="@+id/loginButton"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
 
@@ -112,12 +141,12 @@
         android:text="@string/forgot_password"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textColor="@color/dark_blue"/>
+        android:textColor="@color/blue_gray"/>
 
     <ImageView
         android:id="@+id/logoLogin"
-        android:layout_width="169dp"
-        android:layout_height="194dp"
+        android:layout_width="161dp"
+        android:layout_height="158dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         app:srcCompat="@drawable/logoflat" />

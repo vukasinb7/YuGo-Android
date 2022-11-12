@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dark_gray_white">#FEFEFE</color>
-    <color name="white_dark_gray">#424242</color>
+    <color name="dark_gray_pewter">@color/pewter</color>
+    <color name="pewter_dark_gray">@color/dark_gray</color>
     <color name="dark_blue_yellowish">@color/yellowish</color>
     <color name="black_white">@color/white</color>
+    <color name="white_dark_gray">@color/dark_gray</color>
+    <color name="pewter_dark_blue">@color/dark_blue</color>
 </resources>

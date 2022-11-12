@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/passengerInboxTabLayout"
         android:layout_below="@+id/passengerMessageSearchBar"
-        app:tabBackground="@color/white_dark_gray">
+        app:tabBackground="@color/pewter_dark_blue">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"

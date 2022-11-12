@@ -1,5 +1,7 @@
 package com.example.uberapp.gui.home;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;

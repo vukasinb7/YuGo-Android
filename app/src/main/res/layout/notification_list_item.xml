@@ -27,7 +27,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="2dp"
                 android:scaleType="fitCenter"
-                app:tint="@color/dark_gray_white"
+                app:tint="@color/dark_gray_pewter"
                 android:src="@drawable/notification_icon"/>
 
             <TextView

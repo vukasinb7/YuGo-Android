@@ -29,7 +29,7 @@
                 android:contentDescription="Sender picture"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                app:tint="@color/dark_gray_white"
+                app:tint="@color/dark_gray_pewter"
                 app:shapeAppearanceOverlay="@style/roundimageview"
                 android:src="@drawable/account_round_icon" />
 

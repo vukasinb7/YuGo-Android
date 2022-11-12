@@ -18,6 +18,9 @@
         <!-- popup menu style-->
         <item name="popupMenuBackground">@drawable/driver_options_menu_bg</item>
         <item name="android:popupMenuStyle">@style/popupBgStyle</item>
+        <!-- font style-->
+        <item name="fontFamily">@font/ui_font</item>
+        <item name="android:textColorHint">#B3B3B3</item>
     </style>
 
 </resources>

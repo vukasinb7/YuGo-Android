@@ -12,7 +12,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center"
-        android:textColor="@color/dark_gray_white"
+        android:textColor="@color/dark_gray_pewter"
         android:textSize="20sp"
         android:text="@string/pick_time_of_the_ride"/>
     <CheckBox
@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:text="@string/now"
-        android:textColor="@color/dark_gray_white"/>
+        android:textColor="@color/dark_gray_pewter"
+        android:buttonTint="@color/yellowish"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,12 +33,12 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
-            android:background="@color/dark_gray_white"/>
+            android:background="@color/dark_gray_pewter"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/dark_gray_white"
+            android:textColor="@color/dark_gray_pewter"
             android:gravity="center"
             android:textSize="15sp"
             android:text="@string/or_book_in_advance"/>
@@ -47,27 +48,27 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
-            android:background="@color/dark_gray_white"/>
+            android:background="@color/dark_gray_pewter"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
-        android:textColor="@color/dark_gray_white"
+        android:textColor="@color/dark_gray_pewter"
         android:text="@string/time"/>
     <TimePicker
         android:id="@+id/rideTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:textColor="@color/dark_gray_white"/>
+        android:textColor="@color/dark_gray_pewter"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
-        android:textColor="@color/dark_gray_white"
+        android:textColor="@color/dark_gray_pewter"
         android:text="@string/date"/>
     <DatePicker
         android:id="@+id/rideDatePicker"
@@ -75,7 +76,7 @@
         android:layout_height="wrap_content"
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
-        android:textColor="@color/dark_gray_white"/>
+        android:textColor="@color/dark_gray_pewter"/>
 
 
 
