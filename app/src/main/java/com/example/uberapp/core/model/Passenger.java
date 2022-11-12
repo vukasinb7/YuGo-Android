@@ -10,7 +10,7 @@ public class Passenger extends User{
     List<Review> reviews;
     List<FavouritePath> favourites;
 
-    public Passenger(String id, String name, String lastName, Bitmap profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked, List<Ride> rides, List<Review> reviews, List<FavouritePath> favourites) {
+    public Passenger(String id, String name, String lastName, Integer profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked, List<Ride> rides, List<Review> reviews, List<FavouritePath> favourites) {
         super(id, name, lastName, profilePicture, phoneNumber, email, address, password, isBlocked);
         this.rides = rides;
         this.reviews = reviews;

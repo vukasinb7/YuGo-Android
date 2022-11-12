@@ -8,7 +8,7 @@ public class Driver extends User{
     private Boolean isActive;
     private Vehicle vehicle;
 
-    public Driver(String id, String name, String lastName, Bitmap profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked, Bitmap driversLicence, Bitmap registrationLicence, Boolean isActive, Vehicle vehicle) {
+    public Driver(String id, String name, String lastName, Integer profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked, Bitmap driversLicence, Bitmap registrationLicence, Boolean isActive, Vehicle vehicle) {
         super(id, name, lastName, profilePicture, phoneNumber, email, address, password, isBlocked);
         this.driversLicence = driversLicence;
         this.registrationLicence = registrationLicence;

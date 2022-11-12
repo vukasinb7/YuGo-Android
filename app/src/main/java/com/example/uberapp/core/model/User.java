@@ -6,14 +6,14 @@ public abstract class User {
     private String id;
     private String name;
     private String lastName;
-    private Bitmap profilePicture;
+    private Integer profilePicture;
     private String phoneNumber;
     private String email;
     private String address;
     private String password;
     private Boolean isBlocked;
 
-    public User(String id, String name, String lastName, Bitmap profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked) {
+    public User(String id, String name, String lastName, Integer profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -49,11 +49,11 @@ public abstract class User {
         this.lastName = lastName;
     }
 
-    public Bitmap getProfilePicture() {
+    public Integer getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(Bitmap profilePicture) {
+    public void setProfilePicture(Integer profilePicture) {
         this.profilePicture = profilePicture;
     }
 
