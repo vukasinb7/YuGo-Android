@@ -17,9 +17,10 @@
         android:queryHint="Search rides..."
         android:iconifiedByDefault="false"/>
 
-    <include layout="@layout/card_driver_history_list_item"
+    <ListView
+        android:id="@+id/driverHistoryList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/driverHistorySearchBar"/>
 
 
