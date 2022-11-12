@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.model.User;
+import com.example.uberapp.core.tools.UserMockup;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 
 public class PassengerAccountFragment extends Fragment {
@@ -62,6 +65,10 @@ public class PassengerAccountFragment extends Fragment {
                 accountTabLayout.getTabAt(position).select();
             }
         });
+
+        User user = UserMockup.getUsers().get(0);
+        ShapeableImageView imageView = view.findViewById(R.id.profilePic);
+        imageView.setImageResource(user.getProfilePicture());
         return view;
     }
 }

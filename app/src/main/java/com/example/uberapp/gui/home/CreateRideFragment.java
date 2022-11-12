@@ -18,6 +18,10 @@ public class CreateRideFragment extends DialogFragment {
 
 
     private int currentSubfragment;
+    private CreateRideSubfragment01 subFrag01;
+    private CreateRideSubfragment02 subFrag02;
+    private CreateRideSubfragment03 subFrag03;
+    public static String TAG = "CreateRideFragmentDialog";
 
     public CreateRideFragment() {
         // Required empty public constructor
@@ -32,33 +36,56 @@ public class CreateRideFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        this.subFrag01  = new CreateRideSubfragment01();
+        this.subFrag02 = new CreateRideSubfragment02();
+        this.subFrag03 = new CreateRideSubfragment03();
 
         View view = inflater.inflate(R.layout.fragment_create_ride, container, false);
-        FloatingActionButton button = view.findViewById(R.id.nextSubfragmentButton);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton buttonNext = view.findViewById(R.id.nextSubfragmentButton);
+        FloatingActionButton buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (currentSubfragment){
                     case 0:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment02()).commit();
-                        currentSubfragment = 1;
+                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
+                        buttonPrev.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment03()).commit();
-                        currentSubfragment = 2;
+                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
                         break;
                     case 2:
                         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment04()).commit();
-                        button.setVisibility(View.GONE);
-                        currentSubfragment = 3;
+                        buttonNext.setVisibility(View.GONE);
+                        buttonPrev.setVisibility(View.GONE);
                         break;
                 }
+                currentSubfragment++;
+            }
+        });
+
+
+        buttonPrev.setVisibility(View.GONE);
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (currentSubfragment){
+                    case 1:
+                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag01).commit();
+                        buttonPrev.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
+                        break;
+                }
+                currentSubfragment--;
             }
         });
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment01()).commit();
         return view;
 
     }
-    public static String TAG = "CreateRideFragmentDialog";
+
 }
