@@ -6,9 +6,9 @@ public class VehicleType {
     private String id;
     private double pricePerUnit;
     private VehicleCategory vehicleCategory;
-    private Bitmap icon;
+    private int icon;
 
-    public VehicleType(String id, double pricePerUnit, VehicleCategory vehicleCategory, Bitmap icon) {
+    public VehicleType(String id, double pricePerUnit, VehicleCategory vehicleCategory, int icon) {
         this.id = id;
         this.pricePerUnit = pricePerUnit;
         this.vehicleCategory = vehicleCategory;
@@ -39,11 +39,11 @@ public class VehicleType {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public Bitmap getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(Bitmap icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 }
