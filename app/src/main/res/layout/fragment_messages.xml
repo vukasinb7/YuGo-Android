@@ -6,7 +6,8 @@
     tools:context=".gui.inbox.MessagesFragment">
 
 
-    <include layout="@layout/message_list_item"
+    <ListView
+        android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
