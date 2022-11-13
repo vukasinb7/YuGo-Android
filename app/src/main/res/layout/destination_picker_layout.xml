@@ -20,7 +20,7 @@
             android:id="@+id/editTextStartingLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_gray_pewter"
+            android:textColor="@color/dark_gray"
             android:hint="@string/starting_location"
             android:layout_marginStart="5dp"
             android:background="@drawable/editview_rounded_corners"
@@ -63,7 +63,7 @@
             android:background="@drawable/editview_rounded_corners"
             android:layout_marginStart="5dp"
             android:hint="@string/where_to"
-            android:textColor="@color/dark_gray_pewter" />
+            android:textColor="@color/dark_gray" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -6,8 +6,15 @@
     tools:context=".gui.inbox.MessagesFragment">
 
 
-    <include layout="@layout/message_list_item"
+    <ListView
+        android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginVertical="10dp"/>
 
 </RelativeLayout>
