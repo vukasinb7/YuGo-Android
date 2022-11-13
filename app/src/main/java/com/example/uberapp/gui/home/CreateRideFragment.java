@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.example.uberapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -62,6 +63,10 @@ public class CreateRideFragment extends DialogFragment {
         this.subFrag03 = new CreateRideSubfragment03();
 
         View view = inflater.inflate(R.layout.fragment_create_ride, container, false);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
 
         buttonNext = view.findViewById(R.id.nextSubfragmentButton);
         buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
