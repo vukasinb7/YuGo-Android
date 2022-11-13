@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="red">#D63333</color>
+    <color name="green">#006300</color>
     <color name="dark_blue">#212334</color>
     <color name="darker_blue">#12131C</color>
     <color name="yellowish">#FAD02C</color>
