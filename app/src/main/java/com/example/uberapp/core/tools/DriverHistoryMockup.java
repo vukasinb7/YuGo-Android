@@ -26,11 +26,18 @@ public class DriverHistoryMockup {
         ArrayList<Passenger> passengers=new ArrayList<>();
         passengers.add(pass1);
         LocalDateTime start=LocalDateTime.of(2021,12,12,17,15);
+        LocalDateTime start2=LocalDateTime.of(2021,11,12,17,15);
         LocalDateTime end=LocalDateTime.of(2021,12,12,17,30);
         Ride r1=new Ride("001",start,end,15.60,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
+        Ride r2=new Ride("001",start,end,15.60,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
+        Ride r3=new Ride("001",start,end,15.60,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
+        Ride r4=new Ride("001",start2,end,15.60,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
 
         //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/car_model_01.png");
         rides.add(r1);
+        rides.add(r2);
+        rides.add(r3);
+        rides.add(r4);
 
         return rides;
     }

@@ -21,7 +21,13 @@
         android:id="@+id/driverHistoryList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/driverHistorySearchBar"/>
+        android:contextClickable="false"
+        android:listSelector="@android:color/transparent"
+        android:layout_below="@id/driverHistorySearchBar"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="5dp"/>
 
 
 </RelativeLayout>

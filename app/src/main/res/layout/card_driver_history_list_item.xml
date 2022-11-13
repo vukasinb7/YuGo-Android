@@ -4,26 +4,41 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <TextView
+        android:id="@+id/dateTitleHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="01.01.1970."
+        android:textColor="@color/dark_gray_pewter"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewDriverHistory"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateTitleHistory"
         app:cardCornerRadius="20dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/visibleDriverHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profilePic"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                app:shapeAppearanceOverlay="@style/roundimageview"
+                app:shapeAppearanceOverlay="@style/roundImageView"
                 tools:ignore="ImageContrastCheck"
                 android:src="@color/blue_gray"/>
 
@@ -32,28 +47,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_toEndOf="@+id/profilePic"
                 android:text="Vukasin Bogdanovic"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <RatingBar
-                android:id="@+id/ratingBar2"
+            <ImageButton
+                android:id="@+id/sendBtnDriverHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nameLb"
-                android:layout_toEndOf="@id/profilePic"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="10dp"
-                android:isIndicator="true"
-                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
-                />
+                app:srcCompat="@drawable/send"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"/>
+
+
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/profilePic"
+                android:layout_below="@+id/profilePic"
                 android:layout_marginTop="10dp"
                 android:background="?attr/colorPrimary"
                 android:alpha="0.6"/>
@@ -63,21 +78,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/location"
-                android:layout_below="@id/line"
+                android:layout_below="@+id/line"
                 android:layout_marginStart="30dp"
                 app:tint="@color/dark_gray_pewter"
                 android:layout_marginTop="15dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/destIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/location"
-                android:layout_below="@id/startIcon"
+                android:layout_below="@+id/startIcon"
                 app:tint="@color/dark_gray_pewter"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
             <TextView
@@ -87,7 +109,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/startIcon"
-                android:layout_below="@id/line"
+                android:layout_below="@+id/line"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:text="Kralja Petra I"
                 android:textSize="16sp" />
@@ -98,7 +120,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="25dp"
                 android:layout_toEndOf="@+id/destIcon"
-                android:layout_below="@id/startText"
+                android:layout_below="@+id/startTime"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:text="Radnicka 54"
                 android:textSize="16sp" />
@@ -107,71 +129,125 @@
                 android:id="@+id/startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line"
-                android:layout_marginTop="15dp"
+                android:layout_below="@+id/line"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:text="09:15"
                 android:alpha="0.7"
                 android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/startTime"
-                android:layout_marginTop="25dp"
+                android:layout_below="@+id/startText"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
                 android:text="09:15"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:alpha="0.7"
                 android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
             <View
                 android:id="@+id/bottomLine"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/destIcon"
+                android:layout_below="@+id/destIcon"
                 android:layout_marginTop="15dp"
                 android:background="?attr/colorPrimary"
                 android:alpha="0.6"/>
 
+
+            <ImageView
+                android:id="@+id/priceIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dollar_tag"
+                android:layout_below="@+id/bottomLine"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+            <TextView
+                android:id="@+id/priceLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottomLine"
+                android:layout_toEndOf="@+id/priceIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="10dp"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="@string/price"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/priceTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottomLine"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="$15.60"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+            <View
+                android:id="@+id/delimiterLine2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/priceTag"
+                android:layout_marginTop="8dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+
+
+
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/hiddenDriverHistory"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_below="@+id/visibleDriverHistory"
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/durationLb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/bottomLine"
-                android:layout_toEndOf="@id/durationIcon"
+                android:layout_toEndOf="@+id/durationIcon"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="10dp"
                 android:textColor="?attr/colorSecondaryVariant"
-                android:text="Duration"
+                android:text="Distance"
                 android:textAlignment="center"
 
                 android:textSize="16sp" />
             <TextView
-                android:id="@+id/durationTime"
+                android:id="@+id/distanceText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/bottomLine"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
-                android:text="09:15"
+                android:text="3.2km"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:alpha="0.7"
                 android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
+
 
             <ImageView
                 android:id="@+id/durationIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/duration"
-                android:layout_below="@id/bottomLine"
+                android:src="@drawable/distance"
                 app:tint="@color/dark_gray_pewter"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
@@ -181,21 +257,161 @@
                 android:id="@+id/delimiterLine"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/durationIcon"
+                android:layout_below="@+id/durationIcon"
                 android:layout_marginTop="15dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
-            <TextView
-                android:id="@+id/priceTag"
+            <RatingBar
+                android:id="@+id/ratingBarHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/delimiterLine"
-                android:layout_marginTop="8dp"
+                android:layout_below="@+id/delimiterLine"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:isIndicator="true"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                />
+            <TextView
+                android:id="@+id/commentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_alignParentEnd="true"
-                android:text="$15.60"
-                android:textAlignment="textEnd"
-                android:textSize="20sp" />
+                android:layout_below="@+id/ratingBarHistory"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                android:textColor="?attr/colorSecondaryVariant"
+                android:alpha="0.7"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="italic"/>
+            <View
+                android:id="@+id/delimiterLine3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/commentText"
+                android:layout_marginTop="5dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <LinearLayout
+                android:id="@+id/personNumLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/delimiterLine3">
+                <ImageView
+                    android:id="@+id/personIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/person"
+                    app:tint="@color/dark_gray_pewter"
+                    />
+                <TextView
+                    android:id="@+id/personNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:layout_marginStart="2dp"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:alpha="0.7"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/profilesHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/personNumLayout"
+                android:layout_marginBottom="10dp">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/passenger1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    tools:ignore="ImageContrastCheck"
+                    android:src="@color/pewter_dark_blue"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/passenger2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    tools:ignore="ImageContrastCheck"
+                    android:src="@color/pewter_dark_blue"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/passenger3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    tools:ignore="ImageContrastCheck"
+                    android:src="@color/pewter_dark_blue"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/passenger4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    tools:ignore="ImageContrastCheck"
+                    android:src="@color/pewter_dark_blue"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/passenger5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    tools:ignore="ImageContrastCheck"
+                    android:src="@color/pewter_dark_blue"/>
+
+            </LinearLayout>
+            <View
+                android:id="@+id/delimiterLine4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/profilesHistory"
+                android:layout_marginTop="5dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/mapHistory"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/delimiterLine4"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@raw/cover_photo_mockup"/>
+            <View
+                android:id="@+id/delimiterLine5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mapHistory"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+
+        </RelativeLayout>
+            <ImageButton
+                android:id="@+id/arrowBtnDriverHistory"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                app:srcCompat="@drawable/arrow_down"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_below="@+id/hiddenDriverHistory"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginBottom="-7dp"/>
 
 
         </RelativeLayout>
