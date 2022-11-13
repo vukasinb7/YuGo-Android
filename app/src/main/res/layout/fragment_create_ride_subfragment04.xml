@@ -164,7 +164,7 @@
                 android:enabled="false"
                 android:text="Bulevar Mihajla Pupina 45"
                 android:hint="@string/where_to"
-                android:textColor="@color/dark_gray_pewter" />
+                android:textColor="@color/dark_gray" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -185,7 +185,17 @@
         android:layout_below="@id/totalPriceSubfragment4"
         android:orientation="horizontal"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true">
+        <ImageButton
+            android:id="@+id/buttonReturnBack"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/dark_gray_pewter"
+            android:layout_marginEnd="10dp"
+            app:tint="@color/white_dark_gray"
+            android:src="@drawable/arrow_left_icon"/>
         <Button
             android:id="@+id/buttonAcceptRide"
             android:layout_width="0dp"
@@ -193,15 +203,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/accept" />
-        <ImageButton
-            android:id="@+id/buttonReturnBack"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/dark_gray_pewter"
-            android:layout_marginStart="10dp"
-            app:tint="@color/white"
-            android:src="@drawable/arrow_left_icon"/>
     </LinearLayout>
 
 </RelativeLayout>
