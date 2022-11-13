@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".gui.inbox.NotificationsFragment">
 
+    <!--
     <ListView
         android:id="@+id/listViewNotifications"
         android:layout_width="match_parent"
@@ -15,5 +16,11 @@
         android:dividerHeight="10dp"
         android:listSelector="@android:color/transparent"
         android:layout_marginVertical="10dp"/>
+        -->
+
+    <include layout="@layout/notification_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notification"/>
 
 </FrameLayout>
