@@ -95,7 +95,7 @@
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                app:shapeAppearanceOverlay="@style/circleimageview"
+                app:shapeAppearanceOverlay="@style/circleImageView"
                 android:src="@drawable/account_round_icon"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
