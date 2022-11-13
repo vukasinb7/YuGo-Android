@@ -1,14 +1,11 @@
 package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,27 +14,27 @@ import androidx.cardview.widget.CardView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.Ride;
-import com.example.uberapp.core.model.VehicleType;
 import com.example.uberapp.core.tools.DriverHistoryMockup;
+import com.example.uberapp.core.tools.PassengerHistoryMockup;
 
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-public class DriverHistoryAdapter extends BaseAdapter {
+public class PassengerHistoryAdapter extends BaseAdapter {
     public Activity activity;
-    public DriverHistoryAdapter(Activity activity){
+    public PassengerHistoryAdapter(Activity activity){
         this.activity = activity;
     }
 
     @Override
     public int getCount() {
-        return DriverHistoryMockup.getRides().size();
+        return PassengerHistoryMockup.getRides().size();
     }
 
     @Override
     public Object getItem(int i) {
-        return DriverHistoryMockup.getRides().get(i);
+        return PassengerHistoryMockup.getRides().get(i);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Ride vht = DriverHistoryMockup.getRides().get(i);
+        Ride vht = PassengerHistoryMockup.getRides().get(i);
         View v = view;
 
         if(view == null){

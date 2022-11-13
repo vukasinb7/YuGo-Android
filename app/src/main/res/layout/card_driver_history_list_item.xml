@@ -268,6 +268,7 @@
                 android:layout_below="@+id/delimiterLine"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:progressTint="@color/yellowish"
                 android:layout_marginStart="10dp"
                 android:isIndicator="true"
                 style="@android:style/Widget.DeviceDefault.RatingBar.Small"
