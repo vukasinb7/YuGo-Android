@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/messageCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp">
@@ -15,7 +16,7 @@
             android:layout_marginBottom="10dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/messageIcon"
+                android:id="@+id/messageSenderIcon"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentStart="true"
@@ -25,9 +26,7 @@
                 android:contentDescription="Sender picture"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                app:tint="@color/dark_gray_pewter"
-                app:shapeAppearanceOverlay="@style/roundimageview"
-                android:src="@drawable/account_round_icon" />
+                app:shapeAppearanceOverlay="@style/roundimageview" />
 
             <TextView
                 android:id="@+id/senderName"
@@ -38,13 +37,13 @@
                 android:text="Sender name"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/messageIcon" />
+                android:layout_toEndOf="@+id/messageSenderIcon" />
 
             <TextView android:id="@+id/messageContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="message"
-                android:layout_toEndOf="@+id/messageIcon"
+                android:layout_toEndOf="@+id/messageSenderIcon"
                 android:layout_below="@+id/senderName"
                 android:layout_alignParentEnd="true" />
 
@@ -52,7 +51,6 @@
                 android:id="@+id/messageTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
                 android:text="09:15"
