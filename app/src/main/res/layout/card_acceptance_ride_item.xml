@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_height="490dp"
+        android:layout_height="520dp"
         android:layout_centerVertical="true">
 
         <RelativeLayout
@@ -62,59 +62,58 @@
                 android:textSize="28sp"
                 android:textColor="?attr/colorPrimary"/>
             <LinearLayout
-                android:id="@+id/fromToContainer"
+                android:id="@+id/fromContainer"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/additional_info"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/startIco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorSecondaryVariant"
+                    app:tint="@color/dark_gray_pewter"
                     app:srcCompat="@drawable/location"
                     android:alpha="0.8"/>
-                <ImageView
-                    android:id="@+id/endIco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    app:tint="?attr/colorSecondaryVariant"
-                    app:srcCompat="@drawable/location"
-                    android:alpha="0.8"/>
+                    <TextView
+                        android:id="@+id/startDest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Zmaj Jovina 54"
+
+                        android:textSize="20sp"
+                        android:textStyle="italic"/>
+
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/locations"
+                android:id="@+id/toContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/additional_info"
-                android:layout_toEndOf="@id/fromToContainer"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/startDest"
-                    android:layout_width="match_parent"
+                android:layout_below="@id/fromContainer"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/endIco"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Zmaj Jovina 54"
-
-                    android:textSize="20sp"
-                    android:textStyle="italic"/>
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/dark_gray_pewter"
+                    app:srcCompat="@drawable/location"
+                    android:alpha="0.8"/>
                 <TextView
                     android:id="@+id/endDest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Bulevar Evrope 30"
-
+                    android:layout_gravity="center_vertical"
                     android:textSize="20sp"
                     android:textStyle="italic"/>
 
@@ -137,7 +136,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:textSize="18sp"
-                    android:textColor="?attr/colorSecondaryVariant"/>
+                    android:textColor="@color/dark_gray_pewter"/>
                 <View
                     android:id="@+id/dot1"
                     android:layout_width="2dp"
@@ -145,7 +144,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="?attr/colorSecondaryVariant"/>
+                    android:background="@color/dark_gray_pewter"/>
                 <TextView
                     android:id="@+id/durationDist"
                     android:layout_width="wrap_content"
@@ -155,7 +154,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
-                    android:textColor="?attr/colorSecondaryVariant"/>
+                    android:textColor="@color/dark_gray_pewter"/>
                 <View
                     android:id="@+id/dot2"
                     android:layout_width="2dp"
@@ -163,7 +162,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="?attr/colorSecondaryVariant"/>
+                    android:background="@color/dark_gray_pewter"/>
 
 
                 <ImageView
@@ -173,7 +172,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    app:tint="?attr/colorSecondaryVariant"
+                    app:tint="@color/dark_gray_pewter"
                     app:srcCompat="@drawable/person" />
                 <TextView
                     android:id="@+id/personNum"
@@ -184,7 +183,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
-                    android:textColor="?attr/colorSecondaryVariant"/>
+                    android:textColor="@color/dark_gray_pewter"/>
 
             </LinearLayout>
             <LinearLayout
