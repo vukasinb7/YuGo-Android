@@ -13,11 +13,6 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.model.User;
 import com.example.uberapp.core.tools.UserMockup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DriverInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DriverInfoFragment extends Fragment {
 
 

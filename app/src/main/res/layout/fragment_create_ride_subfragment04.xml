@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white_dark_gray"
@@ -169,21 +169,22 @@
 
     </RelativeLayout>
     <TextView
+        android:id="@+id/totalPriceSubfragment4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/destinationLayoutSubfragment4"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray_pewter"
         android:layout_marginTop="10dp"
         android:text="Total: $9.99"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/accept"/>
+        android:text="@string/accept"
+        android:layout_below="@id/totalPriceSubfragment4"/>
 </RelativeLayout>
