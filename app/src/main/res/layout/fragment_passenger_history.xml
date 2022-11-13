@@ -16,9 +16,16 @@
         android:queryHint="Search rides..."
         android:iconifiedByDefault="false"/>
 
-    <include layout="@layout/card_driver_history_list_item"
+    <ListView
+        android:id="@+id/passengerHistoryList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/passengerHistorySearchBar"/>
+        android:layout_height="match_parent"
+        android:contextClickable="false"
+        android:listSelector="@android:color/transparent"
+        android:layout_below="@id/passengerHistorySearchBar"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="5dp"/>
 
 </RelativeLayout>

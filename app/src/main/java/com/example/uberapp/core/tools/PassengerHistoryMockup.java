@@ -1,22 +1,17 @@
 package com.example.uberapp.core.tools;
 
-import com.example.uberapp.R;
 import com.example.uberapp.core.model.FavouritePath;
 import com.example.uberapp.core.model.Passenger;
 import com.example.uberapp.core.model.Review;
 import com.example.uberapp.core.model.Ride;
 import com.example.uberapp.core.model.RideStatus;
-import com.example.uberapp.core.model.VehicleCategory;
-import com.example.uberapp.core.model.VehicleType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverHistoryMockup {
+public class PassengerHistoryMockup {
     public static List<Ride> getRides(){
         List<Ride> rides = new ArrayList<>();
         Passenger pass1 = new Passenger("001", "Marko", "Markovic",
