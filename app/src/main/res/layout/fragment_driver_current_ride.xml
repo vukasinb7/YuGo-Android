@@ -6,6 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".gui.home.DriverCurrentRideFragment">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/driverControlMenu"
+        app:cardCornerRadius="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_centerHorizontal="true">
+
+        <ToggleButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_margin="0dp"
+            android:background="@drawable/driver_toggle_button"
+            android:textColor="@color/white"
+
+            android:textOff="Offline"
+            android:textOn="Online"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -19,8 +42,7 @@
         android:id="@+id/driverControlMenu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:cardCornerRadius="20dp">
