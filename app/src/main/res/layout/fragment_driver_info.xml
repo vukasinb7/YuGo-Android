@@ -92,6 +92,47 @@
                 android:textColorHint="#616161"
                 android:textColor="@color/dark_gray" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/dark_gray_pewter"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextAddress"
+                android:text="@string/address"/>
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="@string/address"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="textPostalAddress"
+                android:textColorHint="#616161"
+                android:textColor="@color/dark_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/drivers_licence"
+                android:textSize="15sp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/buttonPickDriversLicence"
+                android:layout_height="wrap_content"
+                android:text="@string/select_from_gallery"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/registration_licence"
+                android:textSize="15sp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/buttonPickRegistrationLicence"
+                android:layout_height="wrap_content"
+                android:text="@string/select_from_gallery"/>
             <Button
                 android:id="@+id/buttonCreateAccount"
                 android:layout_width="match_parent"
@@ -99,6 +140,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="20dp"
                 tools:layout_editor_absoluteX="21dp" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

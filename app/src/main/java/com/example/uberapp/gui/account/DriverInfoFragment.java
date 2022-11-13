@@ -2,11 +2,16 @@ package com.example.uberapp.gui.account;
 
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.uberapp.R;
@@ -48,6 +53,50 @@ public class DriverInfoFragment extends Fragment {
         EditText email = view.findViewById(R.id.editTextEmail);
         email.setText(user.getEmail());
 
+        EditText address = view.findViewById(R.id.editTextAddress);
+        address.setText(user.getAddress());
+
+        ActivityResultLauncher<PickVisualMediaRequest> pickDriversLicnece =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
+        Button buttonDriversLicence = view.findViewById(R.id.buttonPickDriversLicence);
+        buttonDriversLicence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDriversLicnece.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
+
+        ActivityResultLauncher<PickVisualMediaRequest> pickRegistrationLicence =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
+        Button buttonRegistrationLicence = view.findViewById(R.id.buttonPickRegistrationLicence);
+        buttonRegistrationLicence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickRegistrationLicence.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
         return view;
     }
 }
