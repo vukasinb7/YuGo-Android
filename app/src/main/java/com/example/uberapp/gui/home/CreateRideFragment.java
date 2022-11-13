@@ -21,12 +21,33 @@ public class CreateRideFragment extends DialogFragment {
     private CreateRideSubfragment01 subFrag01;
     private CreateRideSubfragment02 subFrag02;
     private CreateRideSubfragment03 subFrag03;
+    private FloatingActionButton buttonNext;
+    private FloatingActionButton buttonPrev;
+
     public static String TAG = "CreateRideFragmentDialog";
 
     public CreateRideFragment() {
         // Required empty public constructor
         super(R.layout.fragment_create_ride);
         currentSubfragment = 0;
+    }
+
+    public void buttonPrevOnClick(){
+        switch (currentSubfragment){
+            case 1:
+                getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag01).commit();
+                buttonPrev.setVisibility(View.GONE);
+                break;
+            case 2:
+                getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
+                break;
+            case 3:
+                getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
+                buttonPrev.setVisibility(View.VISIBLE);
+                buttonNext.setVisibility(View.VISIBLE);
+                break;
+        }
+        currentSubfragment--;
     }
 
     @Override
@@ -42,8 +63,8 @@ public class CreateRideFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_create_ride, container, false);
 
-        FloatingActionButton buttonNext = view.findViewById(R.id.nextSubfragmentButton);
-        FloatingActionButton buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
+        buttonNext = view.findViewById(R.id.nextSubfragmentButton);
+        buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,16 +92,7 @@ public class CreateRideFragment extends DialogFragment {
         buttonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (currentSubfragment){
-                    case 1:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag01).commit();
-                        buttonPrev.setVisibility(View.GONE);
-                        break;
-                    case 2:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
-                        break;
-                }
-                currentSubfragment--;
+                buttonPrevOnClick();
             }
         });
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment01()).commit();
