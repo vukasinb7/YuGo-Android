@@ -35,8 +35,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_gravity="center_vertical"
                         app:tint="@color/dark_gray_pewter"
-                        app:srcCompat="@drawable/location"
-                        android:alpha="0.8"/>
+                        app:srcCompat="@drawable/location"/>
                     <TextView
                         android:id="@+id/startDest"
                         android:layout_width="match_parent"
@@ -44,7 +43,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_gravity="center_vertical"
                         android:text="Zmaj Jovina 54"
-
+                        android:textColor="@color/dark_gray_pewter"
                         android:textSize="20sp"/>
 
 
@@ -143,14 +142,14 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         app:tint="@color/dark_gray_pewter"
-                        app:srcCompat="@drawable/location"
-                        android:alpha="0.8"/>
+                        app:srcCompat="@drawable/location" />
                     <TextView
                         android:id="@+id/endDest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Bulevar Evrope 30"
                         android:layout_gravity="center_vertical"
+                        android:textColor="@color/dark_gray_pewter"
                         android:textSize="20sp"/>
 
                 </LinearLayout>
@@ -171,23 +170,22 @@
                     android:layout_marginTop="10dp">
                     <ImageView
                         android:id="@+id/durationIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/distance"
                         app:tint="@color/dark_gray_pewter"
-                        android:layout_marginStart="25dp"
+                        android:layout_marginStart="20dp"
                         android:layout_gravity="center_vertical"
-                        android:scaleX="1.5"
-                        android:scaleY="1.5"/>
+        />
                     <TextView
                         android:id="@+id/distanceLb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
-                        android:textColor="?attr/colorSecondaryVariant"
+                        android:textColor="@color/dark_gray_pewter"
                         android:text="Distance"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <TextView
@@ -198,7 +196,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_alignParentEnd="true"
                     android:text="3.2km"
-                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textColor="@color/dark_gray_pewter"
                     android:alpha="0.7"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
@@ -265,10 +263,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textColor="?attr/colorSecondaryVariant"
+                        android:textColor="@color/dark_gray_pewter"
                         android:text="Duration"
                         android:layout_gravity="center_vertical"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
                 <TextView
@@ -280,7 +278,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/delimiterLine"
                     android:text="32min"
-                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textColor="@color/dark_gray_pewter"
                     android:alpha="0.7"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
