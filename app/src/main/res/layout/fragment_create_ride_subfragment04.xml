@@ -168,22 +168,13 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <TextView
-        android:id="@+id/totalPriceSubfragment4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/destinationLayoutSubfragment4"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/dark_gray_pewter"
-        android:layout_marginTop="10dp"
-        android:text="Total: $9.99"/>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/totalPriceSubfragment4"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/addToFavouritesContainer"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="10dp"
         android:layout_centerHorizontal="true">
@@ -207,5 +198,42 @@
             android:background="@drawable/round_image_button"
             />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/addToFavouritesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/destinationLayoutSubfragment4">
+        <ImageButton
+            android:id="@+id/addToFavouritesBtn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:tint="@color/yellowish"
+            android:src="@drawable/star_outline"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/addToFavouritesLb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/dark_gray_pewter"
+            android:text="Add to favorites"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/totalPriceSubfragment4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/dark_gray_pewter"
+            android:layout_marginEnd="10dp"
+            android:text="Total: $9.99"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
