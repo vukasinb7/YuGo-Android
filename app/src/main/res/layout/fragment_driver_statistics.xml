@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".gui.account.DriverStatisticsFragment">
+
+    <GridLayout
+        android:id="@+id/statisticsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="4">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard1"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="16dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ridesCountLb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_centerVertical="true"
+                    android:text="50"
+                    android:textSize="46sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray_pewter"/>
+
+                <TextView
+                    android:id="@+id/ridesLb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Rides"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard2"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_rowWeight="2"
+            android:layout_rowSpan="2"
+            android:layout_columnWeight="1"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard3"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="16dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ratingCountLb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_centerVertical="true"
+                    android:text="5/5"
+                    android:textSize="46sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray_pewter"/>
+
+                <TextView
+                    android:id="@+id/ratingLb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Rating"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard4"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="16dp" >
+
+           <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/dayCountLb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:text="3"
+                android:textSize="46sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_gray_pewter"/>
+
+            <TextView
+                android:id="@+id/dayLb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Day"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard5"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="16dp" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statisticsCard6"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_columnWeight="2"
+            android:layout_columnSpan="2"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="16dp" />
+
+    </GridLayout>
+</RelativeLayout>
