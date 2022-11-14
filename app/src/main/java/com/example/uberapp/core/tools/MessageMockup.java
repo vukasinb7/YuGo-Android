@@ -7,6 +7,7 @@ import com.example.uberapp.core.model.MessageType;
 import com.example.uberapp.core.model.Passenger;
 import com.example.uberapp.core.model.Review;
 import com.example.uberapp.core.model.Ride;
+import com.example.uberapp.core.model.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,15 +17,8 @@ public class MessageMockup {
     public static List<Message> getMessages(){
         List<Message> messages = new ArrayList<>();
 
-        Passenger pass1 = new Passenger("001", "Marko", "Markovic",
-                R.drawable.profile_picture_01, "0604560456", "example@example.com",
-                "Bulevar oslobodjenja 213", "asdasd", false,
-                new ArrayList<Ride>(), new ArrayList<Review>() , new ArrayList<FavouritePath>());
-
-        Passenger pass2 = new Passenger("001", "Darko", "Markovic",
-                R.drawable.profile_picture_02, "0604560456", "example@example.com",
-                "Bulevar oslobodjenja 213", "asdasd", false,
-                new ArrayList<Ride>(), new ArrayList<Review>() , new ArrayList<FavouritePath>());
+        User pass1 = UserMockup.getUsers().get(0);
+        User pass2 = UserMockup.getUsers().get(1);
 
         String sample_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales sem sit amet ipsum scelerisque consectetur. Vestibulum pellentesque diam sit amet diam commodo laoreet. Vivamus lobortis aliquam neque id hendrerit.";
         Message mess1 = new Message("001", sample_text,

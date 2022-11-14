@@ -42,6 +42,9 @@ public class PassengerInfoFragment extends Fragment {
         EditText email = view.findViewById(R.id.editTextEmail);
         email.setText(user.getEmail());
 
+        EditText address = view.findViewById(R.id.editTextAddress);
+        address.setText(user.getAddress());
+
         return view;
     }
 }

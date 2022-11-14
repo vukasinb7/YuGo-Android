@@ -70,7 +70,7 @@ public class MessageAdapter extends BaseAdapter {
         }
 
         icon.setImageResource(msg.getSender().getProfilePicture());
-        senderName.setText(msg.getSender().getName());
+        senderName.setText(String.format("%s %s", msg.getSender().getName(), msg.getSender().getLastName()));
         messageContent.setText(msgText);
         messageTime.setText(msg.getSendDateTime().format(formatter));
 
