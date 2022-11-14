@@ -12,9 +12,9 @@ public class UserMockup {
     public static List<User> getUsers(){
         User user01 = new Passenger(
                 "001",
-                "The",
-                "Rhino",
-                R.drawable.profile_picture_01,
+                "Amar",
+                "Sinha",
+                R.drawable.profile_pic_01,
                 "06512332100",
                 "example@email.com",
                 "some address",
@@ -26,9 +26,9 @@ public class UserMockup {
         );
         User user02 = new Driver(
                 "002",
-                "Green",
-                "Goblin",
-                R.drawable.profile_picture_02,
+                "Marko",
+                "Markovic",
+                R.drawable.profile_pic_02,
                 "023857235",
                 "example@email.com",
                 "some address",
