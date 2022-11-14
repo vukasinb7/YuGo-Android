@@ -17,7 +17,7 @@ public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new DriverInfoFragment();
             case 1:
-                return new PassengerFavouritesFragment();
+                return new DriverStatisticsFragment();
             case 2:
                 return new DriverReportFragment();
             default:
