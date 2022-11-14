@@ -31,7 +31,8 @@
             android:backgroundTint="@color/dark_gray_pewter"
             android:layout_marginTop="10dp"
             android:src="@drawable/arrow_left_icon"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            app:elevation="0dp"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/nextSubfragmentButton"
             android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:src="@drawable/arrow_right_icon"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            app:elevation="0dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
