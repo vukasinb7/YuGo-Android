@@ -7,167 +7,73 @@
     tools:context=".gui.account.DriverAccountFragment">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/bannerPic"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@raw/cover_photo_mockup"/>
+            android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profilePic"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_below="@id/bannerPic"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-70dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            app:shapeAppearanceOverlay="@style/accountImageView"
-            app:srcCompat="@color/black"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/bannerPic"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@raw/cover_photo_mockup"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePic"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_below="@id/bannerPic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-70dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:shapeAppearanceOverlay="@style/accountImageView"
+                app:srcCompat="@color/black"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profilePic"
-            android:layout_marginTop="25dp"
-            android:weightSum="3"
-            android:id="@+id/driverStatsLayout"
-            android:orientation="horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp">
-
-            <LinearLayout
+            <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/ridesCountLb"
+                android:layout_marginTop="15dp"
+                android:id="@+id/driverAccountTabLayout"
+                app:tabBackground="@color/pewter_dark_blue"
+                android:layout_below="@+id/profilePic">
+
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="123"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_gray_pewter"/>
-
-                <TextView
-                    android:id="@+id/ridesLb"
+                    android:text="Info"/>
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Rides"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="2dp"
-                android:layout_height="match_parent"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/ratingCountLb"
+                    android:text="Statistics"/>
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="123"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_gray_pewter"/>
+                    android:text="Report"/>
 
-                <TextView
-                    android:id="@+id/ratingLb"
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:paddingVertical="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/driverAccountViewPager"
+                android:layout_below="@+id/driverAccountTabLayout"
+                android:saveEnabled="false"
+                >
+            </androidx.viewpager2.widget.ViewPager2>
+
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Rating"
-                    android:textSize="20sp"/>
-            </LinearLayout>
+                    android:orientation="vertical" />
 
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="2dp"
-                android:layout_height="match_parent"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/dayCountLb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="123"
-                    android:textSize="30sp"
-                    android:textColor="@color/dark_gray_pewter"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/dayLb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Day"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/driverAccountTabLayout"
-            app:tabBackground="@color/pewter_dark_blue"
-            android:layout_below="@+id/driverStatsLayout">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Info"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Favourites"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Report"/>
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:paddingVertical="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/driverAccountViewPager"
-            android:layout_below="@+id/driverAccountTabLayout"
-            android:saveEnabled="false"
-            >
-        </androidx.viewpager2.widget.ViewPager2>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>
