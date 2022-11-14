@@ -92,6 +92,26 @@
                 android:textColorHint="#616161"
                 android:textColor="@color/dark_gray"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/dark_gray_pewter"
+                android:textSize="15sp"
+                android:labelFor="@+id/editTextAddress"
+                android:text="@string/address"/>
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="@string/address"
+                android:background="@drawable/editview_rounded_corners"
+                android:ems="10"
+                android:inputType="textPostalAddress"
+                android:textColorHint="#616161"
+                android:textColor="@color/dark_gray" />
+
             <Button
                 android:id="@+id/buttonCreateAccount"
                 android:layout_width="match_parent"
