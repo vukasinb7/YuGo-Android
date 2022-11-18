@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.account.PassengerFavouritesFragment">
+    tools:context=".gui.fragments.account.PassengerFavouritesFragment">
 
     <include
         android:id="@+id/favouritePathTmp"
-        layout="@layout/card_favourite_path"
+        layout="@layout/list_item_favourite_path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"

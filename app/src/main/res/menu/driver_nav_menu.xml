@@ -3,17 +3,17 @@
     <item
         android:id="@+id/driverHome"
         android:title="Home"
-        android:icon="@drawable/home_icon"/>
+        android:icon="@drawable/icon_home"/>
     <item
         android:id="@+id/driverInbox"
         android:title="Inbox"
-        android:icon="@drawable/inbox_icon"/>
+        android:icon="@drawable/icon_inbox"/>
     <item
         android:id="@+id/driverHistory"
         android:title="History"
-        android:icon="@drawable/history_icon"/>
+        android:icon="@drawable/icon_history"/>
     <item
         android:id="@+id/driverAccount"
         android:title="Account"
-        android:icon="@drawable/account_icon"/>
+        android:icon="@drawable/icon_account"/>
 </menu>

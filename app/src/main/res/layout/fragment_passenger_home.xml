@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.home.PassengerHomeFragment">
+    tools:context=".gui.fragments.home.PassengerHomeFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="street map" />
+        android:contentDescription="@string/map" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonCreateRide"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="25dp"
-        app:icon="@drawable/add_icon"
+        app:icon="@drawable/icon_add"
         app:iconTint="@color/dark_gray_pewter"
         android:text="@string/new_ride"
         android:textColor="@color/dark_gray_pewter"

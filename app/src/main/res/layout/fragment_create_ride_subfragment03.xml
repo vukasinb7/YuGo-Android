@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white_dark_gray"
-    tools:context=".gui.home.CreateRideSubfragment03">
+    tools:context=".gui.fragments.home.CreateRideSubfragment03">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         android:textAlignment="center"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/dark_gray_pewter"
-        android:text="Date"/>
+        android:text="@string/date"/>
     <DatePicker
         android:id="@+id/rideDatePicker"
         android:layout_width="wrap_content"

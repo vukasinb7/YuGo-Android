@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.home.DriverHomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".gui.fragments.home.DriverHomeFragment">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Driver home fragment" />
+        android:text="@string/driver_home_fragment" />
 
 </FrameLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.home.DriverCurrentRideFragment">
+    tools:context=".gui.fragments.home.DriverCurrentRideFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -20,22 +20,23 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_margin="0dp"
-            android:background="@drawable/driver_toggle_button"
+            android:background="@drawable/selector_on_off_toggle_button"
             android:textColor="@color/white"
-            android:textOff="Offline"
-            android:textOn="Online"
+            android:textOff="@string/offline"
+            android:textOn="@string/online"
             android:textSize="16sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/map_current_ride"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@raw/cover_current_ride_mockup"
         app:layout_constraintBottom_toBottomOf="parent"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/map" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/driverControlMenu"
@@ -99,8 +100,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:backgroundTint="#FF4C4C"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
                 android:layout_centerVertical="true"
                 app:cardCornerRadius="30dp">
                 <RelativeLayout
@@ -114,7 +115,7 @@
                         android:layout_centerHorizontal="true"
                         android:textStyle="bold"
                         android:textColor="#FFFFFF"
-                        android:text="PANIC" />
+                        android:text="@string/panic" />
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
@@ -130,7 +131,7 @@
                 android:scaleX="1.15"
                 android:scaleY="1.15"
                 app:shapeAppearanceOverlay="@style/circleImageView"
-                android:src="@drawable/account_round_icon"
+                android:src="@drawable/icon_round_account"
                 app:tint="@color/dark_gray_pewter"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

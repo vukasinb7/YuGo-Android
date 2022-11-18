@@ -13,35 +13,35 @@
         android:theme="@style/Theme.UberApp"
         tools:targetApi="31">
         <activity
-            android:name=".gui.main.PassengerMainActivity"
+            android:name=".gui.activities.PassengerMainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".gui.account.NewUserRegisterActivity"
+            android:name=".gui.activities.NewUserRegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".gui.main.DriverMainActivity"
+            android:name=".gui.activities.DriverMainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".gui.account.LoginActivity"
+            android:name=".gui.activities.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".gui.SplashScreenActivity"
+            android:name=".gui.activities.SplashScreenActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.main.MainActivity"
+            android:name=".gui.activities.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

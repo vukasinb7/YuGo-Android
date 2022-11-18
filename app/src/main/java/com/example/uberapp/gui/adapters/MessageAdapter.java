@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -48,7 +47,7 @@ public class MessageAdapter extends BaseAdapter {
         View v = view;
 
         if(view == null){
-            v = LayoutInflater.from(activity).inflate(R.layout.message_list_item, null);
+            v = LayoutInflater.from(activity).inflate(R.layout.list_item_message, null);
         }
 
         CardView messageCardView = v.findViewById(R.id.messageCardView);

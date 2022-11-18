@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_rounded_bg"
-    tools:context=".gui.home.CreateRideFragment">
+    android:background="@drawable/shape_dialog_round"
+    tools:context=".gui.fragments.home.CreateRideFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="350dp"
@@ -30,7 +30,7 @@
             app:fabSize="mini"
             android:backgroundTint="@color/dark_gray_pewter"
             android:layout_marginTop="10dp"
-            android:src="@drawable/arrow_left_icon"
+            android:src="@drawable/icon_arrow_left"
             android:contentDescription="TODO"
             app:elevation="0dp"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,7 +43,7 @@
             android:backgroundTint="@color/dark_gray_pewter"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
-            android:src="@drawable/arrow_right_icon"
+            android:src="@drawable/icon_arrow_right"
             android:contentDescription="TODO"
             app:elevation="0dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@ public class VehicleTypeAdapter extends BaseAdapter {
         View v = view;
 
         if(view == null){
-            v = LayoutInflater.from(activity).inflate(R.layout.vehicle_type_card, null);
+            v = LayoutInflater.from(activity).inflate(R.layout.list_item_vehicle_type, null);
         }
 
         ImageView icon = (ImageView) v.findViewById(R.id.imageViewVehicle);

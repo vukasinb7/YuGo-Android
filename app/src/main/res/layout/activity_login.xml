@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.account.LoginActivity">
+    tools:context=".gui.activities.LoginActivity">
 
     <EditText
         android:id="@+id/loginEmailAddress"
@@ -73,9 +73,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="#FFFFFF"
-            android:drawableLeft="@drawable/google_logo"
             android:text="@string/continue_with_google"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:drawableLeft="@drawable/icon_google"/>
         <Button
             android:id="@+id/continueFacebook"
             android:layout_width="match_parent"
@@ -83,9 +83,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
             android:backgroundTint="#4267B2"
-            android:drawableLeft="@drawable/facebook_logo"
+            android:drawableLeft="@drawable/icon_facebook"
             android:textColor="@color/white"
             android:text="@string/continue_with_facebook"
             android:textSize="12sp"/>
@@ -149,6 +148,7 @@
         android:layout_height="158dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        app:srcCompat="@drawable/logoflat" />
+        app:srcCompat="@drawable/icon_yugo_logo_flat"
+        android:contentDescription="@string/logo" />
 
 </RelativeLayout>

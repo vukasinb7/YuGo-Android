@@ -31,7 +31,7 @@ public class PassengerHistoryMockup {
         Ride r3=new Ride("003",start2,end2,9.60,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
         Ride r4=new Ride("004",start3,end2,13.00,Duration.between(end,start),null,false,false,false,false,passengers,RideStatus.Finished);
 
-        //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/car_model_01.png");
+        //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/image_car_model_01.png");
         rides.add(r1);
         rides.add(r2);
         rides.add(r3);

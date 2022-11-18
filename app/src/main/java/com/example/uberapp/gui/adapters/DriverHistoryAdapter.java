@@ -1,14 +1,11 @@
 package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import androidx.cardview.widget.CardView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.Ride;
-import com.example.uberapp.core.model.VehicleType;
 import com.example.uberapp.core.tools.DriverHistoryMockup;
 
 import java.time.Duration;
@@ -56,7 +52,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         View v = view;
 
         if(view == null){
-            v = LayoutInflater.from(activity).inflate(R.layout.card_driver_history_list_item, null);
+            v = LayoutInflater.from(activity).inflate(R.layout.list_item_driver_history, null);
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         TextView nameLb = (TextView) v.findViewById(R.id.nameLb);
@@ -97,7 +93,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
                 // Here we use an object of the AutoTransition Class to create a default transition
                 //TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 hiddenView.setVisibility(View.GONE);
-                arrow.setImageResource(R.drawable.arrow_down);
+                arrow.setImageResource(R.drawable.icon_arrow_down);
             }
 
             // If the CardView is not expanded, set its visibility to
@@ -105,7 +101,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
             else {
                 //TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 hiddenView.setVisibility(View.VISIBLE);
-                arrow.setImageResource(R.drawable.arrow_up);
+                arrow.setImageResource(R.drawable.icon_arrow_up);
             }
         });
 

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.account.DriverAccountFragment">
+    tools:context=".gui.fragments.account.DriverAccountFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/bannerPic"
@@ -45,15 +45,15 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Info"/>
+                    android:text="@string/info"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Statistics"/>
+                    android:text="@string/statistics"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Report"/>
+                    android:text="@string/report"/>
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -66,14 +66,6 @@
                 android:saveEnabled="false"
                 >
             </androidx.viewpager2.widget.ViewPager2>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>
