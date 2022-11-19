@@ -10,6 +10,7 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,31 +41,21 @@ public class DriverInfoFragment extends Fragment {
 
 
     public void setupEditText(View view,String type,String value){
-        EditText editText = null;
-        ImageButton cancel = null,edit = null,accept = null;
+        EditText editText=view.findViewById(R.id.editTextTextPersonName);
+        ImageButton edit= view.findViewById(R.id.editBtnDriverName);
+        ImageButton accept= view.findViewById(R.id.checkBtnDriverName);
+        ImageButton cancel= view.findViewById(R.id.cancelBtnDriverName);
+        editText.setText(value);
         switch(type) {
-            case "name":
-                editText=view.findViewById(R.id.editTextTextPersonName);
-                edit= view.findViewById(R.id.editBtnDriverName);
-                accept= view.findViewById(R.id.checkBtnDriverName);
-                cancel= view.findViewById(R.id.cancelBtnDriverName);
-                editText.setText(value);
-                break;
-            case "lastname":
-                // code block
-                break;
             case "phone":
-                // code block
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
             case "email":
-                // code block
-                break;
-            case "address":
-                // code block
+                editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 break;
             default:
-                // code block
         }
+
 
 
         EditText finalEditText = editText;
@@ -111,19 +102,13 @@ public class DriverInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_driver_info, container, false);
         User user = UserMockup.getUsers().get(1);
-        setupEditText(view,"name",user.getName());
-        setupEditText(view,"lastname",user.getLastName());
-        EditText lastName = view.findViewById(R.id.editTextLastName);
-        lastName.setText(user.getLastName());
 
-        EditText phoneNumber = view.findViewById(R.id.editTextPhone);
-        phoneNumber.setText(user.getPhoneNumber());
+        setupEditText(view.findViewById(R.id.nameContainerDriver),"name",user.getName());
+        setupEditText(view.findViewById(R.id.lastNameContainerDriver),"lastname",user.getLastName());
+        setupEditText(view.findViewById(R.id.phoneContainerDriver),"phone",user.getPhoneNumber());
+        setupEditText(view.findViewById(R.id.emailContainerDriver),"email",user.getEmail());
+        setupEditText(view.findViewById(R.id.addressContainerDriver),"email",user.getAddress());
 
-        EditText email = view.findViewById(R.id.editTextEmail);
-        email.setText(user.getEmail());
-
-        EditText address = view.findViewById(R.id.editTextAddress);
-        address.setText(user.getAddress());
 
         ActivityResultLauncher<PickVisualMediaRequest> pickDriversLicnece =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
