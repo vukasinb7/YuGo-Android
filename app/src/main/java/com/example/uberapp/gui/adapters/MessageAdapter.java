@@ -47,7 +47,7 @@ public class MessageAdapter extends BaseAdapter {
         View v = view;
 
         if(view == null){
-            v = LayoutInflater.from(activity).inflate(R.layout.list_item_message, null);
+            v = LayoutInflater.from(activity).inflate(R.layout.list_item_message_preview, null);
         }
 
         CardView messageCardView = v.findViewById(R.id.messageCardView);
@@ -63,7 +63,7 @@ public class MessageAdapter extends BaseAdapter {
 
         LocalDateTime dateTime = msg.getSendDateTime();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         if (dateTime.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
             formatter = DateTimeFormatter.ofPattern("hh:mm");
         }

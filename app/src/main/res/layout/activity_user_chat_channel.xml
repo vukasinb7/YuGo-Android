@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gui.activities.UserChatChannel">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/chatBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/channelToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:background="@color/pewter_dark_blue"
+        android:layout_below="@+id/chatBarLayout"/>
+
+    <TextView
+        android:id="@+id/textChatIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        android:layout_above="@id/view"
+        android:layout_alignBottom="@+id/view" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="1dp"
+        android:background="#e0e0e0"
+        android:layout_above="@+id/layoutChatChatbox" />
+
+    <RelativeLayout
+        android:id="@+id/layoutChatChatbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+
+        <EditText
+            android:layout_marginStart="16dp"
+            android:id="@+id/editChatMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/buttonSend"
+            android:background="@android:color/transparent"
+            android:hint="@string/enter_message"
+            android:inputType="text"
+            android:maxLines="6"/>
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:text="@string/send"
+            android:textColor="@color/dark_gray_pewter"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
