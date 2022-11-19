@@ -27,7 +27,7 @@
                 android:layout_height="140dp"
                 android:layout_below="@id/bannerPic"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="-70dp"
+                android:layout_marginTop="-90dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 app:shapeAppearanceOverlay="@style/accountImageView"
@@ -66,6 +66,19 @@
                 android:saveEnabled="false"
                 >
             </androidx.viewpager2.widget.ViewPager2>
+
+            <ImageButton
+                android:id="@+id/logoutButtonDriver"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_logout"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:tint="@color/dark_gray"
+                android:backgroundTint="@color/yellowish"
+                android:background="@drawable/shape_round_image_button"/>
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

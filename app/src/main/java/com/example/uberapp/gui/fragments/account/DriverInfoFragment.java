@@ -1,5 +1,8 @@
 package com.example.uberapp.gui.fragments.account;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.User;
@@ -34,16 +38,81 @@ public class DriverInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+    public void setupEditText(View view,String type,String value){
+        EditText editText = null;
+        ImageButton cancel = null,edit = null,accept = null;
+        switch(type) {
+            case "name":
+                editText=view.findViewById(R.id.editTextTextPersonName);
+                edit= view.findViewById(R.id.editBtnDriverName);
+                accept= view.findViewById(R.id.checkBtnDriverName);
+                cancel= view.findViewById(R.id.cancelBtnDriverName);
+                editText.setText(value);
+                break;
+            case "lastname":
+                // code block
+                break;
+            case "phone":
+                // code block
+                break;
+            case "email":
+                // code block
+                break;
+            case "address":
+                // code block
+                break;
+            default:
+                // code block
+        }
+
+
+        EditText finalEditText = editText;
+        ImageButton finalEdit = edit;
+        ImageButton finalAccept = accept;
+        ImageButton finalCancel = cancel;
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finalEditText.setBackgroundTintList( ColorStateList.valueOf(Color.WHITE) );
+                finalEditText.setEnabled(true);
+                finalEditText.setTextColor(getResources().getColor(R.color.dark_gray));
+                finalEdit.setVisibility(View.INVISIBLE);
+                finalAccept.setVisibility(View.VISIBLE);
+                finalCancel.setVisibility(View.VISIBLE);
+            }
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finalEditText.setBackgroundTintList( ColorStateList.valueOf(Color.TRANSPARENT ) );
+                finalEditText.setEnabled(false);
+                finalEditText.setTextColor(getResources().getColor(R.color.dark_gray_pewter));
+                finalEdit.setVisibility(View.VISIBLE);
+                finalAccept.setVisibility(View.INVISIBLE);
+                finalCancel.setVisibility(View.INVISIBLE);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finalEditText.setBackgroundTintList( ColorStateList.valueOf(Color.TRANSPARENT ) );
+                finalEditText.setEnabled(false);
+                finalEditText.setTextColor(getResources().getColor(R.color.dark_gray_pewter));
+                finalEdit.setVisibility(View.VISIBLE);
+                finalAccept.setVisibility(View.INVISIBLE);
+                finalCancel.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_driver_info, container, false);
         User user = UserMockup.getUsers().get(1);
-
-        EditText name = view.findViewById(R.id.editTextFirstName);
-        name.setText(user.getName());
-
+        setupEditText(view,"name",user.getName());
+        setupEditText(view,"lastname",user.getLastName());
         EditText lastName = view.findViewById(R.id.editTextLastName);
         lastName.setText(user.getLastName());
 
