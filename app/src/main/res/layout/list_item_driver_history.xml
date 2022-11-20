@@ -212,7 +212,7 @@
         <RelativeLayout
             android:id="@+id/hiddenDriverHistory"
             android:layout_width="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_below="@+id/visibleDriverHistory"
             android:layout_height="wrap_content">
             <TextView
