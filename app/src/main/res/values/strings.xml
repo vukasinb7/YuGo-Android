@@ -75,4 +75,6 @@
     <string name="sender_picture">Sender picture</string>
     <string name="sender_name">Sender name</string>
     <string name="message">message</string>
+    <string name="forgot_password_c">Forgot Password?</string>
+    <string name="forgot_password_explanation">Enter the email address associated \n with your account.</string>
 </resources>

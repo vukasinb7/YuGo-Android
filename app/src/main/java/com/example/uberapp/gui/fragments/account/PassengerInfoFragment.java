@@ -46,7 +46,7 @@ public class PassengerInfoFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finalEditText.setBackgroundTintList( ColorStateList.valueOf(Color.WHITE) );
+                finalEditText.setBackgroundTintList( ColorStateList.valueOf(getResources().getColor(R.color.pewter_dark_blue)) );
                 finalEditText.setEnabled(true);
                 finalEditText.setTextColor(getResources().getColor(R.color.dark_gray));
                 finalEdit.setVisibility(View.INVISIBLE);

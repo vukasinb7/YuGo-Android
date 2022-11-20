@@ -39,7 +39,6 @@ public class DriverInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
     public void setupEditText(View view,String type,String value){
         EditText editText=view.findViewById(R.id.editTextTextPersonName);
         ImageButton edit= view.findViewById(R.id.editBtnDriverName);
@@ -87,7 +86,7 @@ public class DriverInfoFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finalEditText.setBackgroundTintList( ColorStateList.valueOf(Color.TRANSPARENT ) );
+                finalEditText.setBackgroundTintList( ColorStateList.valueOf(getResources().getColor(R.color.pewter_dark_blue)) );
                 finalEditText.setEnabled(false);
                 finalEditText.setTextColor(getResources().getColor(R.color.dark_gray_pewter));
                 finalEdit.setVisibility(View.VISIBLE);

@@ -4,7 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/yellowish"
+        app:cardCornerRadius="6dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp">
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="match_parent"
@@ -12,7 +20,7 @@
         android:ems="10"
         android:enabled="false"
         android:inputType="textPersonName"
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="@color/pewter_dark_blue"
         android:background="@drawable/selector_editview_round"
         android:textColorHint="#616161"
         android:textColor="@color/dark_gray_pewter"
@@ -46,4 +54,6 @@
         android:layout_alignParentEnd="true"
         app:tint="@color/dark_gray_pewter"
         android:backgroundTint="@android:color/transparent"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
