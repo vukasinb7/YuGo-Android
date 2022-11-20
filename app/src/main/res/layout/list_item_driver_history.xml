@@ -317,6 +317,22 @@
                     android:alpha="0.7"
                     android:textAlignment="center"
                     android:textSize="16sp"/>
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/babyIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_baby"
+                    app:tint="@color/dark_gray_pewter"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/petIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_pet"
+                    app:tint="@color/dark_gray_pewter"
+                    android:contentDescription="@string/person" />
 
             </LinearLayout>
             <LinearLayout
