@@ -1,5 +1,8 @@
 package com.example.uberapp.gui.fragments.account;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -7,12 +10,14 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.User;
@@ -33,9 +38,6 @@ public class DriverInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-<<<<<<< Updated upstream
-=======
 
     public void setupEditText(View view,String type,String value){
         EditText editText=view.findViewById(R.id.editTextTextPersonName);
@@ -93,7 +95,6 @@ public class DriverInfoFragment extends Fragment {
             }
         });
     }
->>>>>>> Stashed changes
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,20 +102,12 @@ public class DriverInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_driver_info, container, false);
         User user = UserMockup.getUsers().get(1);
 
-        EditText name = view.findViewById(R.id.editTextFirstName);
-        name.setText(user.getName());
+        setupEditText(view.findViewById(R.id.nameContainerDriver),"name",user.getName());
+        setupEditText(view.findViewById(R.id.lastNameContainerDriver),"lastname",user.getLastName());
+        setupEditText(view.findViewById(R.id.phoneContainerDriver),"phone",user.getPhoneNumber());
+        setupEditText(view.findViewById(R.id.emailContainerDriver),"email",user.getEmail());
+        setupEditText(view.findViewById(R.id.addressContainerDriver),"email",user.getAddress());
 
-        EditText lastName = view.findViewById(R.id.editTextLastName);
-        lastName.setText(user.getLastName());
-
-        EditText phoneNumber = view.findViewById(R.id.editTextPhone);
-        phoneNumber.setText(user.getPhoneNumber());
-
-        EditText email = view.findViewById(R.id.editTextEmail);
-        email.setText(user.getEmail());
-
-        EditText address = view.findViewById(R.id.editTextAddress);
-        address.setText(user.getAddress());
 
         ActivityResultLauncher<PickVisualMediaRequest> pickDriversLicnece =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {

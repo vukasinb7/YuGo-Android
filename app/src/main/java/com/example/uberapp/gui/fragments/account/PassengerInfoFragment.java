@@ -1,13 +1,17 @@
 package com.example.uberapp.gui.fragments.account;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.User;
@@ -17,8 +21,6 @@ public class PassengerInfoFragment extends Fragment {
     public PassengerInfoFragment() {
         // Required empty public constructor
     }
-<<<<<<< Updated upstream
-=======
     public void setupEditText(View view,String type,String value){
         EditText editText=view.findViewById(R.id.editTextTextPersonName);
         ImageButton edit= view.findViewById(R.id.editBtnDriverName);
@@ -75,7 +77,6 @@ public class PassengerInfoFragment extends Fragment {
             }
         });
     }
->>>>>>> Stashed changes
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,21 +89,11 @@ public class PassengerInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         User user = UserMockup.getUsers().get(0);
         View view = inflater.inflate(R.layout.fragment_passenger_info, container, false);
-
-        EditText name = view.findViewById(R.id.editTextFirstName);
-        name.setText(user.getName());
-
-        EditText lastName = view.findViewById(R.id.editTextLastName);
-        lastName.setText(user.getLastName());
-
-        EditText phoneNumber = view.findViewById(R.id.editTextPhone);
-        phoneNumber.setText(user.getPhoneNumber());
-
-        EditText email = view.findViewById(R.id.editTextEmail);
-        email.setText(user.getEmail());
-
-        EditText address = view.findViewById(R.id.editTextAddress);
-        address.setText(user.getAddress());
+        setupEditText(view.findViewById(R.id.nameContainerPassenger),"name",user.getName());
+        setupEditText(view.findViewById(R.id.lastNameContainerPassenger),"lastname",user.getLastName());
+        setupEditText(view.findViewById(R.id.phoneContainerPassenger),"phone",user.getPhoneNumber());
+        setupEditText(view.findViewById(R.id.emailContainerPassenger),"email",user.getEmail());
+        setupEditText(view.findViewById(R.id.addressContainerPassenger),"email",user.getAddress());
 
         return view;
     }

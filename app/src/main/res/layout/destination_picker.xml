@@ -54,7 +54,6 @@
             android:layout_height="10dp"
             android:src="@drawable/icon_circle"
             android:layout_gravity="center_vertical"
-
             app:tint="@color/dark_gray_pewter"
             android:contentDescription="@string/destination_icon" />
 
@@ -65,7 +64,7 @@
             android:background="@drawable/selector_editview_round"
             android:layout_marginStart="5dp"
             android:hint="@string/where_to"
-            android:textColor="@color/dark_gray" />
+            android:textColor="@color/dark_gray_pewter" />
     </LinearLayout>
 
 </RelativeLayout>

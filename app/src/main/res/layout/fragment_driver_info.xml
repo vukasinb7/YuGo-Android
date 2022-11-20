@@ -20,17 +20,10 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextFirstName"
                 android:text="@string/first_name"/>
-
-            <EditText
-                android:id="@+id/editTextFirstName"
+            <include layout="@layout/edit_text_update"
+                android:id="@+id/nameContainerDriver"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/selector_editview_round"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColorHint="#616161"
-                android:textColor="@color/dark_gray"/>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,17 +33,10 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextLastName"
                 android:text="@string/last_name"/>
-            <EditText
-                android:id="@+id/editTextLastName"
+            <include layout="@layout/edit_text_update"
+                android:id="@+id/lastNameContainerDriver"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:autofillHints="@string/last_name"
-                android:background="@drawable/selector_editview_round"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColorHint="#616161"
-                android:textColor="@color/dark_gray" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,17 +46,10 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextPhone"
                 android:text="@string/phone_number"/>
-            <EditText
-                android:id="@+id/editTextPhone"
+            <include layout="@layout/edit_text_update"
+                android:id="@+id/phoneContainerDriver"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:autofillHints="@string/phone_number"
-                android:background="@drawable/selector_editview_round"
-                android:ems="10"
-                android:inputType="phone"
-                android:textColorHint="#616161"
-                android:textColor="@color/dark_gray"/>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,17 +59,10 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextEmail"
                 android:text="@string/email"/>
-            <EditText
-                android:id="@+id/editTextEmail"
+            <include layout="@layout/edit_text_update"
+                android:id="@+id/emailContainerDriver"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:autofillHints="@string/email"
-                android:background="@drawable/selector_editview_round"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:textColorHint="#616161"
-                android:textColor="@color/dark_gray" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,17 +72,10 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextAddress"
                 android:text="@string/address"/>
-            <EditText
-                android:id="@+id/editTextAddress"
+            <include layout="@layout/edit_text_update"
+                android:id="@+id/addressContainerDriver"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:autofillHints="@string/address"
-                android:background="@drawable/selector_editview_round"
-                android:ems="10"
-                android:inputType="textPostalAddress"
-                android:textColorHint="#616161"
-                android:textColor="@color/dark_gray" />
+                android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,6 +109,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="20dp"
                 tools:layout_editor_absoluteX="21dp" />
+
 
         </LinearLayout>
     </ScrollView>
