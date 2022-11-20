@@ -11,6 +11,8 @@
     <color name="blue_gray">#90ADC6</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="panic">#AA4A44</color>
+    <color name="assistance">#E3963E</color>
     <color name="dark_gray_pewter">#424242</color>
     <color name="pewter_dark_gray">@color/pewter</color>
     <color name="dark_blue_yellowish">@color/dark_blue</color>

@@ -17,6 +17,33 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:shapeAppearanceOverlay="@style/roundImageView"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/icon_account"/>
+
+                <TextView
+                    android:id="@+id/senderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@+id/profilePic"
+                    android:text="Sender"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray_pewter"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,7 +51,7 @@
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="48dp"
         android:background="@color/pewter_dark_blue"
         android:layout_below="@+id/chatBarLayout"/>
 

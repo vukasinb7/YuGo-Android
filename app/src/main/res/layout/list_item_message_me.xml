@@ -7,7 +7,7 @@
     android:layout_marginTop="16dp">
 
     <TextView
-        android:id="@+id/textChatMeDate"
+        android:id="@+id/textChatDateMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -29,7 +29,7 @@
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
-        android:layout_below="@id/textChatMeDate"
+        android:layout_below="@id/textChatDateMe"
         android:layout_alignParentEnd="true">
 
         <LinearLayout
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="10:00"
         android:textColor="@color/black_white"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:alpha="0.5"
         android:layout_toStartOf="@+id/cardChatMessageMe"
         android:layout_alignBottom="@+id/cardChatMessageMe"/>
