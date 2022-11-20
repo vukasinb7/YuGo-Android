@@ -1,6 +1,7 @@
 package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,26 +15,26 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.model.Message;
 import com.example.uberapp.core.model.MessageType;
 import com.example.uberapp.core.tools.MessageMockup;
+import com.example.uberapp.gui.activities.UserChatChannel;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MessageAdapter extends BaseAdapter {
-
+public class InboxMessageAdapter extends BaseAdapter {
     public Activity activity;
-    public MessageAdapter(Activity activity){
+    public InboxMessageAdapter(Activity activity){
         this.activity = activity;
     }
 
     @Override
     public int getCount() {
-        return MessageMockup.getMessages().size();
+        return MessageMockup.getDistinctMessages().size();
     }
 
     @Override
     public Object getItem(int i) {
-        return MessageMockup.getMessages().get(i);
+        return MessageMockup.getDistinctMessages().get(i);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Message msg = MessageMockup.getMessages().get(i);
+        Message msg = MessageMockup.getDistinctMessages().get(i);
         View v = view;
 
         if(view == null){
@@ -79,6 +80,13 @@ public class MessageAdapter extends BaseAdapter {
         else if (msg.getMessageType() == MessageType.Panic){
             messageCardView.setCardBackgroundColor(Color.parseColor("#AA4A44"));
         }
+
+        messageCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.startActivity(new Intent(activity, UserChatChannel.class));
+            }
+        });
 
         return v;
     }
