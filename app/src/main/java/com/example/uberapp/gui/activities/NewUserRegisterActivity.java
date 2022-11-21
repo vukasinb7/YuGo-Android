@@ -21,6 +21,7 @@ public class NewUserRegisterActivity extends AppCompatActivity {
             case R.id.buttonCreateAccount:
                 Intent passengerMainActivity = new Intent(this, PassengerMainActivity.class);
                 startActivity(passengerMainActivity);
+                finish();
         }
     }
 }
