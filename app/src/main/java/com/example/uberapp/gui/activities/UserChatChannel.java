@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.tools.MessageMockup;
+import com.example.uberapp.core.tools.UserMockup;
 import com.example.uberapp.gui.adapters.MessageListAdapter;
 
 public class UserChatChannel extends AppCompatActivity {
@@ -20,8 +21,12 @@ public class UserChatChannel extends AppCompatActivity {
         setContentView(R.layout.activity_user_chat_channel);
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
-        mMessageAdapter = new MessageListAdapter(this, MessageMockup.getConversation());
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mMessageAdapter = new MessageListAdapter(this, UserMockup.getUsers().get(1), MessageMockup.getConversationMessages());
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setStackFromEnd(true);
+        mMessageRecycler.setLayoutManager(llm);
         mMessageRecycler.setAdapter(mMessageAdapter);
     }
+
+
 }

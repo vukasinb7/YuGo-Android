@@ -33,4 +33,12 @@ public class UserMessagesFragment extends Fragment {
         listView.setAdapter(adapter);
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ListView listView = (ListView) getView().findViewById(R.id.listViewMessages);
+        InboxMessageAdapter adapter = new InboxMessageAdapter((Activity) getContext());
+        listView.setAdapter(adapter);
+    }
 }

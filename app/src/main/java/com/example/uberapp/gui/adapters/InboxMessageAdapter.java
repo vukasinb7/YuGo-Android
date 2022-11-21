@@ -29,12 +29,12 @@ public class InboxMessageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return MessageMockup.getDistinctMessages().size();
+        return MessageMockup.getConversations().size();
     }
 
     @Override
     public Object getItem(int i) {
-        return MessageMockup.getDistinctMessages().get(i);
+        return MessageMockup.getConversations().get(i);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class InboxMessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Message msg = MessageMockup.getDistinctMessages().get(i);
+        Message msg = MessageMockup.getConversations().get(i);
         View v = view;
 
         if(view == null){

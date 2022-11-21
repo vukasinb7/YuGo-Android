@@ -51,7 +51,7 @@
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="53dp"
         android:background="@color/pewter_dark_blue"
         android:layout_below="@+id/chatBarLayout"/>
 
