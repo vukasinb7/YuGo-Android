@@ -78,4 +78,7 @@
     <string name="enter_message">Enter Message</string>
     <string name="forgot_password_c">Forgot Password?</string>
     <string name="forgot_password_explanation">Enter the email address associated \n with your account.</string>
+    <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
+    <string name="no">No</string>
+    <string name="yes">YES</string>
 </resources>

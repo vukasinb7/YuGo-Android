@@ -1,11 +1,14 @@
 package com.example.uberapp.gui.activities;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.uberapp.gui.dialogs.ExitAppDialog;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.DriverAccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
@@ -25,6 +28,21 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
+
+
+
+    }
+    @Override
+    public void onBackPressed() {
+        if (bottomNavigationView.getSelectedItemId()==R.id.driverHome)
+        {
+            ExitAppDialog ead=new ExitAppDialog(this);
+            ead.show();
+        }
+        else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.driverHome);
+        }
     }
     DriverHomeFragment driverHomeFragment = new DriverHomeFragment();
     UserInboxFragment userInboxFragment = new UserInboxFragment();

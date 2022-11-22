@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.fragments.account.PassengerAccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
@@ -17,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class PassengerMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    BottomNavigationView navigation;
+    BottomNavigationView bottomNavigationView;
     PassengerHomeFragment homeFragment = new PassengerHomeFragment();
     PassengerAccountFragment accountFragment = new PassengerAccountFragment();
     UserInboxFragment inboxFragment = new UserInboxFragment();
@@ -28,9 +29,21 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger_main);
 
-        navigation = findViewById(R.id.passengerBottomNavigationView);
-        navigation.setOnItemSelectedListener(this);
-        navigation.setSelectedItemId(R.id.passenger_home);
+        bottomNavigationView = findViewById(R.id.passengerBottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.passenger_home);
+    }
+    @Override
+    public void onBackPressed() {
+        if (bottomNavigationView.getSelectedItemId()==R.id.passenger_home)
+        {
+            ExitAppDialog ead=new ExitAppDialog(this);
+            ead.show();
+        }
+        else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, homeFragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.passenger_home);
+        }
     }
 
     @Override

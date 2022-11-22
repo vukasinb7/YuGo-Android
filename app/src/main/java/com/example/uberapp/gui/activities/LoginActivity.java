@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, DriverMainActivity.class));
+                finish();
             }
         });
 
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             case R.id.registerButton:
                 Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
                 startActivity(registerActivity);
+                finish();
         }
     }
 }
