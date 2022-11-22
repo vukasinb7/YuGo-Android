@@ -2,10 +2,11 @@ package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +35,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public MessageListAdapter(Context context, User user, List<Message> messageList) {
         this.context = context;
         this.messageList = messageList;
-        conversationWith = user;
+        this.conversationWith = user;
 
         //change when login is implemented
         TextView sender = (TextView) ((Activity) context).findViewById(R.id.senderName);
@@ -42,7 +43,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         sender.setText(String.format("%s %s", conversationWith.getName(), conversationWith.getLastName()));
         profilePic.setBackgroundResource(conversationWith.getProfilePicture());
 
-        Button sendBtn = (Button) ((Activity) context).findViewById(R.id.buttonSend);
+        ImageButton backBtn = (ImageButton) ((Activity) context).findViewById(R.id.buttonBack);
+        ImageButton sendBtn = (ImageButton) ((Activity) context).findViewById(R.id.buttonSend);
+
+        backBtn.setOnClickListener(view -> {
+            ((Activity) context).finish();
+        });
+
         sendBtn.setOnClickListener(view -> {
             TextView text = (TextView) ((Activity) context).findViewById(R.id.editChatMessage);
             Message newMsg = new Message(Integer.toString(MessageMockup.getIdCounter()), text.getText().toString(),
@@ -98,10 +105,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind(message);
+                ((SentMessageHolder) holder).bind(message, position);
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceivedMessageHolder) holder).bind(message);
+                ((ReceivedMessageHolder) holder).bind(message, position);
         }
     }
 
@@ -116,12 +123,19 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             dateText = (TextView) itemView.findViewById(R.id.textChatDateMe);
         }
 
-        void bind(Message message) {
+        void bind(Message message, int position) {
             messageText.setText(message.getText());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             timeText.setText(message.getSendDateTime().format(formatter));
-            formatter = DateTimeFormatter.ofPattern("dd.MMM.yyyy");
-            dateText.setText(message.getSendDateTime().format(formatter));
+
+            if (position-1 >= 0 && messageList.get(position-1).getSendDateTime().toLocalDate().isEqual(
+                    messageList.get(position).getSendDateTime().toLocalDate())){
+                dateText.setVisibility(View.GONE);
+            }
+            else{
+                formatter = DateTimeFormatter.ofPattern("dd.MMM.yyyy");
+                dateText.setText(message.getSendDateTime().format(formatter));
+            }
         }
     }
 
@@ -136,12 +150,19 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             dateText = (TextView) itemView.findViewById(R.id.textChatDateOther);
         }
 
-        void bind(Message message) {
+        void bind(Message message, int position) {
             messageText.setText(message.getText());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             timeText.setText(message.getSendDateTime().format(formatter));
-            formatter = DateTimeFormatter.ofPattern("dd.MMM.yyyy");
-            dateText.setText(message.getSendDateTime().format(formatter));
+
+            if (position-1 >= 0 && messageList.get(position-1).getSendDateTime().toLocalDate().isEqual(
+                    messageList.get(position).getSendDateTime().toLocalDate())){
+                dateText.setVisibility(View.GONE);
+            }
+            else{
+                formatter = DateTimeFormatter.ofPattern("dd.MMM.yyyy");
+                dateText.setText(message.getSendDateTime().format(formatter));
+            }
         }
     }
 }
