@@ -11,11 +11,13 @@
     <color name="blue_gray">#90ADC6</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_gray_pewter">#424242</color>
+    <color name="panic">#AA4A44</color>
+    <color name="assistance">#E3963E</color>
+    <color name="dark_gray_pewter">@color/dark_gray</color>
     <color name="pewter_dark_gray">@color/pewter</color>
     <color name="dark_blue_yellowish">@color/dark_blue</color>
     <color name="black_white">@color/black</color>
-    <color name="pewter_dark_blue">#E9EAEC</color>
+    <color name="pewter_dark_blue">@color/pewter</color>
     <color name="white_dark_blue">@color/white</color>
     <color name="white_dark_gray">@color/white</color>
 </resources>

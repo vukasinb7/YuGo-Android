@@ -21,6 +21,16 @@ public class Message {
         this.ride = ride;
     }
 
+    public Message(Message message) {
+        this.id = message.getId();
+        this.text = message.getText();
+        this.sendDateTime = message.getSendDateTime();
+        this.sender = message.getSender();
+        this.receiver = message.getReceiver();
+        this.messageType = message.getMessageType();
+        this.ride = message.getRide();
+    }
+
     public String getId() {
         return id;
     }

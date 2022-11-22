@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.uberapp.R;
-import com.example.uberapp.gui.adapters.MessageAdapter;
+import com.example.uberapp.gui.adapters.InboxMessageAdapter;
 
 public class UserMessagesFragment extends Fragment {
 
@@ -29,8 +29,16 @@ public class UserMessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_messages, container, false);
         ListView listView = (ListView) view.findViewById(R.id.listViewMessages);
-        MessageAdapter adapter = new MessageAdapter((Activity) getContext());
+        InboxMessageAdapter adapter = new InboxMessageAdapter((Activity) getContext());
         listView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ListView listView = (ListView) getView().findViewById(R.id.listViewMessages);
+        InboxMessageAdapter adapter = new InboxMessageAdapter((Activity) getContext());
+        listView.setAdapter(adapter);
     }
 }
