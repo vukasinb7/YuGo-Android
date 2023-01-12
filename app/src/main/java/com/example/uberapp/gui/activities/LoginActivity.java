@@ -17,6 +17,7 @@ import com.example.uberapp.core.model.User;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.UserService;
 import com.example.uberapp.core.services.VehicleTypeService;
+import com.example.uberapp.core.services.auth.TokenManager;
 import com.example.uberapp.core.services.auth.TokenState;
 import com.example.uberapp.gui.dialogs.ForgotPasswordDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
@@ -59,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(tokenState -> {
+                            TokenManager.setToken(tokenState.accessToken);
+                            TokenManager.setRefreshToken(tokenState.refreshToken);
                             Intent homePage = new Intent(LoginActivity.this, DriverMainActivity.class);
                             startActivity(homePage);
                             finish();
@@ -69,12 +72,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.registerButton:
-                Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
-                startActivity(registerActivity);
-                finish();
-
+        if (view.getId() == R.id.registerButton) {
+            Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
+            startActivity(registerActivity);
+            finish();
         }
     }
 }

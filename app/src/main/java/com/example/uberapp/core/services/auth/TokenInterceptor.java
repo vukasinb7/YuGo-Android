@@ -24,17 +24,6 @@ public class TokenInterceptor implements Interceptor {
             chain.proceed(original);
         }
 
-        Gson gson = new Gson();
-        Response response = chain.proceed(original);
-        ResponseBody body = response.body();
-        if(originalURL.encodedPath().contains("/login") && body != null && response.code() == 200){
-            TokenState tokenState = gson.fromJson(body.string(), TokenState.class);
-            TokenManager.setToken(tokenState.accessToken);
-            TokenManager.setRefreshToken(tokenState.refreshToken);
-        }else if(originalURL.encodedPath().contains("/logout") && body != null && response.code() == 200){
-            TokenManager.setRefreshToken(null);
-            TokenManager.setToken(null);
-        }
-        return response;
+        return chain.proceed(original);
     }
 }
