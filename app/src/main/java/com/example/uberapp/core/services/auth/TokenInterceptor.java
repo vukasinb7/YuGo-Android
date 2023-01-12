@@ -19,11 +19,8 @@ public class TokenInterceptor implements Interceptor {
 
         if(TokenManager.getToken() != null){
             Builder newRequestBuilder = original.newBuilder().addHeader("authorization", "JWT " + TokenManager.getToken()).url(originalURL);
-            chain.proceed(newRequestBuilder.build());
-        }else{
-            chain.proceed(original);
+            return chain.proceed(newRequestBuilder.build());
         }
-
         return chain.proceed(original);
     }
 }
