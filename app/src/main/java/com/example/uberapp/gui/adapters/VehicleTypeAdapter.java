@@ -12,11 +12,15 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleType;
 import com.example.uberapp.core.tools.VehicleTypeMockup;
 
+import java.util.List;
+
 public class VehicleTypeAdapter extends BaseAdapter {
 
     public Activity activity;
-    public VehicleTypeAdapter(Activity activity){
+    private List<VehicleType> data;
+    public VehicleTypeAdapter(Activity activity, List<VehicleType> data){
         this.activity = activity;
+        this.data = data;
     }
 
     @Override
@@ -26,17 +30,17 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return VehicleTypeMockup.getVehicleTypes().get(i);
+        return data.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return data.get(i).getId();
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        VehicleType vht = VehicleTypeMockup.getVehicleTypes().get(i);
+        VehicleType vht = data.get(i);
         View v = view;
 
         if(view == null){
@@ -45,15 +49,11 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
         ImageView icon = (ImageView) v.findViewById(R.id.imageViewVehicle);
         TextView category = (TextView) v.findViewById(R.id.textViewVehicleCategory);
-        TextView estTime = (TextView) v.findViewById(R.id.textViewEstimatedTimeOfRideEnd);
-        TextView personCount = (TextView) v.findViewById(R.id.textViewPersonCount);
         TextView price = (TextView) v.findViewById(R.id.textViewPrice);
 
-        icon.setImageResource(vht.getIcon());
         category.setText(vht.getVehicleCategory().toString());
-        estTime.setText("2:03pm");
-        personCount.setText("3");
         price.setText("$9.99");
+        icon.setImageBitmap(vht.getIcon());
 
         return v;
     }
