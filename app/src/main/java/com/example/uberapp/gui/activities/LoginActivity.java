@@ -2,24 +2,42 @@ package com.example.uberapp.gui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.dto.LoginCredentials;
+import com.example.uberapp.core.model.User;
+import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.UserService;
+import com.example.uberapp.core.services.VehicleTypeService;
+import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.core.services.auth.TokenState;
 import com.example.uberapp.gui.dialogs.ForgotPasswordDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class LoginActivity extends AppCompatActivity {
 
+    UserService userService;
+    TextView emailTextView;
+    TextView passwordTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
+        userService = APIClient.getClient().create(UserService.class);
+        emailTextView = findViewById(R.id.loginEmailAddress);
+        passwordTextView = findViewById(R.id.loginPassword);
         TextView forgotPassword=findViewById(R.id.forgotPassword);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,23 +46,43 @@ public class LoginActivity extends AppCompatActivity {
                 fpd.show();
             }
         });
-        Button btn = (Button)findViewById(R.id.loginButton);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("CheckResult")
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, DriverMainActivity.class));
-                finish();
+                LoginCredentials credentials = new LoginCredentials();
+                String email = emailTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
+                credentials.email = email;
+                credentials.password = password;
+                userService.login(credentials)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(tokenState -> {
+                            TokenManager.setToken(tokenState.accessToken);
+                            TokenManager.setRefreshToken(tokenState.refreshToken);
+
+                            Intent homePage;
+                            if (TokenManager.getRole().equals("PASSENGER")){
+                                homePage = new Intent(LoginActivity.this, PassengerMainActivity.class);
+                            }
+                            else {
+                                homePage = new Intent(LoginActivity.this, DriverMainActivity.class);
+                            }
+                            startActivity(homePage);
+                            finish();
+                        }, throwable -> Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show());
             }
         });
 
     }
 
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.registerButton:
-                Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
-                startActivity(registerActivity);
-                finish();
+        if (view.getId() == R.id.registerButton) {
+            Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
+            startActivity(registerActivity);
+            finish();
         }
     }
 }

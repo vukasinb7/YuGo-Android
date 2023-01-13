@@ -29,8 +29,6 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
 
-
-
     }
     @Override
     public void onBackPressed() {
