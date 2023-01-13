@@ -15,11 +15,11 @@ public class VehicleTypeMockup {
         List<VehicleType> vehicleTypes = new ArrayList<>();
 
         //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/car_model_01.png");
-        VehicleType vt1 = new VehicleType(1, 5.0, VehicleCategory.Standard, null);
+        VehicleType vt1 = new VehicleType(1, 5.0, VehicleCategory.STANDARD, null);
 
-        VehicleType vt2 = new VehicleType(2, 7.5, VehicleCategory.Lux, null);
+        VehicleType vt2 = new VehicleType(2, 7.5, VehicleCategory.LUX, null);
 
-        VehicleType vt3 = new VehicleType(3, 6, VehicleCategory.Van, null);
+        VehicleType vt3 = new VehicleType(3, 6, VehicleCategory.VAN, null);
 
         vehicleTypes.add(vt1);
         vehicleTypes.add(vt2);

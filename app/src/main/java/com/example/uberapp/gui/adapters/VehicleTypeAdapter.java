@@ -18,11 +18,11 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
     public Activity activity;
     private List<VehicleType> data;
+    private List<View> items;
     public VehicleTypeAdapter(Activity activity, List<VehicleType> data){
         this.activity = activity;
         this.data = data;
     }
-
     @Override
     public int getCount() {
         return VehicleTypeMockup.getVehicleTypes().size();
@@ -50,7 +50,6 @@ public class VehicleTypeAdapter extends BaseAdapter {
         ImageView icon = (ImageView) v.findViewById(R.id.imageViewVehicle);
         TextView category = (TextView) v.findViewById(R.id.textViewVehicleCategory);
         TextView price = (TextView) v.findViewById(R.id.textViewPrice);
-
         category.setText(vht.getVehicleCategory().toString());
         price.setText("$9.99");
         icon.setImageBitmap(vht.getIcon());
