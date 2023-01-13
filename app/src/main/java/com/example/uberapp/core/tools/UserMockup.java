@@ -3,14 +3,13 @@ package com.example.uberapp.core.tools;
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.Driver;
 import com.example.uberapp.core.model.Passenger;
-import com.example.uberapp.core.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class UserMockup {
-    static User user01 = new Passenger(
+    /*static User user01 = new Passenger(
             "001",
             "Amar",
             "Sinha",
@@ -49,5 +48,5 @@ public class UserMockup {
 
     public static User getLoggedUser(){
         return user01;
-    }
+    }*/
 }

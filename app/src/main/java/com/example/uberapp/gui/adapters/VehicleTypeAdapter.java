@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleType;
+import com.example.uberapp.core.model.VehicleTypePrice;
 import com.example.uberapp.core.tools.VehicleTypeMockup;
 
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.List;
 public class VehicleTypeAdapter extends BaseAdapter {
 
     public Activity activity;
-    private List<VehicleType> data;
-    public VehicleTypeAdapter(Activity activity, List<VehicleType> data){
+    private List<VehicleTypePrice> data;
+    public VehicleTypeAdapter(Activity activity, List<VehicleTypePrice> data){
         this.activity = activity;
         this.data = data;
     }
@@ -40,7 +41,7 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        VehicleType vht = data.get(i);
+        VehicleTypePrice vht = data.get(i);
         View v = view;
 
         if(view == null){
@@ -51,9 +52,9 @@ public class VehicleTypeAdapter extends BaseAdapter {
         TextView category = (TextView) v.findViewById(R.id.textViewVehicleCategory);
         TextView price = (TextView) v.findViewById(R.id.textViewPrice);
 
-        category.setText(vht.getVehicleCategory().toString());
+        category.setText(vht.getVehicleType().toString());
         price.setText("$9.99");
-        icon.setImageBitmap(vht.getIcon());
+        //icon.setImageBitmap(vht.getIcon());
 
         return v;
     }

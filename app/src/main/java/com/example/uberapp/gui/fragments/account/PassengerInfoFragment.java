@@ -87,13 +87,13 @@ public class PassengerInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        User user = UserMockup.getUsers().get(0);
+        //User user = UserMockup.getUsers().get(0);
         View view = inflater.inflate(R.layout.fragment_passenger_info, container, false);
-        setupEditText(view.findViewById(R.id.nameContainerPassenger),"name",user.getName());
+        /*setupEditText(view.findViewById(R.id.nameContainerPassenger),"name",user.getName());
         setupEditText(view.findViewById(R.id.lastNameContainerPassenger),"lastname",user.getLastName());
         setupEditText(view.findViewById(R.id.phoneContainerPassenger),"phone",user.getPhoneNumber());
         setupEditText(view.findViewById(R.id.emailContainerPassenger),"email",user.getEmail());
-        setupEditText(view.findViewById(R.id.addressContainerPassenger),"email",user.getAddress());
+        setupEditText(view.findViewById(R.id.addressContainerPassenger),"email",user.getAddress());*/
 
         return view;
     }

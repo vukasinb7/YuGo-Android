@@ -1,87 +1,37 @@
 package com.example.uberapp.core.model;
 
+
+import com.example.uberapp.core.dto.VehicleIn;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Getter @Setter
+@NoArgsConstructor
 public class Vehicle {
-    private String id;
-    private String model;
-    private String registerPlateNumber;
-    private int seatsCount;
-    private Boolean babiesAllowed;
-    private Boolean petsAllowed;
+    private Integer id;
     private Driver driver;
     private VehicleType vehicleType;
+    private String model;
+    private String licencePlateNumber;
+    private int numberOfSeats;
+    private Location currentLocation;
+    private Boolean areBabiesAllowed;
+    private Boolean arePetsAllowed;
 
-    public Vehicle(String id, String model, String registerPlateNumber, int seatsCount, Boolean babiesAllowed, Boolean petsAllowed, Driver driver, VehicleType vehicleType) {
-        this.id = id;
-        this.model = model;
-        this.registerPlateNumber = registerPlateNumber;
-        this.seatsCount = seatsCount;
-        this.babiesAllowed = babiesAllowed;
-        this.petsAllowed = petsAllowed;
-        this.driver = driver;
-        this.vehicleType = vehicleType;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getRegisterPlateNumber() {
-        return registerPlateNumber;
-    }
-
-    public void setRegisterPlateNumber(String registerPlateNumber) {
-        this.registerPlateNumber = registerPlateNumber;
-    }
-
-    public int getSeatsCount() {
-        return seatsCount;
-    }
-
-    public void setSeatsCount(int seatsCount) {
-        this.seatsCount = seatsCount;
-    }
-
-    public Boolean getBabiesAllowed() {
-        return babiesAllowed;
-    }
-
-    public void setBabiesAllowed(Boolean babiesAllowed) {
-        this.babiesAllowed = babiesAllowed;
-    }
-
-    public Boolean getPetsAllowed() {
-        return petsAllowed;
-    }
-
-    public void setPetsAllowed(Boolean petsAllowed) {
-        this.petsAllowed = petsAllowed;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public VehicleType getVehicleType() {
-        return vehicleType;
-    }
-
-    public void setVehicleType(VehicleType vehicleType) {
-        this.vehicleType = vehicleType;
+    public Vehicle(VehicleIn vehicleIn){
+        this.vehicleType = vehicleIn.getVehicleType();
+        this.model = vehicleIn.getModel();
+        this.licencePlateNumber = vehicleIn.getLicenseNumber();
+        Location location = new Location();
+        location.setAddress(vehicleIn.getCurrentLocation().getAddress());
+        location.setLatitude(vehicleIn.getCurrentLocation().getLatitude());
+        location.setLongitude(vehicleIn.getCurrentLocation().getLongitude());
+        this.currentLocation = location;
+        this.numberOfSeats = vehicleIn.getPassengerSeats();
+        this.areBabiesAllowed = vehicleIn.getBabyTransport();
+        this.arePetsAllowed = vehicleIn.getPetTransport();
     }
 }

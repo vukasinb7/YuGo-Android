@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MessageMockup {
-    static int messageIdCounter = 5;
+    /*static int messageIdCounter = 5;
     static User pass1 = UserMockup.user01;
     static User pass2 = UserMockup.user02;
     static String sample_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales sem sit amet ipsum scelerisque consectetur. Vestibulum pellentesque diam sit amet diam commodo laoreet. Vivamus lobortis aliquam neque id hendrerit.";
@@ -73,5 +73,5 @@ public class MessageMockup {
 
     public static void addMessage(Message msg){
         messages.add(msg);
-    }
+    }*/
 }

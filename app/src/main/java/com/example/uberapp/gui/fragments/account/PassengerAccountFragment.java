@@ -67,9 +67,9 @@ public class PassengerAccountFragment extends Fragment {
             }
         });
 
-        User user = UserMockup.getUsers().get(0);
+        /*User user = UserMockup.getUsers().get(0);
         ShapeableImageView imageView = view.findViewById(R.id.profilePic);
-        imageView.setImageResource(user.getProfilePicture());
+        imageView.setImageResource(user.getProfilePicture());*/
         return view;
     }
 }

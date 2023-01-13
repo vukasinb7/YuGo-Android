@@ -1,43 +1,21 @@
 package com.example.uberapp.core.model;
 
-import android.graphics.Bitmap;
+import com.example.uberapp.core.dto.UserDetailedIn;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.Set;
+
+@NoArgsConstructor
+@Getter @Setter
 public class Passenger extends User{
+    private Set<Ride> rides;
+    private Set<FavoritePath> favouritePaths;
 
-    List<Ride> rides;
-    List<Review> reviews;
-    List<FavouritePath> favourites;
-
-    public Passenger(String id, String name, String lastName, Integer profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked, List<Ride> rides, List<Review> reviews, List<FavouritePath> favourites) {
-        super(id, name, lastName, profilePicture, phoneNumber, email, address, password, isBlocked);
-        this.rides = rides;
-        this.reviews = reviews;
-        this.favourites = favourites;
+    public Passenger(UserDetailedIn userDetailedIn) {
+        super(userDetailedIn);
     }
 
-    public List<Ride> getRides() {
-        return rides;
-    }
-
-    public void setRides(List<Ride> rides) {
-        this.rides = rides;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<FavouritePath> getFavourites() {
-        return favourites;
-    }
-
-    public void setFavourites(List<FavouritePath> favourites) {
-        this.favourites = favourites;
-    }
 }

@@ -1,89 +1,28 @@
 package com.example.uberapp.core.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@Getter @Setter
 public class Message {
-    private String id;
-    private String text;
-    private LocalDateTime sendDateTime;
     private User sender;
     private User receiver;
+    private String messageContent;
+    private LocalDateTime timeOfSending;
     private MessageType messageType;
     private Ride ride;
+    private Integer id;
 
-    public Message(String id, String text, LocalDateTime sendDateTime, User sender, User receiver, MessageType messageType, Ride ride) {
-        this.id = id;
-        this.text = text;
-        this.sendDateTime = sendDateTime;
+    public Message(User sender, User receiver, String messageContent, LocalDateTime timeOfSending, MessageType messageType, Ride ride) {
         this.sender = sender;
         this.receiver = receiver;
+        this.messageContent = messageContent;
+        this.timeOfSending = timeOfSending;
         this.messageType = messageType;
-        this.ride = ride;
-    }
-
-    public Message(Message message) {
-        this.id = message.getId();
-        this.text = message.getText();
-        this.sendDateTime = message.getSendDateTime();
-        this.sender = message.getSender();
-        this.receiver = message.getReceiver();
-        this.messageType = message.getMessageType();
-        this.ride = message.getRide();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public LocalDateTime getSendDateTime() {
-        return sendDateTime;
-    }
-
-    public void setSendDateTime(LocalDateTime sendDateTime) {
-        this.sendDateTime = sendDateTime;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
-    }
-
-    public Ride getRide() {
-        return ride;
-    }
-
-    public void setRide(Ride ride) {
         this.ride = ride;
     }
 }
