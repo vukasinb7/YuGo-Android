@@ -29,8 +29,8 @@ public class TokenManager {
         return token.getClaim("role").asString();
     }
 
-    public static String getUserId(){
-        return token.getClaim("id").asString();
+    public static Integer getUserId(){
+        return token.getClaim("id").asInt();
     }
 
     public static String getTokenType(){
