@@ -22,29 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class InboxMessageAdapter extends BaseAdapter {
-    public InboxMessageAdapter(Activity context) {
-    }
-
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
-    /*public Activity activity;
+    public Activity activity;
     public InboxMessageAdapter(Activity activity){
         this.activity = activity;
     }
@@ -111,5 +89,5 @@ public class InboxMessageAdapter extends BaseAdapter {
         });
 
         return v;
-    }*/
+    }
 }

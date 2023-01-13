@@ -1,5 +1,5 @@
 package com.example.uberapp.core.model;
 
 public enum MessageType {
-    SUPPORT, RIDE, PANIC;
+    Assistance, Drive, Panic
 }

@@ -1,48 +1,99 @@
 package com.example.uberapp.core.model;
 
+import android.graphics.Bitmap;
 
-import com.example.uberapp.core.dto.UserDetailedIn;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-
-@NoArgsConstructor
-@Getter @Setter
-public abstract class User /*implements UserDetails*/ {
-    private String role;
+public abstract class User {
+    private String id;
     private String name;
-    private String surname;
-    private String profilePicture;
-    private String telephoneNumber;
+    private String lastName;
+    private Integer profilePicture;
+    private String phoneNumber;
     private String email;
     private String address;
     private String password;
-    private boolean isBlocked;
-    private boolean isActive;
-    private Integer id;
-    private List<Role> roles;
-    private Timestamp lastPasswordResetDate;
+    private Boolean isBlocked;
+
+    public User(String id, String name, String lastName, Integer profilePicture, String phoneNumber, String email, String address, String password, Boolean isBlocked) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.password = password;
+        this.isBlocked = isBlocked;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Integer profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
-        Timestamp now = new Timestamp((new Date()).getTime());
-        this.lastPasswordResetDate=now;
         this.password = password;
     }
 
-    public User(UserDetailedIn userDetailedIn) {
-        this.name = userDetailedIn.getName();
-        this.surname = userDetailedIn.getSurname();
-        this.profilePicture = userDetailedIn.getProfilePicture();
-        this.telephoneNumber = userDetailedIn.getTelephoneNumber();
-        this.email = userDetailedIn.getEmail();
-        this.address = userDetailedIn.getAddress();
-        this.password = userDetailedIn.getPassword();
-        this.isBlocked = false;
-        this.isActive = false;
+    public Boolean getBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
     }
 }

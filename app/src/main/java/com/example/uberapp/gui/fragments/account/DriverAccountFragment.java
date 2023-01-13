@@ -67,9 +67,9 @@ public class DriverAccountFragment extends Fragment {
             }
         });
 
-        /*User user = UserMockup.getUsers().get(1);
+        User user = UserMockup.getUsers().get(1);
         ShapeableImageView imageView = view.findViewById(R.id.profilePic);
-        imageView.setImageResource(user.getProfilePicture());*/
+        imageView.setImageResource(user.getProfilePicture());
         return view;
     }
 }

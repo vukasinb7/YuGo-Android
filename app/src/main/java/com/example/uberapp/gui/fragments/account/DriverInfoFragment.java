@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.model.User;
 import com.example.uberapp.core.tools.UserMockup;
 
 public class DriverInfoFragment extends Fragment {
@@ -99,13 +100,13 @@ public class DriverInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_driver_info, container, false);
-        /*User user = UserMockup.getUsers().get(1);
+        User user = UserMockup.getUsers().get(1);
 
         setupEditText(view.findViewById(R.id.nameContainerDriver),"name",user.getName());
         setupEditText(view.findViewById(R.id.lastNameContainerDriver),"lastname",user.getLastName());
         setupEditText(view.findViewById(R.id.phoneContainerDriver),"phone",user.getPhoneNumber());
         setupEditText(view.findViewById(R.id.emailContainerDriver),"email",user.getEmail());
-        setupEditText(view.findViewById(R.id.addressContainerDriver),"email",user.getAddress());*/
+        setupEditText(view.findViewById(R.id.addressContainerDriver),"email",user.getAddress());
 
 
         ActivityResultLauncher<PickVisualMediaRequest> pickDriversLicnece =
@@ -119,7 +120,7 @@ public class DriverInfoFragment extends Fragment {
                     }
                 });
 
-       /* Button buttonDriversLicence = view.findViewById(R.id.buttonPickDriversLicence);
+        Button buttonDriversLicence = view.findViewById(R.id.buttonPickDriversLicence);
         buttonDriversLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +128,7 @@ public class DriverInfoFragment extends Fragment {
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
             }
-        });*/
+        });
 
         ActivityResultLauncher<PickVisualMediaRequest> pickRegistrationLicence =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -141,14 +142,14 @@ public class DriverInfoFragment extends Fragment {
                 });
 
         Button buttonRegistrationLicence = view.findViewById(R.id.buttonPickRegistrationLicence);
-        /*buttonRegistrationLicence.setOnClickListener(new View.OnClickListener() {
+        buttonRegistrationLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickRegistrationLicence.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
             }
-        });*/
+        });
         return view;
     }
 }

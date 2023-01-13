@@ -21,29 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class DriverHistoryAdapter extends BaseAdapter {
-    public DriverHistoryAdapter(Activity context) {
-    }
-
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
-    /*public Activity activity;
+    public Activity activity;
     public DriverHistoryAdapter(Activity activity){
         this.activity = activity;
     }
@@ -129,5 +107,5 @@ public class DriverHistoryAdapter extends BaseAdapter {
 
 
         return v;
-    }*/
+    }
 }

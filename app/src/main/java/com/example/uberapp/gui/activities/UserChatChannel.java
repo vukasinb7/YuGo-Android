@@ -20,12 +20,12 @@ public class UserChatChannel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_chat_channel);
 
-        /*mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
+        mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
         mMessageAdapter = new MessageListAdapter(this, UserMockup.getUsers().get(1), MessageMockup.getConversationMessages());
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
         mMessageRecycler.setLayoutManager(llm);
-        mMessageRecycler.setAdapter(mMessageAdapter);*/
+        mMessageRecycler.setAdapter(mMessageAdapter);
     }
 
 

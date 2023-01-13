@@ -3,22 +3,23 @@ package com.example.uberapp.core.tools;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 
+import com.example.uberapp.R;
+import com.example.uberapp.core.model.VehicleCategory;
 import com.example.uberapp.core.model.VehicleType;
-import com.example.uberapp.core.model.VehicleTypePrice;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleTypeMockup {
-    public static List<VehicleTypePrice> getVehicleTypes(){
-        List<VehicleTypePrice> vehicleTypes = new ArrayList<>();
+    public static List<VehicleType> getVehicleTypes(){
+        List<VehicleType> vehicleTypes = new ArrayList<>();
 
         //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/car_model_01.png");
-        VehicleTypePrice vt1 = new VehicleTypePrice();
+        VehicleType vt1 = new VehicleType(1, 5.0, VehicleCategory.Standard, null);
 
-        VehicleTypePrice vt2 = new VehicleTypePrice();
+        VehicleType vt2 = new VehicleType(2, 7.5, VehicleCategory.Lux, null);
 
-        VehicleTypePrice vt3 = new VehicleTypePrice();
+        VehicleType vt3 = new VehicleType(3, 6, VehicleCategory.Van, null);
 
         vehicleTypes.add(vt1);
         vehicleTypes.add(vt2);

@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.Message;
 import com.example.uberapp.core.model.MessageType;
+import com.example.uberapp.core.model.User;
 import com.example.uberapp.core.tools.DriverHistoryMockup;
 import com.example.uberapp.core.tools.MessageMockup;
 import com.example.uberapp.core.tools.UserMockup;
@@ -28,23 +28,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    /*private User conversationWith;
+    private User conversationWith;
     private Context context;
     private List<Message> messageList;
 
@@ -180,5 +164,5 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 dateText.setText(message.getSendDateTime().format(formatter));
             }
         }
-    }*/
+    }
 }
