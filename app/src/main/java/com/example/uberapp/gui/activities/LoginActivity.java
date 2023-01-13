@@ -63,15 +63,19 @@ public class LoginActivity extends AppCompatActivity {
                             TokenManager.setToken(tokenState.accessToken);
                             TokenManager.setRefreshToken(tokenState.refreshToken);
 
-                            Intent homePage;
                             if (TokenManager.getRole().equals("PASSENGER")){
-                                homePage = new Intent(LoginActivity.this, PassengerMainActivity.class);
+                                Intent homePage = new Intent(LoginActivity.this, PassengerMainActivity.class);
+                                startActivity(homePage);
+                                finish();
                             }
-                            else {
-                                homePage = new Intent(LoginActivity.this, DriverMainActivity.class);
+                            else if (TokenManager.getRole().equals("DRIVER")){
+                                Intent homePage = new Intent(LoginActivity.this, DriverMainActivity.class);
+                                startActivity(homePage);
+                                finish();
                             }
-                            startActivity(homePage);
-                            finish();
+                            else{
+                                Toast.makeText(LoginActivity.this, "Admin can't sign on mobile application!", Toast.LENGTH_SHORT).show();
+                            }
                         }, throwable -> Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show());
             }
         });
