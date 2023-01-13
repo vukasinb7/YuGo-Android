@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.model.LocationInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class CreateRideFragment extends DialogFragment {
-
+public class CreateRideFragment extends DialogFragment implements CreateRideSubfragment01.OnRouteChangedListener {
 
     private int currentSubfragment;
     private CreateRideSubfragment01 subFrag01;
@@ -25,6 +25,9 @@ public class CreateRideFragment extends DialogFragment {
     private FloatingActionButton buttonNext;
     private FloatingActionButton buttonPrev;
 
+    private LocationInfo destination;
+    private LocationInfo departure;
+
     public static String TAG = "CreateRideFragmentDialog";
 
     public CreateRideFragment() {
@@ -32,6 +35,7 @@ public class CreateRideFragment extends DialogFragment {
         super(R.layout.fragment_create_ride);
         currentSubfragment = 0;
     }
+
 
     public void buttonPrevOnClick(){
         switch (currentSubfragment){
@@ -69,6 +73,7 @@ public class CreateRideFragment extends DialogFragment {
         }
 
         buttonNext = view.findViewById(R.id.nextSubfragmentButton);
+        buttonNext.setEnabled(false);
         buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
@@ -94,15 +99,16 @@ public class CreateRideFragment extends DialogFragment {
 
 
         buttonPrev.setVisibility(View.GONE);
-        buttonPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonPrevOnClick();
-            }
-        });
+        buttonPrev.setOnClickListener(view1 -> buttonPrevOnClick());
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment01()).commit();
         return view;
 
     }
 
+    @Override
+    public void onRideRouteChanged(LocationInfo departure, LocationInfo destination) {
+        this.departure = departure;
+        this.destination = destination;
+        this.buttonNext.setEnabled(departure != null && destination != null);
+    }
 }

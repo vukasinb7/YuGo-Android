@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.home.CreateRideSubfragment01"
+    tools:context=".gui.fragments.home.CreateRideSubfragment01"
     android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
@@ -28,6 +28,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="800px"/>
 
 </LinearLayout>

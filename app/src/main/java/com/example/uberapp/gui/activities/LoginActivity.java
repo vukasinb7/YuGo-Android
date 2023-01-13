@@ -65,8 +65,19 @@ public class LoginActivity extends AppCompatActivity {
                             Intent homePage = new Intent(LoginActivity.this, DriverMainActivity.class);
                             startActivity(homePage);
                             finish();
-                        }, throwable -> Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show());
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
+        });
+        Button signUpButton = findViewById(R.id.registerButton);
+        signUpButton.setOnClickListener(v -> {
+            Intent registerActivity = new Intent(LoginActivity.this, NewUserRegisterActivity.class);
+            startActivity(registerActivity);
+            finish();
         });
 
     }

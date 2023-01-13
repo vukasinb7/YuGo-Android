@@ -8,21 +8,17 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class APIClient {
-
+public class APIMaps {
     static public Retrofit getClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        TokenInterceptor tokenInterceptor = new TokenInterceptor();
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(tokenInterceptor)
                 .build();
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.105:9000")
+                .baseUrl("https://nominatim.openstreetmap.org")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .client(client)
