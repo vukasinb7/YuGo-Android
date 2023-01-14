@@ -17,6 +17,7 @@ import android.view.Window;
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.PathDTO;
+import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.RideRequestDTO;
 import com.example.uberapp.core.dto.UserSimpleDTO;
 import com.example.uberapp.core.dto.VehicleTypeDTO;
@@ -28,7 +29,10 @@ import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.VehicleTypeService;
 import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
@@ -45,7 +49,13 @@ import java.util.concurrent.Executors;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
 
 
 public class CreateRideFragment extends DialogFragment implements
@@ -77,6 +87,7 @@ public class CreateRideFragment extends DialogFragment implements
     private double totalPrice;
     private Road road;
 
+    private StompClient mStompClient;
 
     public static String TAG = "CreateRideFragmentDialog";
 
@@ -138,6 +149,51 @@ public class CreateRideFragment extends DialogFragment implements
                 .subscribe(vehicleTypes -> {
                     subFrag02.vehicleTypes = vehicleTypes;
                 });
+
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+
+        mStompClient.topic("/ride-topic/notify-passenger/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                    Gson gson= new Gson();
+                    JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
+                    Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
+                    rideService.getRide(rideID).enqueue(new Callback<RideDetailedDTO>() {
+                        @Override
+                        public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                            createRideLoader.changeLoadingStatus(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+                        }
+                    });
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        System.out.println(throwable.getMessage());
+                    }
+                });
+        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
+            switch (lifecycleEvent.getType()) {
+
+                case OPENED:
+                    System.out.println("OPENED");
+                    break;
+
+                case ERROR:
+                    System.out.println(lifecycleEvent.getException().getMessage());
+                    break;
+
+                case CLOSED:
+                    System.out.println("CLOSED");
+                    break;
+            }
+        });
+
+        mStompClient.connect();
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -207,7 +263,12 @@ public class CreateRideFragment extends DialogFragment implements
             });
         }
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStompClient.disconnect();
 
+    }
     @Override
     public void onVehicleTypeChanged(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
@@ -256,7 +317,17 @@ public class CreateRideFragment extends DialogFragment implements
         passenger.email = "NA";
         passengers.add(passenger);
         ride.passengers = passengers;
-        rideService.createRide(ride);
+        rideService.createRide(ride).enqueue(new Callback<RideDetailedDTO>() {
+            @Override
+            public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                createRideLoader.changeLoadingStatus(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+            }
+        });
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, createRideLoader).commit();
     }
 }

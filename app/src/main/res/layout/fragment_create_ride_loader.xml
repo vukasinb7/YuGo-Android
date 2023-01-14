@@ -6,6 +6,7 @@
     android:minHeight="400dp"
     tools:context=".gui.fragments.home.CreateRideLoader">
     <TextView
+        android:id="@+id/driverSearchingMessage"
         android:text="@string/we_are_searching_a_driver_for_your_ride_please_wait"
         android:textStyle="bold"
         android:textColor="@color/dark_gray_pewter"

@@ -19,6 +19,6 @@ public interface RideService {
     @GET("/api/ride/{id}")
     Call<RideDetailedDTO> getRide(@Path("id") Integer rideId);
 
-    @POST("/api/rode")
+    @POST("/api/ride")
     Call<RideDetailedDTO> createRide(@Body RideRequestDTO rideRequestDTO);
 }
