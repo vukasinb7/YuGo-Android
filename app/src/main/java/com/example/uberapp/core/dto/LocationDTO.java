@@ -1,5 +1,7 @@
 package com.example.uberapp.core.dto;
 
+import com.example.uberapp.core.model.LocationInfo;
+
 public class LocationDTO {
     private String address;
     private double latitude;
@@ -9,6 +11,12 @@ public class LocationDTO {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public LocationDTO(LocationInfo locationInfo){
+        this.address = locationInfo.getAddress();
+        this.latitude = locationInfo.getLatitude();
+        this.longitude = locationInfo.getLongitude();
     }
 
     public LocationDTO() {

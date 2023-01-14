@@ -12,6 +12,8 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleType;
 import com.example.uberapp.core.tools.VehicleTypeMockup;
 
+import org.osmdroid.bonuspack.routing.Road;
+
 import java.util.List;
 
 public class VehicleTypeAdapter extends BaseAdapter {
@@ -19,9 +21,11 @@ public class VehicleTypeAdapter extends BaseAdapter {
     public Activity activity;
     private List<VehicleType> data;
     private List<View> items;
-    public VehicleTypeAdapter(Activity activity, List<VehicleType> data){
+    private Road road;
+    public VehicleTypeAdapter(Activity activity, List<VehicleType> data, Road road){
         this.activity = activity;
         this.data = data;
+        this.road = road;
     }
     @Override
     public int getCount() {
@@ -49,9 +53,11 @@ public class VehicleTypeAdapter extends BaseAdapter {
 
         ImageView icon = (ImageView) v.findViewById(R.id.imageViewVehicle);
         TextView category = (TextView) v.findViewById(R.id.textViewVehicleCategory);
-        TextView price = (TextView) v.findViewById(R.id.textViewPrice);
+        TextView priceTextView = (TextView) v.findViewById(R.id.textViewPrice);
         category.setText(vht.getVehicleCategory().toString());
-        price.setText("$9.99");
+        double distance = road.mLength;
+        double price = Math.round(vht.getPricePerUnit() * distance * 100) / 100.0;
+        priceTextView.setText("$"+String.valueOf(price));
         icon.setImageBitmap(vht.getIcon());
 
         return v;

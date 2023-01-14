@@ -215,7 +215,7 @@ public class MapFragment extends Fragment implements LocationListener {
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        createMarker(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude(), "Current location");
+        //createMarker(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),
+                //locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude(), "Current location");
     }
 }
