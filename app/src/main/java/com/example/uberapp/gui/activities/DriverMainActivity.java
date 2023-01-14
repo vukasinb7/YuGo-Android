@@ -1,24 +1,33 @@
 package com.example.uberapp.gui.activities;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.uberapp.core.services.auth.TokenManager;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.DriverAccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
-import com.example.uberapp.gui.fragments.home.DriverHomeFragment;
+import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
+
+public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
     BottomNavigationView bottomNavigationView;
+    private StompClient mStompClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,30 +37,66 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+
+        mStompClient.topic("/ride-topic/driver-request/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                    Gson gson= new Gson();
+                    JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
+                    Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
+                    NewRideDialog nrd=new NewRideDialog(this,rideID);
+                    nrd.show();
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        System.out.println(throwable.getMessage());
+                    }
+                });
+        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
+            switch (lifecycleEvent.getType()) {
+
+                case OPENED:
+                    System.out.println("OPENED");
+                    break;
+
+                case ERROR:
+                    System.out.println(lifecycleEvent.getException().getMessage());
+                    break;
+
+                case CLOSED:
+                    System.out.println("CLOSED");
+                    break;
+            }
+        });
+
+        mStompClient.connect();
+
 
     }
+
     @Override
     public void onBackPressed() {
-        if (bottomNavigationView.getSelectedItemId()==R.id.driverHome)
-        {
-            ExitAppDialog ead=new ExitAppDialog(this);
+        if (bottomNavigationView.getSelectedItemId() == R.id.driverHome) {
+            ExitAppDialog ead = new ExitAppDialog(this);
             ead.show();
-        }
-        else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, homeFragment).commit();
             bottomNavigationView.setSelectedItemId(R.id.driverHome);
         }
     }
-    DriverHomeFragment driverHomeFragment = new DriverHomeFragment();
+
+    HomeFragment homeFragment = new HomeFragment();
     UserInboxFragment userInboxFragment = new UserInboxFragment();
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     DriverAccountFragment driverAccountFragment = new DriverAccountFragment();
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.driverHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, homeFragment).commit();
                 return true;
             case R.id.driverInbox:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, userInboxFragment).commit();
@@ -64,5 +109,11 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                 return true;
         }
         return false;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStompClient.disconnect();
+
     }
 }
