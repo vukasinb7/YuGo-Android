@@ -130,6 +130,10 @@ public class MapFragment extends Fragment implements LocationListener {
     }
 
     public void createRoute(double startLatitude,double startLongitude, double endLatitude, double endLongitude){
+        if(map == null) {
+            return;
+        }
+
         ExecutorService executorService= Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
             @Override
@@ -233,6 +237,8 @@ public class MapFragment extends Fragment implements LocationListener {
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        createMarker(location.getLatitude(), location.getLongitude(), "Current location");
+        if (map != null) {
+            createMarker(location.getLatitude(), location.getLongitude(), "Current location");
+        }
     }
 }

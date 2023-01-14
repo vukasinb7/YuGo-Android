@@ -93,4 +93,10 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapFragment.onPause();
+    }
 }
