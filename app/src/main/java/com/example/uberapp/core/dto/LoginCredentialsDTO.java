@@ -1,6 +1,6 @@
 package com.example.uberapp.core.dto;
 
-public class LoginCredentials {
+public class LoginCredentialsDTO {
     public String email;
     public String password;
 }

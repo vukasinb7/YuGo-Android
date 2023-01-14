@@ -3,7 +3,6 @@ package com.example.uberapp.gui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,18 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uberapp.R;
-import com.example.uberapp.core.dto.LoginCredentials;
-import com.example.uberapp.core.model.User;
+import com.example.uberapp.core.dto.LoginCredentialsDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.VehicleTypeService;
 import com.example.uberapp.core.services.auth.TokenManager;
-import com.example.uberapp.core.services.auth.TokenState;
 import com.example.uberapp.gui.dialogs.ForgotPasswordDialog;
-import com.example.uberapp.gui.dialogs.NewRideDialog;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             @SuppressLint("CheckResult")
             @Override
             public void onClick(View v) {
-                LoginCredentials credentials = new LoginCredentials();
+                LoginCredentialsDTO credentials = new LoginCredentialsDTO();
                 String email = emailTextView.getText().toString();
                 String password = passwordTextView.getText().toString();
                 credentials.email = email;

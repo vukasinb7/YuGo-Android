@@ -12,6 +12,104 @@
         android:layout_height="match_parent"
         />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/passengerControlMenu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="20dp"
+        android:visibility="visible">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/passengerRemainingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hr 3 min"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/dark_gray_pewter"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passengerRemainingTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-10dp">
+                <TextView
+                    android:id="@+id/passengerRemainingDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="55 km"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/dark_gray_pewter"/>
+                <View
+                    android:id="@+id/passengerDot"
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/dark_gray_pewter"/>
+                <TextView
+                    android:id="@+id/passengerDurationDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:13"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/dark_gray_pewter"/>
+
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FF4C4C"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="30dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/passengerPanicText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:text="@string/panic" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/driverProfilePic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:scaleX="1.15"
+                android:scaleY="1.15"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                android:src="@drawable/icon_round_account"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonCreateRide"
         android:layout_width="wrap_content"
@@ -27,4 +125,5 @@
         android:backgroundTint="@color/pewter_dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </FrameLayout>
