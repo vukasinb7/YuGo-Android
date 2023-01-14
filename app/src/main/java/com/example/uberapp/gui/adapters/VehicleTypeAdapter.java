@@ -57,7 +57,7 @@ public class VehicleTypeAdapter extends BaseAdapter {
         category.setText(vht.getVehicleCategory().toString());
         double distance = road.mLength;
         double price = Math.round(vht.getPricePerUnit() * distance * 100) / 100.0;
-        priceTextView.setText(String.valueOf(price));
+        priceTextView.setText("$"+String.valueOf(price));
         icon.setImageBitmap(vht.getIcon());
 
         return v;

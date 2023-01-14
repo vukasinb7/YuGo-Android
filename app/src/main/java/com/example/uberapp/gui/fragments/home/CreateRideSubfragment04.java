@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,15 +35,15 @@ public class CreateRideSubfragment04 extends Fragment {
         // Required empty public constructor
     }
 
-    public static CreateRideSubfragment04 newInstance() {
-        CreateRideSubfragment04 fragment = new CreateRideSubfragment04();
-        return fragment;
+    public interface OnAcceptRideListener{
+        void onAcceptRide();
     }
+    OnAcceptRideListener acceptRideListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        acceptRideListener = (OnAcceptRideListener) getParentFragment();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class CreateRideSubfragment04 extends Fragment {
         vehicleCategoryTextView.setText(vehicleType.getVehicleCategory().toString());
 
         TextView vehicleTypePriceTextView = vehicleTypeCard.findViewById(R.id.textViewPrice);
-        vehicleTypePriceTextView.setText(String.valueOf(totalPrice));
+        vehicleTypePriceTextView.setText("$" + String.valueOf(totalPrice));
 
         ImageView vehicleCategoryImageView = vehicleTypeCard.findViewById(R.id.imageViewVehicle);
         vehicleCategoryImageView.setImageBitmap(vehicleType.getIcon());
@@ -112,6 +113,8 @@ public class CreateRideSubfragment04 extends Fragment {
         String price = "Total: $" + totalPrice;
         totalPriceTextView.setText(price);
 
+        Button acceptRideBtn = view.findViewById(R.id.buttonAcceptRide);
+        acceptRideBtn.setOnClickListener(v -> acceptRideListener.onAcceptRide());
 
         return view;
     }

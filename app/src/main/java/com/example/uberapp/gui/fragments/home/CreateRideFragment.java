@@ -44,13 +44,16 @@ import io.reactivex.schedulers.Schedulers;
 public class CreateRideFragment extends DialogFragment implements
         CreateRideSubfragment01.OnRouteChangedListener,
         CreateRideSubfragment02.OnRidePropertiesChangedListener,
-        CreateRideSubfragment03.OnDateTimeChangedListener {
+        CreateRideSubfragment03.OnDateTimeChangedListener,
+        CreateRideSubfragment04.OnAcceptRideListener {
 
     private int currentSubfragment;
     private CreateRideSubfragment01 subFrag01;
     private CreateRideSubfragment02 subFrag02;
     private CreateRideSubfragment03 subFrag03;
     private CreateRideSubfragment04 subFrag04;
+    private CreateRideLoader createRideLoader;
+
     private FloatingActionButton buttonNext;
     private FloatingActionButton buttonPrev;
 
@@ -110,13 +113,14 @@ public class CreateRideFragment extends DialogFragment implements
     @SuppressLint("CheckResult")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
         imageService = APIClient.getClient().create(ImageService.class);
-        this.subFrag01  = new CreateRideSubfragment01();
+        this.subFrag01 = new CreateRideSubfragment01();
         this.subFrag02 = new CreateRideSubfragment02();
         this.subFrag03 = new CreateRideSubfragment03();
         this.subFrag04 = new CreateRideSubfragment04();
-        super.onCreate(savedInstanceState);
+        this.createRideLoader = new CreateRideLoader();
         Single<List<VehicleType>> result = vehicleTypeService.getVehicleTypes()
                 .flatMapIterable(vehicleTypeDTOS -> vehicleTypeDTOS)
                 .flatMap(vehicleTypeDTO -> fetchImage(vehicleTypeDTO).subscribeOn(Schedulers.io())).toList();
@@ -222,5 +226,10 @@ public class CreateRideFragment extends DialogFragment implements
     public void onDateTimeChanged(LocalDateTime dateTime) {
         this.dateTime = dateTime;
         subFrag04.rideDateTime = dateTime;
+    }
+
+    @Override
+    public void onAcceptRide() {
+        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, createRideLoader).commit();
     }
 }
