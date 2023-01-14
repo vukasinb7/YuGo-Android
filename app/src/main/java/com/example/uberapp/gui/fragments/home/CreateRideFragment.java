@@ -15,13 +15,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.dto.LocationDTO;
+import com.example.uberapp.core.dto.PathDTO;
+import com.example.uberapp.core.dto.RideRequestDTO;
+import com.example.uberapp.core.dto.UserSimpleDTO;
 import com.example.uberapp.core.dto.VehicleTypeDTO;
 import com.example.uberapp.core.model.LocationInfo;
 import com.example.uberapp.core.model.VehicleCategory;
 import com.example.uberapp.core.model.VehicleType;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.ImageService;
+import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.VehicleTypeService;
+import com.example.uberapp.core.services.auth.TokenManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -30,6 +36,7 @@ import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.util.GeoPoint;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -59,6 +66,7 @@ public class CreateRideFragment extends DialogFragment implements
 
     private VehicleTypeService vehicleTypeService;
     private ImageService imageService;
+    private RideService rideService;
 
     private LocationInfo destination;
     private LocationInfo departure;
@@ -116,6 +124,7 @@ public class CreateRideFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
         vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
         imageService = APIClient.getClient().create(ImageService.class);
+        rideService = APIClient.getClient().create(RideService.class);
         this.subFrag01 = new CreateRideSubfragment01();
         this.subFrag02 = new CreateRideSubfragment02();
         this.subFrag03 = new CreateRideSubfragment03();
@@ -230,6 +239,24 @@ public class CreateRideFragment extends DialogFragment implements
 
     @Override
     public void onAcceptRide() {
+        RideRequestDTO ride = new RideRequestDTO();
+        ride.babyTransport = isBabyTransport;
+        ride.dateTime = dateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+        ride.petTransport = isPetTransport;
+        ride.vehicleType = vehicleType.getVehicleCategory().toString();
+        List<PathDTO> locations = new ArrayList<>();
+        PathDTO path = new PathDTO();
+        path.setDeparture(new LocationDTO(departure));
+        path.setDestination(new LocationDTO(destination));
+        locations.add(path);
+        ride.locations = locations;
+        List<UserSimpleDTO> passengers = new ArrayList<>();
+        UserSimpleDTO passenger = new UserSimpleDTO();
+        passenger.id = TokenManager.getUserId();
+        passenger.email = "NA";
+        passengers.add(passenger);
+        ride.passengers = passengers;
+        rideService.createRide(ride);
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, createRideLoader).commit();
     }
 }
