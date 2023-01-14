@@ -1,4 +1,4 @@
-package com.example.uberapp.core.services.auth;
+package com.example.uberapp.core.auth;
 
 import com.auth0.android.jwt.JWT;
 

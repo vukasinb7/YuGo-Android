@@ -34,7 +34,7 @@ public class UserInboxFragment extends Fragment {
 
         inboxTabLayout = view.findViewById(R.id.inboxTabLayout);
         inboxViewPager2 = view.findViewById(R.id.driverInboxViewPager);
-        inboxAdapter =  new UserInboxViewPagerAdapter(this);
+        inboxAdapter = new UserInboxViewPagerAdapter(this);
         inboxViewPager2.setAdapter(inboxAdapter);
 
         inboxTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){

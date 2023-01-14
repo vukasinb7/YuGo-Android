@@ -14,7 +14,7 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.dto.LoginCredentialsDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.gui.dialogs.ForgotPasswordDialog;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

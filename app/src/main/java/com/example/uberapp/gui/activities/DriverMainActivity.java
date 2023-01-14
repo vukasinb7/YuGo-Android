@@ -7,7 +7,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.DriverAccountFragment;

@@ -1,7 +1,5 @@
 package com.example.uberapp.core.services;
 
-import com.example.uberapp.core.services.auth.TokenInterceptor;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

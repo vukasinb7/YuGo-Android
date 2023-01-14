@@ -1,4 +1,4 @@
-package com.example.uberapp.core.services.auth;
+package com.example.uberapp.core.auth;
 
 public class TokenState {
     public String accessToken;

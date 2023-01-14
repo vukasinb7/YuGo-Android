@@ -10,14 +10,13 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ToggleButton;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
-import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.core.auth.TokenManager;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import retrofit2.Call;
@@ -48,6 +47,8 @@ public class HomeFragment extends Fragment {
         Call<RideDetailedDTO> activeRide;
         if (TokenManager.getRole().equals("DRIVER")){
             activeRide = rideService.getActiveDriverRide(TokenManager.getUserId());
+            CardView toggleButton = view.findViewById(R.id.online_offline_button);
+            toggleButton.setVisibility(View.VISIBLE);
         }
         else{
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
@@ -69,15 +70,9 @@ public class HomeFragment extends Fragment {
 
                 }
                 else{
-                    ExtendedFloatingActionButton createRideButton = view.findViewById(R.id.buttonCreateRide);
-                    CardView toggleButton = view.findViewById(R.id.online_offline_button);
-                    if (TokenManager.getRole().equals("DRIVER")) {
-                        createRideButton.setVisibility(View.GONE);
-                        toggleButton.setVisibility(View.VISIBLE);
-                    }
-                    else{
+                    if (TokenManager.getRole().equals("PASSENGER")) {
+                        ExtendedFloatingActionButton createRideButton = view.findViewById(R.id.buttonCreateRide);
                         createRideButton.setVisibility(View.VISIBLE);
-                        toggleButton.setVisibility(View.GONE);
                         createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
                                 .show(getChildFragmentManager().beginTransaction(),
                                         CreateRideFragment.TAG));
@@ -97,6 +92,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        mapFragment.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         mapFragment.onPause();
     }
 }

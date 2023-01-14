@@ -2,7 +2,7 @@ package com.example.uberapp.core.services;
 
 import com.example.uberapp.core.dto.LoginCredentialsDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
-import com.example.uberapp.core.services.auth.TokenState;
+import com.example.uberapp.core.auth.TokenState;
 
 
 import io.reactivex.Observable;

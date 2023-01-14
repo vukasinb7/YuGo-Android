@@ -24,7 +24,7 @@ import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.core.auth.TokenManager;
 
 import java.io.IOException;
 

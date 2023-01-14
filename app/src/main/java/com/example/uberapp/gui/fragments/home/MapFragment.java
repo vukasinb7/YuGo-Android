@@ -102,9 +102,10 @@ public class MapFragment extends Fragment implements LocationListener {
     }
 
     public void createMarker(double latitude, double longitude, String title){
-        if(map == null) {
+        if(map == null || map.getRepository() == null) {
             return;
         }
+
         for(int i=0;i<map.getOverlays().size();i++){
             Overlay overlay=map.getOverlays().get(i);
             if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
@@ -127,7 +128,7 @@ public class MapFragment extends Fragment implements LocationListener {
     }
 
     public void createRoute(double startLatitude,double startLongitude, double endLatitude, double endLongitude){
-        if(map == null) {
+        if(map == null || map.getRepository() == null) {
             return;
         }
 
@@ -234,8 +235,9 @@ public class MapFragment extends Fragment implements LocationListener {
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if (map != null) {
-            createMarker(location.getLatitude(), location.getLongitude(), "Current location");
+        if(map == null || map.getRepository() == null) {
+            return;
         }
+        createMarker(location.getLatitude(), location.getLongitude(), "Current location");
     }
 }
