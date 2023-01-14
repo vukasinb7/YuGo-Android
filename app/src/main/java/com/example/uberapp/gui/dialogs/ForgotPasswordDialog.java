@@ -25,7 +25,7 @@ public class ForgotPasswordDialog extends Dialog implements android.view.View.On
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setContentView(R.layout.item_forgot_password);
+        setContentView(R.layout.dialog_forgot_password);
         yes = (Button) findViewById(R.id.sendForgotPasswordButton);
         yes.setOnClickListener(this);
     }

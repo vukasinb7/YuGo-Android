@@ -1,8 +1,9 @@
 package com.example.uberapp.core.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RideDetailedDTO {
+public class RideDetailedDTO implements Serializable {
     private Integer id;
     private List<PathDTO> locations;
     private String startTime;

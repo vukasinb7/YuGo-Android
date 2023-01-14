@@ -3,7 +3,6 @@ package com.example.uberapp.gui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -11,7 +10,7 @@ import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.fragments.account.PassengerAccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
-import com.example.uberapp.gui.fragments.home.PassengerHomeFragment;
+import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -19,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class PassengerMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-    PassengerHomeFragment homeFragment = new PassengerHomeFragment();
+    HomeFragment homeFragment = new HomeFragment();
     PassengerAccountFragment accountFragment = new PassengerAccountFragment();
     UserInboxFragment inboxFragment = new UserInboxFragment();
     UserHistoryFragment historyFragment = new UserHistoryFragment();

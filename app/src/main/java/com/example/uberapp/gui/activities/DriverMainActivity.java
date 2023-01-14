@@ -1,11 +1,9 @@
 package com.example.uberapp.gui.activities;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.uberapp.core.services.auth.TokenManager;
@@ -14,7 +12,7 @@ import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.DriverAccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
-import com.example.uberapp.gui.fragments.home.DriverHomeFragment;
+import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -83,12 +81,12 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
             ExitAppDialog ead = new ExitAppDialog(this);
             ead.show();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, homeFragment).commit();
             bottomNavigationView.setSelectedItemId(R.id.driverHome);
         }
     }
 
-    DriverHomeFragment driverHomeFragment = new DriverHomeFragment();
+    HomeFragment homeFragment = new HomeFragment();
     UserInboxFragment userInboxFragment = new UserInboxFragment();
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     DriverAccountFragment driverAccountFragment = new DriverAccountFragment();
@@ -98,7 +96,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.driverHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, driverHomeFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, homeFragment).commit();
                 return true;
             case R.id.driverInbox:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, userInboxFragment).commit();

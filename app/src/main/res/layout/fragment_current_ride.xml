@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.fragments.home.DriverHomeFragment">
-
-    <org.osmdroid.views.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    tools:context=".gui.fragments.home.CurrentRideFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/driverControlMenu"
+        android:id="@+id/passengerControlMenu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        app:cardCornerRadius="20dp"
-        android:visibility="gone">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/driverRemainingTime"
+                android:id="@+id/passengerRemainingTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hr 3 min"
@@ -38,11 +29,11 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/driverRemainingTime"
+                android:layout_below="@id/passengerRemainingTime"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-10dp">
                 <TextView
-                    android:id="@+id/driverRemainingDist"
+                    android:id="@+id/passengerRemainingDist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="55 km"
@@ -52,7 +43,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray_pewter"/>
                 <View
-                    android:id="@+id/driverDot"
+                    android:id="@+id/passengerDot"
                     android:layout_width="2dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="20dp"
@@ -60,7 +51,7 @@
                     android:layout_marginRight="5dp"
                     android:background="@color/dark_gray_pewter"/>
                 <TextView
-                    android:id="@+id/driverDurationDist"
+                    android:id="@+id/passengerDurationDist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00:13"
@@ -83,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:id="@+id/driverPanicText"
+                        android:id="@+id/passengerPanicText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -96,7 +87,7 @@
             </androidx.cardview.widget.CardView>
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/passengerProfilePic"
+                android:id="@+id/driverProfilePic"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="10dp"
@@ -106,31 +97,8 @@
                 android:scaleX="1.15"
                 android:scaleY="1.15"
                 app:shapeAppearanceOverlay="@style/circleImageView"
-                android:src="@drawable/icon_round_account"
-                app:tint="@color/dark_gray_pewter"/>
+                android:src="@drawable/icon_round_account"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/driverControlMenu"
-        app:cardCornerRadius="30dp"
-        android:layout_marginVertical="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_centerHorizontal="true">
-
-        <ToggleButton
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_margin="0dp"
-            android:background="@drawable/selector_on_off_toggle_button"
-            android:textColor="@color/white"
-            android:textOff="@string/offline"
-            android:textOn="@string/online"
-            android:textSize="16sp"
-            android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
