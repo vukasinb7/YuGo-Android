@@ -20,7 +20,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="20dp"
-        android:visibility="gone">
+        android:visibility="visible">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -52,7 +52,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray_pewter"/>
                 <View
-                    android:id="@+id/passengerLineLeft"
+                    android:id="@+id/passengerDot"
                     android:layout_width="2dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="20dp"
@@ -106,8 +106,7 @@
                 android:scaleX="1.15"
                 android:scaleY="1.15"
                 app:shapeAppearanceOverlay="@style/circleImageView"
-                android:src="@drawable/icon_round_account"
-                app:tint="@color/dark_gray_pewter"/>
+                android:src="@drawable/icon_round_account"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

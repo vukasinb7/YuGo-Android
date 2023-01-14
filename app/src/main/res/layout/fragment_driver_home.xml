@@ -52,7 +52,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray_pewter"/>
                 <View
-                    android:id="@+id/driverLineLeft"
+                    android:id="@+id/driverDot"
                     android:layout_width="2dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="20dp"
