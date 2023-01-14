@@ -1,9 +1,6 @@
 package com.example.uberapp.gui.fragments.home;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +9,27 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.uberapp.R;
+
+import java.time.LocalDateTime;
 
 public class CreateRideSubfragment03 extends Fragment {
 
-    public static CreateRideSubfragment03 newInstance() {
-        CreateRideSubfragment03 fragment = new CreateRideSubfragment03();
-        return fragment;
+    public interface OnDateTimeChangedListener{
+        void onDateTimeChanged(LocalDateTime dateTime);
     }
+    OnDateTimeChangedListener dateTimeChangedListener;
+
+    public LocalDateTime dateTime = LocalDateTime.now();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dateTimeChangedListener = (OnDateTimeChangedListener) getParentFragment();
+        dateTimeChangedListener.onDateTimeChanged(dateTime);
     }
 
     @Override
@@ -34,19 +40,35 @@ public class CreateRideSubfragment03 extends Fragment {
         datePicker.setEnabled(false);
         TimePicker timePicker = view.findViewById(R.id.rideTimePicker);
         timePicker.setEnabled(false);
+        datePicker.setMinDate(System.currentTimeMillis());
+        CheckBox nowCheckBox = view.findViewById(R.id.useCurrentTimeCheckBox);
+        nowCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(!isChecked){
+                dateTime = dateTime.withYear(datePicker.getYear())
+                        .withMonth(datePicker.getMonth() + 1)
+                        .withDayOfMonth(datePicker.getDayOfMonth())
+                        .withHour(timePicker.getHour())
+                        .withMinute(timePicker.getMinute());
+            }else{
+                dateTime = LocalDateTime.now();
+                dateTimeChangedListener.onDateTimeChanged(dateTime);
+            }
+
+        });
+
+        datePicker.setOnDateChangedListener((view12, year, monthOfYear, dayOfMonth) -> {
+            dateTime = dateTime.withYear(year).withMonth(monthOfYear + 1).withDayOfMonth(dayOfMonth);
+            dateTimeChangedListener.onDateTimeChanged(dateTime);
+        });
+        timePicker.setOnTimeChangedListener((view1, hourOfDay, minute) -> {
+            dateTime = dateTime.withHour(hourOfDay).withMinute(minute);
+            dateTimeChangedListener.onDateTimeChanged(dateTime);
+        });
 
         CheckBox checkBox = view.findViewById(R.id.useCurrentTimeCheckBox);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    datePicker.setEnabled(false);
-                    timePicker.setEnabled(false);
-                }else{
-                    datePicker.setEnabled(true);
-                    timePicker.setEnabled(true);
-                }
-            }
+        checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            datePicker.setEnabled(!b);
+            timePicker.setEnabled(!b);
         });
         return view;
 

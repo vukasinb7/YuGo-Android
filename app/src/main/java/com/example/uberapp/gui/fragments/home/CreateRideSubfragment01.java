@@ -34,9 +34,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -52,8 +58,9 @@ public class CreateRideSubfragment01 extends Fragment {
     private EditText destinationEditText;
     private EditText departureEditText;
     private View view;
-    public LocationInfo departure = null;
-    public LocationInfo destination = null;
+
+    LocationInfo departure;
+    LocationInfo destination;
     private String recommendedAddressContext;
 
     public interface OnRouteChangedListener{
@@ -124,7 +131,13 @@ public class CreateRideSubfragment01 extends Fragment {
         });
 
         departureEditText = view.findViewById(R.id.editTextStartingLocation);
+        if(departure != null){
+            departureEditText.setText(departure.getAddress());
+        }
         destinationEditText = view.findViewById(R.id.editTextDestination);
+        if(destination != null){
+            destinationEditText.setText(destination.getAddress());
+        }
 
         departureEditText.setFocusableInTouchMode(true);
         departureEditText.requestFocus();

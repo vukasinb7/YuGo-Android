@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mapFragment = new MapFragment();
+        mapFragment = MapFragment.newInstance(true);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
 

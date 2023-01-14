@@ -13,6 +13,12 @@ public class LocationDTO implements Serializable {
         this.longitude = longitude;
     }
 
+    public LocationDTO(LocationInfo locationInfo){
+        this.address = locationInfo.getAddress();
+        this.latitude = locationInfo.getLatitude();
+        this.longitude = locationInfo.getLongitude();
+    }
+
     public LocationDTO() {
     }
 

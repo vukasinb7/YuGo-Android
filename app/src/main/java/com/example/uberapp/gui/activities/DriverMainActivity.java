@@ -3,6 +3,7 @@ package com.example.uberapp.gui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -29,6 +30,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     BottomNavigationView bottomNavigationView;
     private StompClient mStompClient;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

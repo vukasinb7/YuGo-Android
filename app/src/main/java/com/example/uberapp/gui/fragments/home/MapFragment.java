@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.dto.RideDetailedDTO;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -44,16 +45,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MapFragment extends Fragment implements LocationListener {
+    private static final String ARG_CURRENT_LOCATION = "showCurrentLocation";
     MapView map;
     LocationManager locationManager;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    boolean showCurrentLocation = false;
     public MapFragment() {
 
+    }
+
+    public static MapFragment newInstance(boolean showCurrentLocation) {
+        MapFragment fragment = new MapFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_CURRENT_LOCATION, showCurrentLocation);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showCurrentLocation = (boolean) getArguments().get(ARG_CURRENT_LOCATION);
     }
 
     @Override
@@ -143,15 +155,14 @@ public class MapFragment extends Fragment implements LocationListener {
                         mapController.setZoom(14.0);
                         mapController.setCenter(new GeoPoint((startLatitude+endLatitude)/2,
                                 (startLongitude+endLongitude)/2));
-
                     }
                 });
-
             }
         });
 
     }
 
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -161,13 +172,13 @@ public class MapFragment extends Fragment implements LocationListener {
         if (!gps && !wifi) {
 
         }
-        else {
+        else if (showCurrentLocation){
             if (checkLocationPermission()) {
                 if (ContextCompat.checkSelfPermission(requireContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
                     locationManager.requestLocationUpdates(provider , 2000L, (float) 5, this);
                 }
-                else if(ContextCompat.checkSelfPermission(getContext(),
+                else if(ContextCompat.checkSelfPermission(requireContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                     locationManager.requestLocationUpdates(provider, 2000L, (float) 5, this);
                 }
@@ -199,7 +210,8 @@ public class MapFragment extends Fragment implements LocationListener {
                         })
                         .create()
                         .show();
-            } else {
+            }
+            else {
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -212,10 +224,15 @@ public class MapFragment extends Fragment implements LocationListener {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        createMarker(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude(),
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude(), "Current location");
+        createMarker(location.getLatitude(), location.getLongitude(), "Current location");
     }
 }
