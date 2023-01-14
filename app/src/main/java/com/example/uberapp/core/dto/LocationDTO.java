@@ -1,5 +1,7 @@
 package com.example.uberapp.core.dto;
 
+import com.example.uberapp.core.model.LocationInfo;
+
 import java.io.Serializable;
 
 public class LocationDTO implements Serializable {

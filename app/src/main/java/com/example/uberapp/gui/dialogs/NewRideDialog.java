@@ -61,7 +61,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         //this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_acceptance_ride, null, false);
-
+        mapFragment = MapFragment.newInstance(false);
         yes = (Button) view.findViewById(R.id.accept);
         no = (Button) view.findViewById(R.id.decline);
         price =(TextView) view.findViewById(R.id.priceRideOffer);
@@ -84,7 +84,8 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     numOfPerson.setText("5");
                     startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
                     endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());
-                    mapFragment = new MapFragment();
+
+
                     FragmentManager fragmentManager = getChildFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mapViewOffer, mapFragment).commit();
                     mapFragment.createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");

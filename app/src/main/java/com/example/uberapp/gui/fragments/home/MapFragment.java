@@ -46,13 +46,10 @@ import java.util.concurrent.Executors;
 
 public class MapFragment extends Fragment implements LocationListener {
     private static final String ARG_CURRENT_LOCATION = "showCurrentLocation";
-    MapView map;
-    LocationManager locationManager;
-    int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    boolean showCurrentLocation = false;
-    public MapFragment() {
-
-    }
+    private MapView map;
+    private LocationManager locationManager;
+    private final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private boolean showCurrentLocation = false;
 
     public static MapFragment newInstance(boolean showCurrentLocation) {
         MapFragment fragment = new MapFragment();
