@@ -24,8 +24,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +48,7 @@ import com.example.uberapp.core.services.auth.TokenManager;
 import com.example.uberapp.gui.activities.DriverMainActivity;
 import com.example.uberapp.gui.activities.LoginActivity;
 import com.example.uberapp.gui.activities.PassengerMainActivity;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.osmdroid.api.IMapController;
