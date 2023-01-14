@@ -1,8 +1,9 @@
 package com.example.uberapp.core.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class RejectionDTO {
+public class RejectionDTO implements Serializable {
     String reason;
     LocalDateTime timeOfRejection;
 

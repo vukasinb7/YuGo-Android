@@ -44,8 +44,8 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                     Gson gson= new Gson();
                     JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
                     Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
-                    NewRideDialog nrd=new NewRideDialog(this,rideID);
-                    nrd.show();
+                    NewRideDialog nrd=new NewRideDialog(rideID);
+
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {

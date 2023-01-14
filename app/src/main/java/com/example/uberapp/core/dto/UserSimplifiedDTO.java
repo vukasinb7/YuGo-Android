@@ -1,6 +1,8 @@
 package com.example.uberapp.core.dto;
 
-public class UserSimplifiedDTO {
+import java.io.Serializable;
+
+public class UserSimplifiedDTO implements Serializable {
     private Integer id;
     private String email;
 

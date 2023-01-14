@@ -2,6 +2,7 @@ package com.example.uberapp.gui.fragments.inbox;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -32,8 +33,7 @@ public class UserNotificationsFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NewRideDialog nrd=new NewRideDialog(getActivity(),1);
-                nrd.show();
+                new NewRideDialog(1).show(getChildFragmentManager(),NewRideDialog.TAG);
             }
         });
         return view;

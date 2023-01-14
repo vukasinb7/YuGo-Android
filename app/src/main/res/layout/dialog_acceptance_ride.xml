@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -33,12 +34,12 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
-            <org.osmdroid.views.MapView
+            <FrameLayout
                 android:id="@+id/mapViewOffer"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_below="@id/delimiterLine"
-                />
+                tools:layout="@layout/fragment_map" />
 
             <View
                 android:id="@+id/delimiterLine2"

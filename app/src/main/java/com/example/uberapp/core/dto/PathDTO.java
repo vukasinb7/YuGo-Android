@@ -1,6 +1,8 @@
 package com.example.uberapp.core.dto;
 
-public class PathDTO {
+import java.io.Serializable;
+
+public class PathDTO implements Serializable {
     private LocationDTO departure;
     private LocationDTO destination;
 
