@@ -8,16 +8,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.uberapp.R;
 
 public class NewRideDialog extends Dialog implements android.view.View.OnClickListener {
     public Activity c;
     public Button yes, no;
+    TextView price,distance,numOfPerson,startLocation,endLocation;
+    public Integer rideID;
 
-    public NewRideDialog(Activity a) {
+    public NewRideDialog(Activity a, Integer rideID) {
         super(a);
         this.c = a;
+        this.rideID=rideID;
     }
 
     @Override
@@ -28,6 +32,13 @@ public class NewRideDialog extends Dialog implements android.view.View.OnClickLi
         setContentView(R.layout.list_item_acceptance_ride);
         yes = (Button) findViewById(R.id.accept);
         no = (Button) findViewById(R.id.decline);
+        price =(TextView) findViewById(R.id.priceRideOffer);
+        distance=(TextView) findViewById(R.id.remainingDistRideOffer);
+        numOfPerson=(TextView) findViewById(R.id.personNumRideOffer);
+        startLocation=(TextView) findViewById(R.id.startDestRideOffer);
+        endLocation=(TextView) findViewById(R.id.endDestRideOffer);
+        
+        price.setText("AAA");
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
     }
