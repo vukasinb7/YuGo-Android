@@ -81,4 +81,6 @@
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
     <string name="no">No</string>
     <string name="yes">YES</string>
+    <string name="date_dd">Date: %1$s</string>
+    <string name="time_dd">Time: %1$s</string>
 </resources>

@@ -4,17 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.VehicleTypeDTO;
@@ -25,35 +23,42 @@ import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.VehicleTypeService;
 import com.example.uberapp.gui.adapters.VehicleTypeAdapter;
 
-import java.util.Arrays;
+import org.osmdroid.bonuspack.routing.Road;
+
 import java.util.List;
 
 import io.reactivex.Observable;
-
-import io.reactivex.ObservableSource;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BiConsumer;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class CreateRideSubfragment02 extends Fragment {
 
     VehicleTypeService vehicleTypeService;
+    List<VehicleType> vehicleTypes;
     ImageService imageService;
     ListView listView;
     VehicleTypeAdapter adapter;
     View view;
-    public static CreateRideSubfragment02 newInstance() {
-        CreateRideSubfragment02 fragment = new CreateRideSubfragment02();
-        return fragment;
+
+    VehicleType vehicleType = null;
+    boolean isBabyTransport = false;
+    boolean isPetTransport = false;
+
+    private Road road;
+
+    public void setRoad(Road rd){
+        this.road = rd;
     }
+    public interface OnRidePropertiesChangedListener{
+        void onVehicleTypeChanged(VehicleType vehicleType);
+        void onPetTransportChanged(boolean isPetTransport);
+        void onBabyTransportChanged(boolean isBabyTransport);
+    }
+    OnRidePropertiesChangedListener propertiesChangedListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        propertiesChangedListener = (OnRidePropertiesChangedListener) getParentFragment();
         vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
         imageService = APIClient.getClient().create(ImageService.class);
     }
@@ -77,22 +82,35 @@ public class CreateRideSubfragment02 extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_create_ride_subfragment02, container, false);
         listView = view.findViewById(R.id.listViewVehicleType);
+        adapter = new VehicleTypeAdapter((Activity) getContext(), vehicleTypes, road);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, v, position, id) -> {
             for(int i = 0; i < parent.getCount(); i++){
                 parent.getChildAt(i).findViewById(R.id.vehicleTypeCardBackgroundHolder).setBackgroundResource(0);
             }
+            vehicleType = (VehicleType) parent.getItemAtPosition(position);
+            propertiesChangedListener.onVehicleTypeChanged(vehicleType);
             v.findViewById(R.id.vehicleTypeCardBackgroundHolder).setBackgroundResource(R.drawable.vehicle_type_card_shape_selected);
         });
+        CheckBox babyTransportCheckBox = view.findViewById(R.id.checkBoxIncludeBaby);
+        babyTransportCheckBox.setChecked(isBabyTransport);
+        babyTransportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isBabyTransport = isChecked;
+                propertiesChangedListener.onBabyTransportChanged(isBabyTransport);
+            }
+        });
+        CheckBox petTransportCheckBox = view.findViewById(R.id.checkBoxIncludePets);
+        petTransportCheckBox.setChecked(isPetTransport);
+        petTransportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isPetTransport = isChecked;
+                propertiesChangedListener.onPetTransportChanged(isPetTransport);
+            }
+        });
 
-        Single<List<VehicleType>> result = vehicleTypeService.getVehicleTypes()
-                .flatMapIterable(vehicleTypeDTOS -> vehicleTypeDTOS)
-                .flatMap(vehicleTypeDTO -> fetchImage(vehicleTypeDTO).subscribeOn(Schedulers.io())).toList();
-        result.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(vehicleTypes -> {
-                    adapter = new VehicleTypeAdapter((Activity) getContext(), vehicleTypes);
-                    listView.setAdapter(adapter);
-                });
 
         return view;
     }
