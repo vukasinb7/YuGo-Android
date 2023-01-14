@@ -12,6 +12,7 @@ public interface RideService {
 
     @GET("/api/ride/passenger/{id}/active")
     Call<RideDetailedDTO> getActivePassengerRide(@Path("id") Integer passengerId);
+
     @GET("/api/ride/{id}")
     Call<RideDetailedDTO> getRide(@Path("id") Integer rideId);
 }

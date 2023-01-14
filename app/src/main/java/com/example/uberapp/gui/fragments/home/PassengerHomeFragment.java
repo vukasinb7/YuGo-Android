@@ -20,8 +20,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +36,7 @@ import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.osmdroid.api.IMapController;
@@ -63,7 +64,7 @@ import retrofit2.Response;
 public class PassengerHomeFragment extends Fragment implements LocationListener {
 
     MapView map;
-    RideService rideService = APIClient.getClient().create(RideService.class);;
+    RideService rideService = APIClient.getClient().create(RideService.class);
     LocationManager locationManager;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public PassengerHomeFragment() {
@@ -101,6 +102,7 @@ public class PassengerHomeFragment extends Fragment implements LocationListener 
 
                 } else if (response.code() == 400) {
                     driverControlMenu.setVisibility(View.GONE);
+
                 }
             }
 

@@ -33,18 +33,18 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
-            <View
-                android:id="@+id/map"
+            <org.osmdroid.views.MapView
+                android:id="@+id/mapViewOffer"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:background="@color/darker_blue"
                 android:layout_below="@id/delimiterLine"
-                android:alpha="0.5"/>
+                />
+
             <View
                 android:id="@+id/delimiterLine2"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_below="@id/map"
+                android:layout_below="@id/mapViewOffer"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
             <TextView
