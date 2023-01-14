@@ -18,4 +18,7 @@ public interface UserService {
 
     @GET("/api/driver/{id}")
     Call<UserDetailedDTO> getDriver(@Path("id") Integer id);
+
+    @GET("/api/passenger/{id}")
+    Call<UserDetailedDTO> getPassenger(@Path("id") Integer id);
 }

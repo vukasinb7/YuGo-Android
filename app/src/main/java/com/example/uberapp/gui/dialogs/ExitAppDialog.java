@@ -10,7 +10,6 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.example.uberapp.R;
-import com.example.uberapp.gui.activities.LoginActivity;
 
 public class ExitAppDialog extends Dialog implements android.view.View.OnClickListener {
     public Activity c;
@@ -27,7 +26,7 @@ public class ExitAppDialog extends Dialog implements android.view.View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setContentView(R.layout.item_exit_message);
+        setContentView(R.layout.dialog_exit);
         yes =findViewById(R.id.yesExitDialog);
         no =findViewById(R.id.noExitDialog);
         yes.setOnClickListener(new View.OnClickListener() {

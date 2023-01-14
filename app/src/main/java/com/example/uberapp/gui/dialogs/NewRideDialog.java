@@ -16,20 +16,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
-import com.example.uberapp.core.services.auth.TokenManager;
-import com.example.uberapp.gui.activities.DriverMainActivity;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.bonuspack.routing.OSRMRoadManager;
-import org.osmdroid.bonuspack.routing.Road;
-import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.util.GeoPoint;
@@ -37,11 +31,6 @@ import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.Polyline;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +56,7 @@ public class NewRideDialog extends Dialog implements android.view.View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setContentView(R.layout.list_item_acceptance_ride);
+        setContentView(R.layout.dialog_acceptance_ride);
         yes = (Button) findViewById(R.id.accept);
         no = (Button) findViewById(R.id.decline);
         price =(TextView) findViewById(R.id.priceRideOffer);

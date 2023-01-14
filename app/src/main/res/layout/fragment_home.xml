@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".gui.fragments.home.HomeFragment">
+
+    <FrameLayout
+        android:id="@+id/fragment_home_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_map" />
+
+    <FrameLayout
+        android:id="@+id/fragment_current_ride"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_current_ride"
+        android:layout_gravity="start|top"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/online_offline_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="end|top"
+        android:visibility="gone">
+
+        <ToggleButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/selector_on_off_toggle_button"
+            android:textColor="@color/white"
+            android:textOff="@string/offline"
+            android:textOn="@string/online"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/buttonCreateRide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_margin="25dp"
+        app:icon="@drawable/icon_add"
+        app:iconTint="@color/dark_gray_pewter"
+        android:text="@string/new_ride"
+        android:textColor="@color/dark_gray_pewter"
+        android:textSize="15sp"
+        app:iconSize="25dp"
+        android:backgroundTint="@color/pewter_dark_gray"
+        android:visibility="gone"/>
+
+</FrameLayout>

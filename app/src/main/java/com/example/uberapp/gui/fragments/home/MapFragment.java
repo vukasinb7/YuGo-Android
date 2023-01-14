@@ -6,50 +6,25 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.uberapp.R;
-import com.example.uberapp.core.dto.LocationDTO;
-import com.example.uberapp.core.dto.RideDetailedDTO;
-import com.example.uberapp.core.dto.UserDetailedDTO;
-import com.example.uberapp.core.services.APIClient;
-import com.example.uberapp.core.services.ImageService;
-import com.example.uberapp.core.services.RideService;
-import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.auth.TokenManager;
-import com.example.uberapp.gui.activities.DriverMainActivity;
-import com.example.uberapp.gui.activities.LoginActivity;
-import com.example.uberapp.gui.activities.PassengerMainActivity;
-import com.example.uberapp.gui.dialogs.NewRideDialog;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -59,33 +34,21 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.MapTileIndex;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polyline;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class PassengerHomeFragment extends Fragment implements LocationListener {
-
+public class MapFragment extends Fragment implements LocationListener {
     MapView map;
-    RideService rideService = APIClient.getClient().create(RideService.class);;
-    UserService userService = APIClient.getClient().create(UserService.class);;
-    ImageService imageService = APIClient.getClient().create(ImageService.class);;
     LocationManager locationManager;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public PassengerHomeFragment() {
+    public MapFragment() {
+
     }
 
     @Override
@@ -96,111 +59,17 @@ public class PassengerHomeFragment extends Fragment implements LocationListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_passenger_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
         Context context = getContext();
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
         map = view.findViewById(R.id.mapView);
-        CardView driverControlMenu = view.findViewById(R.id.passengerControlMenu);
-        ExtendedFloatingActionButton createRideButton = view.findViewById(R.id.buttonCreateRide);
         loadMap();
-
-        Call<RideDetailedDTO> activePassengerRide = rideService.getActivePassengerRide(TokenManager.getUserId());
-        activePassengerRide.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
-                if (response.code() == 200) {
-                    RideDetailedDTO ride = response.body();
-                    driverControlMenu.setVisibility(View.VISIBLE);
-                    createRideButton.setVisibility(View.GONE);
-                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
-                    LocationDTO destination = ride.getLocations().get(0).getDestination();
-                    createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
-                    createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
-                    createRoute(departure.getLatitude(), departure.getLongitude(),
-                            destination.getLatitude(), destination.getLongitude());
-
-
-                    ImageView profilePic = view.findViewById(R.id.driverProfilePic);
-                    Call<UserDetailedDTO> userDetailedDTOCall = userService.getDriver(ride.getDriver().getId());
-                    userDetailedDTOCall.enqueue(new Callback<>() {
-                        @Override
-                        public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
-                            UserDetailedDTO driver = response.body();
-
-                            Call<ResponseBody> profilePictureCall = imageService.getProfilePicture(driver.getProfilePicture());
-                            profilePictureCall.enqueue(new Callback<>() {
-                                @Override
-                                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                                    try {
-                                        byte[] bytes = response.body().bytes();
-                                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                        profilePic.setImageBitmap(bitmap);
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
-                                }
-                            });
-
-                            profilePic.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    showPopupMenu(v, driver);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
-
-                        }
-                    });
-                }
-                else{
-                    driverControlMenu.setVisibility(View.GONE);
-                    createRideButton.setVisibility(View.VISIBLE);
-                    createRideButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            new CreateRideFragment().show(getChildFragmentManager().beginTransaction(), CreateRideFragment.TAG);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
-
-            }
-        });
+        IMapController mapController = map.getController();
+        mapController.setZoom(14.0);
+        mapController.setCenter(new GeoPoint(44.97639, 19.61222));
 
         return view;
-    }
-
-    public void showPopupMenu(View view, UserDetailedDTO driver){
-        Context wrapper = new ContextThemeWrapper(getActivity(), R.style.popupBgStyle);
-        PopupMenu popupMenu = new PopupMenu(wrapper,view);
-        MenuInflater inflater = popupMenu.getMenuInflater();
-        Menu menu = popupMenu.getMenu();
-        //inflater.inflate(R.menu.driver_options_popup_menu, menu);
-        menu.add(0 , 0, 0,driver.getName() + " " + driver.getSurname());
-        MenuItem call = menu.add(1 , 1, 1, "Call (" + driver.getTelephoneNumber() + ")");
-        call.setOnMenuItemClickListener(item -> {
-            Uri number = Uri.parse("tel:" + driver.getTelephoneNumber());
-            Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-            startActivity(callIntent);
-            return true;
-        });
-        menu.add(2 , 2, 2,"Message");
-        menu.add(3 , 3, 3,"Report");
-        menu.setGroupDividerEnabled(true);
-        popupMenu.show();
     }
 
     public void loadMap() {
