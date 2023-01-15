@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
@@ -31,10 +33,19 @@ import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.gui.activities.UserChatChannel;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.dialogs.ReasonDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.util.GeoPoint;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -82,9 +93,25 @@ public class CurrentRideFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current_ride, container, false);
         ImageView profilePic = view.findViewById(R.id.driverProfilePic);
         CardView panic= view.findViewById(R.id.panicCurrentRide);
+        TextView distanceTb=view.findViewById(R.id.passengerRemainingDistCurrentTime);
+        TextView timeRemainingTb=view.findViewById(R.id.passengerRemainingTimeCurrentRide);
+        TextView timeRemainingTotalTb=view.findViewById(R.id.passengerDurationDist);
         ExtendedFloatingActionButton endRide= view.findViewById(R.id.end_ride_button);
+        LocationDTO departure= ride.getLocations().get(0).getDeparture();
+        LocationDTO destination= ride.getLocations().get(0).getDestination();
 
         Call<UserDetailedDTO> userCall;
+        getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CurrentRideFragment.CallbackLengthTime() {
+            @Override
+            public void onSuccess(Double distance, Double remainingTime) {
+                distanceTb.setText(Double.toString(Math.round(distance*100)/100)+"km");
+                timeRemainingTb.setText(String.valueOf((int)Math.round(remainingTime/60))+"min");
+                timeRemainingTotalTb.setText(String.valueOf((int)Math.round(remainingTime/60))+"min");
+            }
+        });
+
+
+
         if (TokenManager.getRole().equals("DRIVER")){
             userCall = passengerService.getPassenger(ride.getPassengers().get(0).getId());
         }
@@ -177,5 +204,34 @@ public class CurrentRideFragment extends Fragment {
         menu.add(3 , 3, 3,"Report");
         menu.setGroupDividerEnabled(true);
         popupMenu.show();
+    }
+    public void getLength(double startLatitude,double startLongitude,double endLatitude,double endLongitude,final CurrentRideFragment.CallbackLengthTime callback){
+
+        final Double[] length = {0.0};
+
+        ExecutorService executorService= Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                RoadManager roadManager = new OSRMRoadManager(getContext(),"RoadManager");
+
+                ArrayList<GeoPoint> track = new ArrayList<>();
+                GeoPoint startPoint = new GeoPoint(startLatitude, startLongitude );
+                GeoPoint endPoint = new GeoPoint(endLatitude, endLongitude);
+                track.add(startPoint);
+                track.add(endPoint);
+
+                Road road = roadManager.getRoad(track);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(road.mLength,road.mDuration);
+                    }
+                });
+            }
+        });
+    }
+    private interface CallbackLengthTime {
+        void onSuccess(Double distance,Double remainingTime);
     }
 }

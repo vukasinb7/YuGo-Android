@@ -108,12 +108,12 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     LocationDTO departure = ride.getLocations().get(0).getDeparture();
                     LocationDTO destination = ride.getLocations().get(0).getDestination();
 
-                    System.out.println(getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CallbackLength() {
+                    getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CallbackLength() {
                         @Override
                         public void onSuccess(Double value) {
                             distance.setText(Double.toString(Math.round(value*100)/100)+"km");
                         }
-                    }));
+                    });
                     numOfPerson.setText(Integer.toString(ride.getPassengers().size()));
 
 
