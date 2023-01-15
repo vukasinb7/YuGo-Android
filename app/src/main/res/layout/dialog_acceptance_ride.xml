@@ -34,12 +34,12 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
-            <FrameLayout
+            <org.osmdroid.views.MapView
                 android:id="@+id/mapViewOffer"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_below="@id/delimiterLine"
-                tools:layout="@layout/fragment_map" />
+                />
 
             <View
                 android:id="@+id/delimiterLine2"

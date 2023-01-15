@@ -45,14 +45,31 @@
                 android:inputType="text|textMultiLine"
                 android:background="@null"
                 android:lines="6" />
-            <Button
-                android:id="@+id/submitReason"
-                android:layout_width="120dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/reasonReasonDialog"
-                android:layout_marginEnd="15dp"
-                android:text="Submit" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/cancelReason"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="@color/pewter_dark_blue"
+                    android:textColor="@color/black_white"
+                    android:text="Cancel"
+                    android:visibility="gone"/>
+                <Button
+                    android:id="@+id/submitReason"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:text="Submit" />
+
+
+            </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

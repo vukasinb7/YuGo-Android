@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.LocationDTO;
@@ -28,6 +28,9 @@ import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.gui.fragments.home.MapFragment;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.util.GeoPoint;
@@ -35,14 +38,19 @@ import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.Polyline;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewRideDialog extends DialogFragment implements android.view.View.OnClickListener {
-    MapFragment mapFragment;
-    LocationManager locationManager;
+    private MapView map;
+    private LocationManager locationManager;
     public Button yes, no;
     TextView price,distance,numOfPerson,startLocation,endLocation;
     private Integer rideID;
@@ -58,10 +66,19 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_acceptance_ride, null, false);
-        mapFragment = MapFragment.newInstance(false);
+
+        Context context = getContext();
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+        map = view.findViewById(R.id.mapViewOffer);
+        loadMap();
+        IMapController mapController = map.getController();
+        mapController.setZoom(12.0);
+        mapController.setCenter(new GeoPoint(44.97639, 19.61222));
+
+
         fragmentManager = getChildFragmentManager();
         yes = (Button) view.findViewById(R.id.accept);
         no = (Button) view.findViewById(R.id.decline);
@@ -70,8 +87,6 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         numOfPerson=(TextView) view.findViewById(R.id.personNumRideOffer);
         startLocation=(TextView) view.findViewById(R.id.startDestRideOffer);
         endLocation=(TextView) view.findViewById(R.id.endDestRideOffer);
-        Context context = getContext();
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
         Call<RideDetailedDTO> call = rideService.getRide(rideID);
         call.enqueue(new Callback<>() {
@@ -79,17 +94,23 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
             public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                 if (response.code() == 200) {
                     RideDetailedDTO ride = response.body();
-                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
-                    LocationDTO destination = ride.getLocations().get(0).getDestination();
                     price.setText("$"+ride.getTotalCost().toString());
                     numOfPerson.setText("5");
                     startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
                     endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());
+                    loadMap();
 
-                    fragmentManager.beginTransaction().replace(R.id.mapViewOffer, mapFragment).commit();
-                    mapFragment.createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
-                    mapFragment.createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
-                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude());
+                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
+                    LocationDTO destination = ride.getLocations().get(0).getDestination();
+
+                    RoadManager roadManager = new OSRMRoadManager(getContext(),"RoadManager");
+
+                    ArrayList<GeoPoint> track = new ArrayList<>();
+
+
+                    createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
+                    createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
+                    createRoute(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude());
                 }
             }
 
@@ -98,8 +119,6 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
 
             }
         });
-        
-        price.setText("AAA");
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
         builder.setView(view);
@@ -128,11 +147,93 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
 
                 break;
             case R.id.decline:
-                new ReasonDialog(rideID,"REJECTION").show(getChildFragmentManager(),ReasonDialog.TAG);
-
+                Dialog dialog=new ReasonDialog(getActivity(),rideID,"REJECTION");
+                dialog.show();
+                dismiss();
                 break;
             default:
                 break;
         }
+    }
+    public void loadMap() {
+        map.getTileProvider().clearTileCache();
+        Configuration.getInstance().setCacheMapTileCount((short) 12);
+        Configuration.getInstance().setCacheMapTileOvershoot((short) 12);
+        map.setTileSource(new OnlineTileSourceBase("", 1, 20,
+                512, ".png",
+                new String[]{"https://a.tile.openstreetmap.org/"}) {
+            @Override
+            public String getTileURLString(long pMapTileIndex) {
+                return getBaseUrl()
+                        + MapTileIndex.getZoom(pMapTileIndex)
+                        + "/" + MapTileIndex.getX(pMapTileIndex)
+                        + "/" + MapTileIndex.getY(pMapTileIndex)
+                        + mImageFilenameEnding;
+            }
+        });
+        map.setMultiTouchControls(true);
+        map.invalidate();
+    }
+    public void createMarker(double latitude, double longitude, String title){
+        if(map == null || map.getRepository() == null) {
+            return;
+        }
+
+        for(int i=0;i<map.getOverlays().size();i++){
+            Overlay overlay=map.getOverlays().get(i);
+            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
+                map.getOverlays().remove(overlay);
+            }
+        }
+
+        Marker marker = new Marker(map);
+        GeoPoint geoPoint = new GeoPoint(latitude,longitude);
+        marker.setPosition(geoPoint);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(title);
+        marker.setId(title);
+        marker.setPanToView(true);
+        map.getOverlays().add(marker);
+        map.invalidate();
+        IMapController mapController = map.getController();
+        mapController.setZoom(12.0);
+        mapController.setCenter(geoPoint);
+    }
+
+    public void createRoute(double startLatitude,double startLongitude, double endLatitude, double endLongitude){
+        if(map == null || map.getRepository() == null) {
+            return;
+        }
+
+        ExecutorService executorService= Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                RoadManager roadManager = new OSRMRoadManager(getContext(),"RoadManager");
+
+                ArrayList<GeoPoint> track = new ArrayList<>();
+                GeoPoint startPoint = new GeoPoint(startLatitude, startLongitude );
+                GeoPoint endPoint = new GeoPoint(endLatitude, endLongitude);
+                track.add(startPoint);
+                track.add(endPoint);
+
+                Road road = roadManager.getRoad(track);
+
+                Polyline roadOverlay = RoadManager.buildRoadOverlay(road);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        map.getOverlays().add(roadOverlay);
+                        map.invalidate();
+                        IMapController mapController = map.getController();
+                        mapController.setZoom(12.0);
+                        mapController.setCenter(new GeoPoint((startLatitude+endLatitude)/2,
+                                (startLongitude+endLongitude)/2));
+                    }
+                });
+            }
+        });
+
     }
 }
