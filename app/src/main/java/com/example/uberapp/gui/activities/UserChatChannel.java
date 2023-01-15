@@ -19,6 +19,7 @@ import com.example.uberapp.core.tools.UserMockup;
 import com.example.uberapp.gui.adapters.MessageListAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -29,8 +30,6 @@ import retrofit2.Response;
 public class UserChatChannel extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
-    private List<MessageDTO> messages;
-    private int senderId;
     UserService userService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,28 +38,44 @@ public class UserChatChannel extends AppCompatActivity {
 
         userService = APIClient.getClient().create(UserService.class);
         Bundle b = getIntent().getExtras();
-        messages = ((AllMessagesDTO) b.get("messages")).getMessages();
-        senderId = (int) b.get("senderId");
+        Integer senderId = (int) b.get("senderId");
+        Integer rideId = (int) b.get("rideId");
         Activity activity = this;
 
-        Call<UserDetailedDTO> userCall = userService.getUser(senderId);
-        userCall.enqueue(new Callback<UserDetailedDTO>() {
+        Call<AllMessagesDTO> conversationCall = userService.getUsersConversation(senderId);
+        conversationCall.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<UserDetailedDTO> call, Response<UserDetailedDTO> response) {
-                if (response.code() == 200){
-                    UserDetailedDTO user = response.body();
+            public void onResponse(Call<AllMessagesDTO> call, Response<AllMessagesDTO> response) {
+                if (response.code() == 200) {
+                    AllMessagesDTO allMessagesDTO = response.body();
+                    List<MessageDTO> messages = allMessagesDTO.getMessages();
 
-                    mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
-                    mMessageAdapter = new MessageListAdapter(activity, user, messages);
-                    LinearLayoutManager llm = new LinearLayoutManager(activity);
-                    llm.setStackFromEnd(true);
-                    mMessageRecycler.setLayoutManager(llm);
-                    mMessageRecycler.setAdapter(mMessageAdapter);
+                    Call<UserDetailedDTO> userCall = userService.getUser(senderId);
+                    userCall.enqueue(new Callback<>() {
+                        @Override
+                        public void onResponse(Call<UserDetailedDTO> call, Response<UserDetailedDTO> response) {
+                            if (response.code() == 200) {
+                                UserDetailedDTO user = response.body();
+
+                                mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
+                                mMessageAdapter = new MessageListAdapter(activity, user, rideId, messages);
+                                LinearLayoutManager llm = new LinearLayoutManager(activity);
+                                llm.setStackFromEnd(true);
+                                mMessageRecycler.setLayoutManager(llm);
+                                mMessageRecycler.setAdapter(mMessageAdapter);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserDetailedDTO> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onFailure(Call<UserDetailedDTO> call, Throwable t) {
+            public void onFailure(Call<AllMessagesDTO> call, Throwable t) {
 
             }
         });

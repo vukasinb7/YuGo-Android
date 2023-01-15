@@ -24,6 +24,8 @@ import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +49,9 @@ public class ReasonDialog extends Dialog implements android.view.View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setCancelable(false);
+        if (Objects.equals(type, "REJECTION")){
+            this.setCancelable(false);
+        }
         setContentView(R.layout.dialog_reason);
         reasonTb=(TextView) findViewById(R.id.reasonReasonDialog);
         reasonTb.onEditorAction(EditorInfo.IME_ACTION_DONE);
@@ -60,7 +64,7 @@ public class ReasonDialog extends Dialog implements android.view.View.OnClickLis
         switch (view.getId()) {
             case R.id.submitReason:
                 ReasonDTO reasonDTO=new ReasonDTO(reasonTb.getText().toString());
-                if (type=="REJECTION"){
+                if (Objects.equals(type, "REJECTION")){
 
                     Call<RideDetailedDTO> call = rideService.rejectRide(rideID,reasonDTO);
                     call.enqueue(new Callback<>() {

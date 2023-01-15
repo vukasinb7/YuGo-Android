@@ -18,13 +18,13 @@ import retrofit2.http.Path;
 public interface UserService {
     @POST("/api/user/login")
     Observable<TokenState> login(@Body LoginCredentialsDTO credentials);
-
     @GET("/api/user/{id}/message")
     Call<AllMessagesDTO> getUserMessages(@Path("id") Integer id);
 
+    @GET("/api/user/{id}/conversation")
+    Call<AllMessagesDTO> getUsersConversation(@Path("id") Integer id);
     @POST("/api/user/{id}/message")
     Call<MessageDTO> sendMessageToUser(@Path("id") Integer id, @Body MessageSendDTO messageSendDTO);
-
     @GET("/api/user/{id}")
     Call<UserDetailedDTO> getUser(@Path("id") Integer id);
 }

@@ -240,6 +240,12 @@ public class MapFragment extends Fragment implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        locationManager.removeUpdates(this);
+    }
+
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {

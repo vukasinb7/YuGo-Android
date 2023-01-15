@@ -28,7 +28,6 @@ import retrofit2.Response;
 public class UserMessagesFragment extends Fragment {
     private UserService userService;
     public UserMessagesFragment() {
-        // Required empty public constructor
     }
 
     @Override

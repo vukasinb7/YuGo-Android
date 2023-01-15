@@ -67,6 +67,12 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
                     startRideButton.setVisibility(View.GONE);
                     hasActiveRide = true;
+
+                    LocationDTO departure = nextRide.getLocations().get(0).getDeparture();
+                    LocationDTO destination = nextRide.getLocations().get(0).getDestination();
+                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
+                            destination.getLatitude(), destination.getLongitude());
+
                 }
 
                 @Override

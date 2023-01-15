@@ -30,8 +30,7 @@ import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
 import com.example.uberapp.core.services.RideService;
-import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.gui.activities.UserChatChannel;
 import com.example.uberapp.gui.dialogs.ReasonDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -45,10 +44,11 @@ import retrofit2.Response;
 public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
     private PassengerService passengerService;
-    private RideService rideService= APIClient.getClient().create(RideService.class);;
+    private RideService rideService;
     private DriverService driverService;
     private ImageService imageService;
     private RideDetailedDTO ride;
+    public OnEndCurrentRideListener endCurrentRideListener;
 
     public CurrentRideFragment() {
     }
@@ -56,7 +56,6 @@ public class CurrentRideFragment extends Fragment {
     public interface OnEndCurrentRideListener{
         void endCurrentRide();
     }
-    public OnEndCurrentRideListener endCurrentRideListener;
 
     public static CurrentRideFragment newInstance(RideDetailedDTO ride) {
         CurrentRideFragment fragment = new CurrentRideFragment();
@@ -74,6 +73,7 @@ public class CurrentRideFragment extends Fragment {
         passengerService = APIClient.getClient().create(PassengerService.class);
         driverService = APIClient.getClient().create(DriverService.class);
         imageService = APIClient.getClient().create(ImageService.class);
+        rideService = APIClient.getClient().create(RideService.class);
     }
 
     @Override
@@ -116,38 +116,30 @@ public class CurrentRideFragment extends Fragment {
                     }
                 });
 
-                profilePic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showPopupMenu(v, user);
-                    }
-                });
-                panic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Dialog dialog = new ReasonDialog(getActivity(),ride.getId(),"PANIC");
-                        dialog.show();
-                    }
-                });
-                endRide.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Call<RideDetailedDTO> call = rideService.endRide(ride.getId());
-                        call.enqueue(new Callback<>() {
-                            @Override
-                            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
-                                if (response.code() == 200) {
-                                    Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
-                                    endCurrentRideListener.endCurrentRide();
-                                }
-                            }
+                profilePic.setOnClickListener(v -> showPopupMenu(v, user));
 
-                            @Override
-                            public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
+                panic.setOnClickListener(v -> {
+                    Dialog dialog = new ReasonDialog(getActivity(),ride.getId(),"PANIC");
+                    dialog.show();
+                });
 
+                endRide.setOnClickListener(v -> {
+                    Call<RideDetailedDTO> call1 = rideService.endRide(ride.getId());
+                    call1.enqueue(new Callback<>() {
+                        @Override
+                        public void onResponse(@NonNull Call<RideDetailedDTO> call1, @NonNull Response<RideDetailedDTO> response1) {
+                            if (response1.code() == 200) {
+                                Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                                endCurrentRideListener.endCurrentRide();
                             }
-                        });
-                    }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<RideDetailedDTO> call1, @NonNull Throwable t) {
+
+                            Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 });
 
             }
@@ -172,7 +164,16 @@ public class CurrentRideFragment extends Fragment {
             startActivity(callIntent);
             return true;
         });
-        menu.add(2 , 2, 2,"Message");
+        MenuItem message = menu.add(2 , 2, 2,"Message");
+        message.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(this.getActivity(), UserChatChannel.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("senderId", user.getId());
+            bundle.putInt("rideId", ride.getId());
+            intent.putExtras(bundle);
+            startActivity(intent);
+            return true;
+        });
         menu.add(3 , 3, 3,"Report");
         menu.setGroupDividerEnabled(true);
         popupMenu.show();

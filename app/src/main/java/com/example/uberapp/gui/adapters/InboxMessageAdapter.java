@@ -46,13 +46,11 @@ import retrofit2.Response;
 
 public class InboxMessageAdapter extends BaseAdapter {
     public Activity activity;
-    private List<MessageDTO> messages;
     private List<MessageDTO> conversations;
-    private UserService userService = APIClient.getClient().create(UserService.class);
-    private ImageService imageService = APIClient.getClient().create(ImageService.class);
+    private final UserService userService = APIClient.getClient().create(UserService.class);
+    private final ImageService imageService = APIClient.getClient().create(ImageService.class);
     public InboxMessageAdapter(Activity activity, List<MessageDTO> messages){
         this.activity = activity;
-        this.messages = messages;
         this.conversations = getConversations(messages);
     }
 
@@ -117,15 +115,15 @@ public class InboxMessageAdapter extends BaseAdapter {
         }
 
         Call<UserDetailedDTO> userCall = userService.getUser(msg.getSenderId());
-        userCall.enqueue(new Callback<UserDetailedDTO>() {
+        userCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<UserDetailedDTO> call, Response<UserDetailedDTO> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     UserDetailedDTO user = response.body();
                     senderName.setText(String.format("%s %s", user.getName(), user.getSurname()));
 
                     Call<ResponseBody> profilePictureCall = imageService.getProfilePicture(user.getProfilePicture());
-                    profilePictureCall.enqueue(new Callback<ResponseBody>() {
+                    profilePictureCall.enqueue(new Callback<>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             try {
@@ -163,22 +161,13 @@ public class InboxMessageAdapter extends BaseAdapter {
             messageCardView.setCardBackgroundColor(Color.parseColor("#AA4A44"));
         }
 
-        AllMessagesDTO conversationMessages = new AllMessagesDTO(messages.stream()
-                .filter(messageDTO -> (messageDTO.getSenderId().equals(msg.getSenderId()) ||
-                        messageDTO.getSenderId().equals(msg.getReceiverId()) ||
-                        messageDTO.getReceiverId().equals(msg.getSenderId()) ||
-                        messageDTO.getReceiverId().equals((msg.getReceiverId())))));
-
-        messageCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, UserChatChannel.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("messages", conversationMessages);
-                bundle.putSerializable("senderId", msg.getSenderId());
-                intent.putExtras(bundle);
-                activity.startActivity(intent);
-            }
+        messageCardView.setOnClickListener(view1 -> {
+            Intent intent = new Intent(activity, UserChatChannel.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("senderId", msg.getSenderId());
+            bundle.putInt("rideId", msg.getRideId());
+            intent.putExtras(bundle);
+            activity.startActivity(intent);
         });
 
         return v;

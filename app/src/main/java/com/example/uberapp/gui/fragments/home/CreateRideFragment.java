@@ -149,7 +149,7 @@ public class CreateRideFragment extends DialogFragment implements
                     subFrag02.vehicleTypes = vehicleTypes;
                 });
 
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.105:9000/api/socket/websocket");
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.61:9000/api/socket/websocket");
 
         mStompClient.topic("/ride-topic/notify-passenger/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
