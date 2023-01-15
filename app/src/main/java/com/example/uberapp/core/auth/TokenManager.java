@@ -21,6 +21,11 @@ public class TokenManager {
         return null;
     }
 
+    public static void clearToken(){
+        token = null;
+        refreshToken = null;
+    }
+
     public static void setToken(String token) {
         TokenManager.token = new JWT(token);
     }

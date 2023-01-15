@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.uberapp.R;
-public class DocumentsFragment extends Fragment {
-    public DocumentsFragment() {
+public class UserDocumentsFragment extends Fragment {
+    public UserDocumentsFragment() {
 
     }
     @Override
@@ -41,14 +41,9 @@ public class DocumentsFragment extends Fragment {
                 });
 
         Button buttonDriversLicence = view.findViewById(R.id.buttonPickDriversLicence);
-        buttonDriversLicence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickDriversLicnece.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
-            }
-        });
+        buttonDriversLicence.setOnClickListener(view12 -> pickDriversLicnece.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
 
         ActivityResultLauncher<PickVisualMediaRequest> pickRegistrationLicence =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -62,14 +57,9 @@ public class DocumentsFragment extends Fragment {
                 });
 
         Button buttonRegistrationLicence = view.findViewById(R.id.buttonPickRegistrationLicence);
-        buttonRegistrationLicence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickRegistrationLicence.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
-            }
-        });
+        buttonRegistrationLicence.setOnClickListener(view1 -> pickRegistrationLicence.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
 
         return view;
     }
