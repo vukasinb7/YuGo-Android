@@ -27,10 +27,15 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener {
     private MapFragment mapFragment;
+    private CurrentRideFragment currentRideFragment;
     private RideService rideService;
     private RideDetailedDTO nextRide;
     private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
+    private ExtendedFloatingActionButton createRideButton;
+    private CardView onlineButton;
+    private Fragment parentFragment;
+    private FragmentManager fragmentManager;
     public HomeFragment() {
     }
 
@@ -39,35 +44,78 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         super.onCreate(savedInstanceState);
         rideService = APIClient.getClient().create(RideService.class);
     }
-    public void acceptRide(RideDetailedDTO ride){
-        nextRide = ride;
-        if(!hasActiveRide){
-            startRideButton.setVisibility(View.VISIBLE);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
-        mapFragment = MapFragment.newInstance(true);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
-
+        createRideButton = view.findViewById(R.id.buttonCreateRide);
         startRideButton = view.findViewById(R.id.buttonStartRide);
+        onlineButton = view.findViewById(R.id.online_offline_button);
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+
+        Call<RideDetailedDTO> activeRide;
+        if (TokenManager.getRole().equals("DRIVER")){
+            activeRide = rideService.getActiveDriverRide(TokenManager.getUserId());
+            initStartRideButton();
+            onlineButton.setVisibility(View.VISIBLE);
+            mapFragment = MapFragment.newInstance(false);
+        }
+        else{
+            activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
+            mapFragment = MapFragment.newInstance(true);
+        }
+
+        fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
+        parentFragment = this;
+        activeRide.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
+                if (response.code() == 200) {
+                    RideDetailedDTO ride = response.body();
+                    currentRideFragment =  CurrentRideFragment.newInstance(ride, parentFragment);
+                    fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
+                    hasActiveRide = true;
+                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
+                    LocationDTO destination = ride.getLocations().get(0).getDestination();
+                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
+                            destination.getLatitude(), destination.getLongitude());
+
+                }
+                else{
+                    if (TokenManager.getRole().equals("DRIVER")) {
+                        // TODO kada se vozac uloguje proveriti da li ima ACCEPTED voznje, ako ima postaviti start ride dugme na VISIBLE
+                    }
+                    else{
+                        createRideButton.setVisibility(View.VISIBLE);
+                        createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
+                                .show(getChildFragmentManager().beginTransaction(),
+                                        CreateRideFragment.TAG));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
+    }
+
+    public void initStartRideButton(){
         startRideButton.setOnClickListener(v -> {
             Call<RideDetailedDTO> startRide = rideService.startRide(nextRide.getId());
             startRide.enqueue(new Callback<>() {
                 @Override
                 public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
-                    CurrentRideFragment currentRideFragment = CurrentRideFragment.newInstance(nextRide);
+                    currentRideFragment = CurrentRideFragment.newInstance(nextRide, parentFragment);
                     fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
                     startRideButton.setVisibility(View.GONE);
                     hasActiveRide = true;
-
                     LocationDTO departure = nextRide.getLocations().get(0).getDeparture();
                     LocationDTO destination = nextRide.getLocations().get(0).getDestination();
                     mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
@@ -81,50 +129,24 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 }
             });
         });
+    }
 
-        // TODO kada se vozac uloguje proveriti da li ima ACCEPTED voznje, ako ima postaviti start ride dugme na VISIBLE
-        Call<RideDetailedDTO> activeRide;
-        if (TokenManager.getRole().equals("DRIVER")){
-            activeRide = rideService.getActiveDriverRide(TokenManager.getUserId());
-            CardView toggleButton = view.findViewById(R.id.online_offline_button);
-            toggleButton.setVisibility(View.VISIBLE);
+    public void acceptRide(RideDetailedDTO ride){
+        nextRide = ride;
+        if(!hasActiveRide){
+            startRideButton.setVisibility(View.VISIBLE);
         }
-        else{
-            activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
+    }
+
+    @Override
+    public void endCurrentRide() {
+        hasActiveRide = false;
+        if(nextRide != null){
+            startRideButton.setVisibility(View.VISIBLE);
         }
-        activeRide.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
-                if (response.code() == 200) {
-                    RideDetailedDTO ride = response.body();
-                    CurrentRideFragment currentRideFragment =  CurrentRideFragment.newInstance(ride);
-                    fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
-                    hasActiveRide = true;
-
-                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
-                    LocationDTO destination = ride.getLocations().get(0).getDestination();
-                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
-                            destination.getLatitude(), destination.getLongitude());
-
-                }
-                else{
-                    if (TokenManager.getRole().equals("PASSENGER")) {
-                        ExtendedFloatingActionButton createRideButton = view.findViewById(R.id.buttonCreateRide);
-                        createRideButton.setVisibility(View.VISIBLE);
-                        createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
-                                .show(getChildFragmentManager().beginTransaction(),
-                                        CreateRideFragment.TAG));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
-
-            }
-        });
-
-        return view;
+        mapFragment = MapFragment.newInstance(false);
+        fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
+        fragmentManager.beginTransaction().remove(currentRideFragment).commit();
     }
 
     @Override
@@ -137,15 +159,5 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public void onDestroy() {
         super.onDestroy();
         mapFragment.onPause();
-    }
-
-    @Override
-    public void endCurrentRide() {
-        hasActiveRide = false;
-        if(nextRide != null){
-            startRideButton.setVisibility(View.VISIBLE);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
-        }
     }
 }

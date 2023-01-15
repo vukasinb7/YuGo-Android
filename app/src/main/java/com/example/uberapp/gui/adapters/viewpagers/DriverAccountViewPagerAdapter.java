@@ -4,9 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.uberapp.gui.fragments.account.DriverInfoFragment;
+import com.example.uberapp.gui.fragments.account.DocumentsFragment;
 import com.example.uberapp.gui.fragments.account.DriverReportFragment;
 import com.example.uberapp.gui.fragments.account.DriverStatisticsFragment;
+import com.example.uberapp.gui.fragments.account.UserInfoFragment;
 
 public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
 
@@ -19,13 +20,15 @@ public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new DriverInfoFragment();
+                return new UserInfoFragment();
             case 1:
-                return new DriverStatisticsFragment();
+                return new DocumentsFragment();
             case 2:
+                return new DriverStatisticsFragment();
+            case 3:
                 return new DriverReportFragment();
             default:
-                return new DriverInfoFragment();
+                return new UserInfoFragment();
         }
     }
 

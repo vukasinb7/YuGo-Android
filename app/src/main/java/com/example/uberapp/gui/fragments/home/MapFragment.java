@@ -102,6 +102,7 @@ public class MapFragment extends Fragment implements LocationListener {
             }
         });
         map.setMultiTouchControls(true);
+        map.setBuiltInZoomControls(false);
         map.invalidate();
     }
 

@@ -57,8 +57,9 @@ public class CurrentRideFragment extends Fragment {
         void endCurrentRide();
     }
 
-    public static CurrentRideFragment newInstance(RideDetailedDTO ride) {
+    public static CurrentRideFragment newInstance(RideDetailedDTO ride, Fragment parentFragment) {
         CurrentRideFragment fragment = new CurrentRideFragment();
+        fragment.endCurrentRideListener = (OnEndCurrentRideListener) parentFragment;
         Bundle args = new Bundle();
         args.putSerializable(ARG_RIDE, ride);
         fragment.setArguments(args);
@@ -68,7 +69,6 @@ public class CurrentRideFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endCurrentRideListener = (OnEndCurrentRideListener) getParentFragment();
         ride = (RideDetailedDTO) getArguments().get(ARG_RIDE);
         passengerService = APIClient.getClient().create(PassengerService.class);
         driverService = APIClient.getClient().create(DriverService.class);
@@ -123,24 +123,27 @@ public class CurrentRideFragment extends Fragment {
                     dialog.show();
                 });
 
-                endRide.setOnClickListener(v -> {
-                    Call<RideDetailedDTO> call1 = rideService.endRide(ride.getId());
-                    call1.enqueue(new Callback<>() {
-                        @Override
-                        public void onResponse(@NonNull Call<RideDetailedDTO> call1, @NonNull Response<RideDetailedDTO> response1) {
-                            if (response1.code() == 200) {
-                                Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
-                                endCurrentRideListener.endCurrentRide();
+                if (TokenManager.getRole().equals("DRIVER")){
+                    endRide.setVisibility(View.VISIBLE);
+                    endRide.setOnClickListener(v -> {
+                        Call<RideDetailedDTO> call1 = rideService.endRide(ride.getId());
+                        call1.enqueue(new Callback<>() {
+                            @Override
+                            public void onResponse(@NonNull Call<RideDetailedDTO> call1, @NonNull Response<RideDetailedDTO> response1) {
+                                if (response1.code() == 200) {
+                                    Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                                    endCurrentRideListener.endCurrentRide();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(@NonNull Call<RideDetailedDTO> call1, @NonNull Throwable t) {
+                            @Override
+                            public void onFailure(@NonNull Call<RideDetailedDTO> call1, @NonNull Throwable t) {
 
-                            Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
-                        }
+                                Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     });
-                });
+                }
 
             }
 

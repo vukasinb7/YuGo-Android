@@ -113,6 +113,7 @@
         android:backgroundTint="@color/red"
         android:textAlignment="textEnd"
         android:text="END RIDE"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone"/>
 
 </RelativeLayout>

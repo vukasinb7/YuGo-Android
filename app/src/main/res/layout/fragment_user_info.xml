@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingHorizontal="10dp"
-    tools:context=".gui.fragments.account.PassengerInfoFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".gui.fragments.account.UserInfoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -20,9 +19,8 @@
                 android:textSize="15sp"
                 android:labelFor="@+id/editTextFirstName"
                 android:text="@string/first_name"/>
-
             <include layout="@layout/edit_text_update"
-                android:id="@+id/nameContainerPassenger"
+                android:id="@+id/nameContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -35,7 +33,7 @@
                 android:labelFor="@+id/editTextLastName"
                 android:text="@string/last_name"/>
             <include layout="@layout/edit_text_update"
-                android:id="@+id/lastNameContainerPassenger"
+                android:id="@+id/lastNameContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -48,7 +46,7 @@
                 android:labelFor="@+id/editTextPhone"
                 android:text="@string/phone_number"/>
             <include layout="@layout/edit_text_update"
-                android:id="@+id/phoneContainerPassenger"
+                android:id="@+id/phoneContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -61,7 +59,7 @@
                 android:labelFor="@+id/editTextEmail"
                 android:text="@string/email"/>
             <include layout="@layout/edit_text_update"
-                android:id="@+id/emailContainerPassenger"
+                android:id="@+id/emailContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -74,10 +72,9 @@
                 android:labelFor="@+id/editTextAddress"
                 android:text="@string/address"/>
             <include layout="@layout/edit_text_update"
-                android:id="@+id/addressContainerPassenger"
+                android:id="@+id/addressContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
             <Button
                 android:id="@+id/buttonCreateAccount"
                 android:layout_width="match_parent"
@@ -85,6 +82,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="20dp"
                 tools:layout_editor_absoluteX="21dp" />
+
 
         </LinearLayout>
     </ScrollView>

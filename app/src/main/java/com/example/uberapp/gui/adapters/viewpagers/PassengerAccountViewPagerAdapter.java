@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.uberapp.gui.fragments.account.PassengerFavouritesFragment;
-import com.example.uberapp.gui.fragments.account.PassengerInfoFragment;
 import com.example.uberapp.gui.fragments.account.PassengerReportFragment;
+import com.example.uberapp.gui.fragments.account.UserInfoFragment;
 
 public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
 
@@ -19,13 +19,13 @@ public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new PassengerInfoFragment();
+                return new UserInfoFragment();
             case 1:
                 return new PassengerFavouritesFragment();
             case 2:
                 return new PassengerReportFragment();
             default:
-                return new PassengerInfoFragment();
+                return new UserInfoFragment();
         }
     }
 
