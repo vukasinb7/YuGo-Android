@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
@@ -25,8 +27,11 @@ import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
+import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.UserService;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.gui.dialogs.ReasonDialog;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.io.IOException;
 
@@ -38,6 +43,7 @@ import retrofit2.Response;
 public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
     private PassengerService passengerService;
+    private RideService rideService;
     private DriverService driverService;
     private ImageService imageService;
     private RideDetailedDTO ride;
@@ -72,10 +78,10 @@ public class CurrentRideFragment extends Fragment {
 
         Call<UserDetailedDTO> userCall;
         if (TokenManager.getRole().equals("DRIVER")){
-            userCall = userService.getPassenger(ride.getPassengers().get(0).getId());
+            userCall = passengerService.getPassenger(ride.getPassengers().get(0).getId());
         }
         else{
-            userCall = userService.getDriver(ride.getDriver().getId());
+            userCall = driverService.getDriver(ride.getDriver().getId());
         }
         userCall.enqueue(new Callback<>() {
             @Override

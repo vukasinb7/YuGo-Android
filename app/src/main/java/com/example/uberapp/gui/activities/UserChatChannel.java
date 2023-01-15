@@ -5,9 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.dto.AllMessagesDTO;
+import com.example.uberapp.core.dto.MessageDTO;
+import com.example.uberapp.core.dto.UserDetailedDTO;
+import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.UserService;
 import com.example.uberapp.core.tools.MessageMockup;
 import com.example.uberapp.core.tools.UserMockup;
 import com.example.uberapp.gui.adapters.MessageListAdapter;
