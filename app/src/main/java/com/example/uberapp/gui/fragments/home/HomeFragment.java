@@ -204,6 +204,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
                             destination.getLatitude(), destination.getLongitude());
 
+                    nextRide = null;
+
                 }
 
                 @Override
@@ -227,6 +229,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         if(nextRide != null){
             startRideButton.setVisibility(View.VISIBLE);
         }
+
         if(TokenManager.getRole().equals("DRIVER"))
             mapFragment = MapFragment.newInstance(false);
         else
