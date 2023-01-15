@@ -100,7 +100,7 @@ public class CurrentRideFragment extends Fragment {
         getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CurrentRideFragment.CallbackLengthTime() {
             @Override
             public void onSuccess(Double distance, Double remainingTime) {
-                distanceTb.setText(Double.toString(Math.round(distance*100)/100)+"km");
+                distanceTb.setText(Double.toString(Math.round(distance*100)/100.0)+"km");
                 timeRemainingTb.setText(String.valueOf((int)Math.round(remainingTime/60))+"min");
                 timeRemainingTotalTb.setText(String.valueOf((int)Math.round(remainingTime/60))+"min");
             }

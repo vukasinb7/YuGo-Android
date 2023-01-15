@@ -99,7 +99,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
             public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                 if (response.code() == 200) {
                     RideDetailedDTO ride = response.body();
-                    price.setText("$"+Double.toString(Math.round(ride.getTotalCost()*100)/100));
+                    price.setText("$"+Double.toString(Math.round(ride.getTotalCost()*100)/100.0));
                     numOfPerson.setText("5");
                     startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
                     endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());
@@ -111,7 +111,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CallbackLength() {
                         @Override
                         public void onSuccess(Double value) {
-                            distance.setText(Double.toString(Math.round(value*100)/100)+"km");
+                            distance.setText(Double.toString(Math.round(value*100)/100.0)+"km");
                         }
                     });
                     numOfPerson.setText(Integer.toString(ride.getPassengers().size()));
