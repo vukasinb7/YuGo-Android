@@ -45,7 +45,7 @@ import retrofit2.Response;
 public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
     private PassengerService passengerService;
-    private RideService rideService;
+    private RideService rideService= APIClient.getClient().create(RideService.class);;
     private DriverService driverService;
     private ImageService imageService;
     private RideDetailedDTO ride;

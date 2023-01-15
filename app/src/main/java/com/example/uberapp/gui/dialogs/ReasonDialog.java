@@ -95,7 +95,7 @@ public class ReasonDialog extends Dialog implements android.view.View.OnClickLis
                     call.enqueue(new Callback<>() {
                         @Override
                         public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
-                            if (response.code() == 204) {
+                            if (response.code() == 200) {
                                 dismiss();
                             }
                         }
