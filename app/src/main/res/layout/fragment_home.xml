@@ -25,8 +25,9 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="30dp"
         android:layout_margin="10dp"
-        android:layout_below="@+id/fragment_current_ride"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
         android:visibility="gone">
 
         <ToggleButton
@@ -62,8 +63,8 @@
         android:id="@+id/buttonStartRide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_margin="25dp"
         app:iconTint="@color/dark_gray_pewter"
         android:text="@string/start_next_ride"

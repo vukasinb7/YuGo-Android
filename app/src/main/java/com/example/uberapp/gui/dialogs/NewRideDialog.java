@@ -99,7 +99,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
             public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                 if (response.code() == 200) {
                     RideDetailedDTO ride = response.body();
-                    price.setText("$"+ride.getTotalCost().toString());
+                    price.setText("$"+Double.toString(Math.round(ride.getTotalCost()*100)/100));
                     numOfPerson.setText("5");
                     startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
                     endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());

@@ -251,7 +251,7 @@
             android:layout_height="50dp"
             android:layout_toEndOf="@id/buttonReturnBack"
             android:gravity="center"
-            android:text="@string/accept"
+            android:text="Confirm Ride"
             android:background="@drawable/shape_round_image_button"
             />
     </RelativeLayout>
