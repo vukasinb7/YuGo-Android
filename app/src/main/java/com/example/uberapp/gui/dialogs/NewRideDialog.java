@@ -2,16 +2,12 @@ package com.example.uberapp.gui.dialogs;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,7 +21,6 @@ import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
-import com.example.uberapp.gui.fragments.home.MapFragment;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -103,9 +98,13 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     LocationDTO departure = ride.getLocations().get(0).getDeparture();
                     LocationDTO destination = ride.getLocations().get(0).getDestination();
 
-                    RoadManager roadManager = new OSRMRoadManager(getContext(),"RoadManager");
-
-                    ArrayList<GeoPoint> track = new ArrayList<>();
+                    System.out.println(getLength(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude(),new CallbackLength() {
+                        @Override
+                        public void onSuccess(Double value) {
+                            distance.setText(Double.toString(Math.round(value*100)/100)+"km");
+                        }
+                    }));
+                    numOfPerson.setText(Integer.toString(ride.getPassengers().size()));
 
 
                     createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
@@ -235,5 +234,37 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
             }
         });
 
+    }
+    public Double getLength(double startLatitude,double startLongitude,double endLatitude,double endLongitude,final CallbackLength callback){
+        if(map == null || map.getRepository() == null) {
+            return null;
+        }
+        final Double[] length = {0.0};
+
+        ExecutorService executorService= Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                RoadManager roadManager = new OSRMRoadManager(getContext(),"RoadManager");
+
+                ArrayList<GeoPoint> track = new ArrayList<>();
+                GeoPoint startPoint = new GeoPoint(startLatitude, startLongitude );
+                GeoPoint endPoint = new GeoPoint(endLatitude, endLongitude);
+                track.add(startPoint);
+                track.add(endPoint);
+
+                Road road = roadManager.getRoad(track);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(road.mLength);
+                    }
+                });
+            }
+        });
+        return length[0];
+    }
+    private interface CallbackLength {
+        void onSuccess(Double value);
     }
 }
