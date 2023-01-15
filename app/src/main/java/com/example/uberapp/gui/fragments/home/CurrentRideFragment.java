@@ -21,15 +21,13 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.auth.TokenManager;
-import com.example.uberapp.gui.activities.LoginActivity;
-import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.dialogs.ReasonDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 

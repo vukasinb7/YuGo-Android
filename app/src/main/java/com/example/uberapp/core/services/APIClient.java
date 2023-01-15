@@ -22,7 +22,7 @@ public class APIClient {
                 .build();
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.61:9000")
+                .baseUrl("http://192.168.1.33:9000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .client(client)
