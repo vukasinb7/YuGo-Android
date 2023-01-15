@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
@@ -23,8 +25,13 @@ import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.ImageService;
+import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.services.auth.TokenManager;
+import com.example.uberapp.gui.activities.LoginActivity;
+import com.example.uberapp.gui.dialogs.NewRideDialog;
+import com.example.uberapp.gui.dialogs.ReasonDialog;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.io.IOException;
 
@@ -37,6 +44,7 @@ public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
     UserService userService = APIClient.getClient().create(UserService.class);
     ImageService imageService = APIClient.getClient().create(ImageService.class);
+    RideService rideService=APIClient.getClient().create(RideService.class);
     RideDetailedDTO ride;
 
     public CurrentRideFragment() {
@@ -61,6 +69,9 @@ public class CurrentRideFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_current_ride, container, false);
         ImageView profilePic = view.findViewById(R.id.driverProfilePic);
+        CardView panic= view.findViewById(R.id.panicCurrentRide);
+        ExtendedFloatingActionButton endRide= view.findViewById(R.id.end_ride_button);
+
         Call<UserDetailedDTO> userCall;
         if (TokenManager.getRole().equals("DRIVER")){
             userCall = userService.getPassenger(ride.getPassengers().get(0).getId());
@@ -99,6 +110,32 @@ public class CurrentRideFragment extends Fragment {
                         showPopupMenu(v, user);
                     }
                 });
+                panic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new ReasonDialog(ride.getId(),"PANIC").show(getChildFragmentManager(), ReasonDialog.TAG);
+                    }
+                });
+                endRide.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Call<RideDetailedDTO> call = rideService.endRide(ride.getId());
+                        call.enqueue(new Callback<>() {
+                            @Override
+                            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+
             }
 
             @Override

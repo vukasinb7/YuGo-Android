@@ -43,11 +43,11 @@ import retrofit2.Response;
 public class NewRideDialog extends DialogFragment implements android.view.View.OnClickListener {
     MapFragment mapFragment;
     LocationManager locationManager;
-    public Activity c;
     public Button yes, no;
     TextView price,distance,numOfPerson,startLocation,endLocation;
     private Integer rideID;
     private Context context;
+    private FragmentManager fragmentManager;
     RideService rideService = APIClient.getClient().create(RideService.class);
     public static String TAG = "NewRideDialog";
 
@@ -62,6 +62,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_acceptance_ride, null, false);
         mapFragment = MapFragment.newInstance(false);
+        fragmentManager = getChildFragmentManager();
         yes = (Button) view.findViewById(R.id.accept);
         no = (Button) view.findViewById(R.id.decline);
         price =(TextView) view.findViewById(R.id.priceRideOffer);
@@ -85,12 +86,10 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
                     endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());
 
-
-                    FragmentManager fragmentManager = getChildFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mapViewOffer, mapFragment).commit();
                     mapFragment.createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
                     mapFragment.createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
-                    //mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude());
+                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude());
                 }
             }
 
@@ -112,14 +111,28 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.accept:
-                dismiss();
+                Call<RideDetailedDTO> call = rideService.acceptRide(rideID);
+                call.enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
+                        if (response.code() == 200) {
+                            dismiss();
+                            }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<RideDetailedDTO> call, @NonNull Throwable t) {
+
+                    }
+                });
+
                 break;
             case R.id.decline:
-                dismiss();
+                new ReasonDialog(rideID,"REJECTION").show(getChildFragmentManager(),ReasonDialog.TAG);
+
                 break;
             default:
                 break;
         }
-        dismiss();
     }
 }

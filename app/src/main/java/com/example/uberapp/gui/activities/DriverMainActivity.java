@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -46,7 +47,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                     Gson gson= new Gson();
                     JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
                     Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
-                    NewRideDialog nrd=new NewRideDialog(rideID);
+                    new NewRideDialog(rideID).show(getSupportFragmentManager(),NewRideDialog.TAG);
 
                 }, new Consumer<Throwable>() {
                     @Override

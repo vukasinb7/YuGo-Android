@@ -30,4 +30,10 @@ public interface RideService {
     @PUT("/api/ride/{id}/cancel")
     Call<RideDetailedDTO> rejectRide(@Path("id") Integer rideId, @Body ReasonDTO reasonDTO);
 
+    @PUT("/api/ride/{id}/panic")
+    Call<RideDetailedDTO> addPanic(@Path("id") Integer rideId, @Body ReasonDTO reasonDTO);
+
+    @PUT("/api/ride/{id}/end")
+    Call<RideDetailedDTO> endRide(@Path("id") Integer rideId);
+
 }

@@ -63,6 +63,7 @@
 
             </LinearLayout>
             <androidx.cardview.widget.CardView
+                android:id="@+id/panicCurrentRide"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:backgroundTint="#FF4C4C"
@@ -86,6 +87,7 @@
 
             </androidx.cardview.widget.CardView>
 
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/driverProfilePic"
                 android:layout_width="60dp"
@@ -100,5 +102,17 @@
                 android:src="@drawable/icon_round_account"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/end_ride_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passengerControlMenu"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="20dp"
+        android:backgroundTint="@color/red"
+        android:textAlignment="textEnd"
+        android:text="END RIDE"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
