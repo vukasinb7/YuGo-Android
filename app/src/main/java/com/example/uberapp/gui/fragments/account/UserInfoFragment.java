@@ -3,9 +3,6 @@ package com.example.uberapp.gui.fragments.account;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,32 +10,29 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.uberapp.R;
-import com.example.uberapp.core.model.User;
-import com.example.uberapp.core.tools.UserMockup;
+import com.example.uberapp.core.dto.UserDetailedDTO;
 
 public class UserInfoFragment extends Fragment {
-    public UserInfoFragment() {
-
+    UserDetailedDTO user;
+    public UserInfoFragment(UserDetailedDTO user) {
+        this.user = user;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        User user = UserMockup.getUsers().get(0);
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
 
-        
-
         setupEditText(view.findViewById(R.id.nameContainer),"name",user.getName());
-        setupEditText(view.findViewById(R.id.lastNameContainer),"lastname",user.getLastName());
-        setupEditText(view.findViewById(R.id.phoneContainer),"phone",user.getPhoneNumber());
+        setupEditText(view.findViewById(R.id.lastNameContainer),"lastname",user.getSurname());
+        setupEditText(view.findViewById(R.id.phoneContainer),"phone",user.getTelephoneNumber());
         setupEditText(view.findViewById(R.id.emailContainer),"email",user.getEmail());
         setupEditText(view.findViewById(R.id.addressContainer),"email",user.getAddress());
 

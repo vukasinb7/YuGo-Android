@@ -20,15 +20,22 @@ import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.auth.TokenManager;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
 
 public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener {
     private MapFragment mapFragment;
     private CurrentRideFragment currentRideFragment;
-    private RideService rideService;
+    private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO nextRide;
     private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
@@ -36,13 +43,14 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     private CardView onlineButton;
     private Fragment parentFragment;
     private FragmentManager fragmentManager;
+
+    private StompClient mStompClient;
     public HomeFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rideService = APIClient.getClient().create(RideService.class);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +63,10 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
+                .show(getChildFragmentManager().beginTransaction(),
+                        CreateRideFragment.TAG));
+
         Call<RideDetailedDTO> activeRide;
         if (TokenManager.getRole().equals("DRIVER")){
             activeRide = rideService.getActiveDriverRide(TokenManager.getUserId());
@@ -64,7 +76,80 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         }
         else{
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
-            mapFragment = MapFragment.newInstance(true);
+            mapFragment = MapFragment.newInstance(false);
+
+            mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+
+            mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        hasActiveRide = false;
+                        mapFragment = MapFragment.newInstance(true);
+                        fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
+                        fragmentManager.beginTransaction().remove(currentRideFragment).commit();
+                        createRideButton.setVisibility(View.VISIBLE);
+
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                            System.out.println(throwable.getMessage());
+                        }
+                    });
+            mStompClient.topic("/ride-topic/notify-passenger-start-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        hasActiveRide = true;
+                        createRideButton.setVisibility(View.GONE);
+                        mapFragment = MapFragment.newInstance(false);
+                        fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
+                        Call<RideDetailedDTO> activeRideNotified;
+                        activeRideNotified = rideService.getActivePassengerRide(TokenManager.getUserId());
+                        activeRideNotified.enqueue(new Callback<>() {
+                           @Override
+                           public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
+                               if (response.code() == 200) {
+                                   RideDetailedDTO ride = response.body();
+                                   currentRideFragment =  CurrentRideFragment.newInstance(ride, parentFragment);
+                                   fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
+                                   hasActiveRide = true;
+                                   LocationDTO departure = ride.getLocations().get(0).getDeparture();
+                                   LocationDTO destination = ride.getLocations().get(0).getDestination();
+                                   mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
+                                           destination.getLatitude(), destination.getLongitude());
+
+                               }}
+
+                            @Override
+                            public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+                            }
+                        });
+
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                            System.out.println(throwable.getMessage());
+                        }
+                    });
+            mStompClient.lifecycle().subscribe(lifecycleEvent -> {
+                switch (lifecycleEvent.getType()) {
+
+                    case OPENED:
+                        System.out.println("OPENED");
+                        break;
+
+                    case ERROR:
+                        System.out.println(lifecycleEvent.getException().getMessage());
+                        break;
+
+                    case CLOSED:
+                        System.out.println("CLOSED");
+                        break;
+                }
+            });
+
+            mStompClient.connect();
+
         }
 
         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
@@ -89,9 +174,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     }
                     else{
                         createRideButton.setVisibility(View.VISIBLE);
-                        createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
-                                .show(getChildFragmentManager().beginTransaction(),
-                                        CreateRideFragment.TAG));
+
 
                     }
                 }
@@ -144,7 +227,10 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         if(nextRide != null){
             startRideButton.setVisibility(View.VISIBLE);
         }
-        mapFragment = MapFragment.newInstance(false);
+        if(TokenManager.getRole().equals("DRIVER"))
+            mapFragment = MapFragment.newInstance(false);
+        else
+            mapFragment = MapFragment.newInstance(true);
         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
     }

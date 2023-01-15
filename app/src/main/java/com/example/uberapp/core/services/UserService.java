@@ -9,6 +9,7 @@ import com.example.uberapp.core.auth.TokenState;
 
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,9 +19,10 @@ import retrofit2.http.Path;
 public interface UserService {
     @POST("/api/user/login")
     Observable<TokenState> login(@Body LoginCredentialsDTO credentials);
+    @POST("/api/user/logout")
+    Call<ResponseBody> logout();
     @GET("/api/user/{id}/message")
     Call<AllMessagesDTO> getUserMessages(@Path("id") Integer id);
-
     @GET("/api/user/{id}/conversation")
     Call<AllMessagesDTO> getUsersConversation(@Path("id") Integer id);
     @POST("/api/user/{id}/message")

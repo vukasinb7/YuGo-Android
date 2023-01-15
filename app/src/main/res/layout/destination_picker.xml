@@ -56,7 +56,8 @@
             android:src="@drawable/icon_circle"
             android:layout_gravity="center_vertical"
             app:tint="@color/dark_gray_pewter"
-            android:contentDescription="@string/destination_icon" />
+            android:contentDescription="@string/destination_icon"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/editTextDestination"
@@ -67,7 +68,7 @@
             android:layout_marginStart="5dp"
             android:hint="@string/where_to"
             android:inputType="textFilter"
-            android:textColor="@color/dark_gray_pewter" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </RelativeLayout>

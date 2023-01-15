@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
-import com.example.uberapp.gui.fragments.account.PassengerAccountFragment;
+import com.example.uberapp.gui.fragments.account.AccountFragment;
 import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
@@ -19,7 +19,7 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
 
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
-    PassengerAccountFragment accountFragment = new PassengerAccountFragment();
+    AccountFragment accountFragment = new AccountFragment();
     UserInboxFragment inboxFragment = new UserInboxFragment();
     UserHistoryFragment historyFragment = new UserHistoryFragment();
 

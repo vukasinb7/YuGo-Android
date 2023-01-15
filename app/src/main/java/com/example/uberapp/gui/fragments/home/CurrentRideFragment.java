@@ -54,10 +54,10 @@ import retrofit2.Response;
 
 public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
-    private PassengerService passengerService;
-    private RideService rideService;
-    private DriverService driverService;
-    private ImageService imageService;
+    private final PassengerService passengerService = APIClient.getClient().create(PassengerService.class);
+    private final DriverService driverService = APIClient.getClient().create(DriverService.class);
+    private final ImageService imageService = APIClient.getClient().create(ImageService.class);
+    private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO ride;
     public OnEndCurrentRideListener endCurrentRideListener;
 
@@ -81,10 +81,6 @@ public class CurrentRideFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ride = (RideDetailedDTO) getArguments().get(ARG_RIDE);
-        passengerService = APIClient.getClient().create(PassengerService.class);
-        driverService = APIClient.getClient().create(DriverService.class);
-        imageService = APIClient.getClient().create(ImageService.class);
-        rideService = APIClient.getClient().create(RideService.class);
     }
 
     @Override

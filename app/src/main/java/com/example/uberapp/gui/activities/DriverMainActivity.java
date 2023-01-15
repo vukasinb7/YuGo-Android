@@ -13,7 +13,7 @@ import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
-import com.example.uberapp.gui.fragments.account.DriverAccountFragment;
+import com.example.uberapp.gui.fragments.account.AccountFragment;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
@@ -93,7 +93,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     HomeFragment homeFragment = new HomeFragment();
     UserInboxFragment userInboxFragment = new UserInboxFragment();
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
-    DriverAccountFragment driverAccountFragment = new DriverAccountFragment();
+    AccountFragment driverAccountFragment = new AccountFragment();
 
 
     @Override

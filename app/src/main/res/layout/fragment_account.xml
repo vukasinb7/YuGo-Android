@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.fragments.account.DriverAccountFragment">
+    tools:context=".gui.fragments.account.AccountFragment">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,41 +39,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:id="@+id/driverAccountTabLayout"
+                android:id="@+id/accountTabLayout"
                 app:tabBackground="@color/pewter_dark_blue"
                 android:layout_below="@+id/profilePic">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/info"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/documents" />
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/statistics"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/report"/>
-
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:paddingVertical="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/driverAccountViewPager"
-                android:layout_below="@+id/driverAccountTabLayout"
+                android:id="@+id/accountViewPager"
+                android:layout_below="@+id/accountTabLayout"
                 android:saveEnabled="false"
                 >
             </androidx.viewpager2.widget.ViewPager2>
 
             <ImageButton
-                android:id="@+id/logoutButtonDriver"
+                android:id="@+id/logoutButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/icon_logout"
@@ -85,4 +68,5 @@
                 android:background="@drawable/shape_round_image_button"/>
         </RelativeLayout>
     </ScrollView>
+
 </FrameLayout>
