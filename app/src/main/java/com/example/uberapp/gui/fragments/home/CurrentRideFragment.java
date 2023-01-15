@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.fragments.home;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -118,7 +119,8 @@ public class CurrentRideFragment extends Fragment {
                 panic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new ReasonDialog(ride.getId(),"PANIC").show(getChildFragmentManager(), ReasonDialog.TAG);
+                        Dialog dialog = new ReasonDialog(getActivity(),ride.getId(),"PANIC");
+                        dialog.show();
                     }
                 });
                 endRide.setOnClickListener(new View.OnClickListener() {

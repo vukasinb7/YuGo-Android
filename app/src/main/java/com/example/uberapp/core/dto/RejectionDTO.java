@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 
 public class RejectionDTO implements Serializable {
     String reason;
-    LocalDateTime timeOfRejection;
+    String timeOfRejection;
 
     public RejectionDTO() {
     }
 
-    public RejectionDTO(String reason, LocalDateTime timeOfRejection) {
+    public RejectionDTO(String reason, String timeOfRejection) {
         this.reason = reason;
         this.timeOfRejection = timeOfRejection;
     }
@@ -23,11 +23,11 @@ public class RejectionDTO implements Serializable {
         this.reason = reason;
     }
 
-    public LocalDateTime getTimeOfRejection() {
+    public String getTimeOfRejection() {
         return timeOfRejection;
     }
 
-    public void setTimeOfRejection(LocalDateTime timeOfRejection) {
+    public void setTimeOfRejection(String timeOfRejection) {
         this.timeOfRejection = timeOfRejection;
     }
 }

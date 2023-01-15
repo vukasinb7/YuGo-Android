@@ -33,7 +33,7 @@ public class UserNotificationsFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new NewRideDialog(1).show(getChildFragmentManager(),NewRideDialog.TAG);
+                new NewRideDialog(2).show(getChildFragmentManager(),NewRideDialog.TAG);
             }
         });
         return view;
