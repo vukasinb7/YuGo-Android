@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
             mapFragment = MapFragment.newInstance(false);
 
-            mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+            mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://"+ LocalSettings.localIP +":9000/api/socket/websocket");
 
             mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
