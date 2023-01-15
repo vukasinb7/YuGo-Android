@@ -24,8 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    MapFragment mapFragment;
-    RideService rideService;
+    private MapFragment mapFragment;
+    private RideService rideService;
     public HomeFragment() {
     }
 

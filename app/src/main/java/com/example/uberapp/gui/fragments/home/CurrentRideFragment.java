@@ -13,25 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
-import com.example.uberapp.core.services.RideService;
+import com.example.uberapp.core.services.PassengerService;
 import com.example.uberapp.core.services.UserService;
-import com.example.uberapp.core.services.auth.TokenManager;
-import com.example.uberapp.gui.activities.LoginActivity;
-import com.example.uberapp.gui.dialogs.NewRideDialog;
-import com.example.uberapp.gui.dialogs.ReasonDialog;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.example.uberapp.core.auth.TokenManager;
 
 import java.io.IOException;
 
@@ -42,10 +37,10 @@ import retrofit2.Response;
 
 public class CurrentRideFragment extends Fragment {
     private static final String ARG_RIDE = "ride";
-    UserService userService = APIClient.getClient().create(UserService.class);
-    ImageService imageService = APIClient.getClient().create(ImageService.class);
-    RideService rideService=APIClient.getClient().create(RideService.class);
-    RideDetailedDTO ride;
+    private PassengerService passengerService;
+    private DriverService driverService;
+    private ImageService imageService;
+    private RideDetailedDTO ride;
 
     public CurrentRideFragment() {
     }
@@ -62,6 +57,9 @@ public class CurrentRideFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ride = (RideDetailedDTO) getArguments().get(ARG_RIDE);
+        passengerService = APIClient.getClient().create(PassengerService.class);
+        driverService = APIClient.getClient().create(DriverService.class);
+        imageService = APIClient.getClient().create(ImageService.class);
     }
 
     @Override

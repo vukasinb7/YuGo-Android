@@ -1,6 +1,9 @@
 package com.example.uberapp.core.services;
 
+import com.example.uberapp.core.dto.AllMessagesDTO;
 import com.example.uberapp.core.dto.LoginCredentialsDTO;
+import com.example.uberapp.core.dto.MessageDTO;
+import com.example.uberapp.core.dto.MessageSendDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.auth.TokenState;
 
@@ -16,9 +19,12 @@ public interface UserService {
     @POST("/api/user/login")
     Observable<TokenState> login(@Body LoginCredentialsDTO credentials);
 
-    @GET("/api/driver/{id}")
-    Call<UserDetailedDTO> getDriver(@Path("id") Integer id);
+    @GET("/api/user/{id}/message")
+    Call<AllMessagesDTO> getUserMessages(@Path("id") Integer id);
 
-    @GET("/api/passenger/{id}")
-    Call<UserDetailedDTO> getPassenger(@Path("id") Integer id);
+    @POST("/api/user/{id}/message")
+    Call<MessageDTO> sendMessageToUser(@Path("id") Integer id, @Body MessageSendDTO messageSendDTO);
+
+    @GET("/api/user/{id}")
+    Call<UserDetailedDTO> getUser(@Path("id") Integer id);
 }
