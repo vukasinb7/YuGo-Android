@@ -86,4 +86,5 @@
     <string name="we_are_searching_a_driver_for_your_ride_please_wait">We are searching a driver for your ride, please wait.</string>
     <string name="start_ride">Start ride</string>
     <string name="start_next_ride">Start next ride</string>
+    <string name="documents">Documents</string>
 </resources>

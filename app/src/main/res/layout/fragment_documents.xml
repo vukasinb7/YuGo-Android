@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".gui.fragments.account.DocumentsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/drivers_licence"
+                android:textSize="15sp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/buttonPickDriversLicence"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white_dark_gray"
+                android:textColor="@color/dark_gray_pewter"
+                android:text="@string/select_from_gallery"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/registration_licence"
+                android:textSize="15sp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/buttonPickRegistrationLicence"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white_dark_gray"
+                android:textColor="@color/dark_gray_pewter"
+                android:text="@string/select_from_gallery"/>
+            <Button
+                android:id="@+id/buttonCreateAccount"
+                android:layout_width="match_parent"
+                android:text="@string/save_changes"
+                android:layout_height="58dp"
+                android:layout_marginTop="20dp"
+                tools:layout_editor_absoluteX="21dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

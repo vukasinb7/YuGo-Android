@@ -37,7 +37,8 @@
             android:textOff="@string/offline"
             android:textOn="@string/online"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:checked="true"/>
     </androidx.cardview.widget.CardView>
 
 
@@ -45,7 +46,7 @@
         android:id="@+id/buttonCreateRide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="25dp"
         app:icon="@drawable/icon_add"
@@ -56,6 +57,7 @@
         app:iconSize="25dp"
         android:backgroundTint="@color/pewter_dark_gray"
         android:visibility="gone"/>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonStartRide"
         android:layout_width="wrap_content"

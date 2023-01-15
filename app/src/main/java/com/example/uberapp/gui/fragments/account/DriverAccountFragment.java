@@ -22,7 +22,7 @@ public class DriverAccountFragment extends Fragment {
     DriverAccountViewPagerAdapter accountAdapter;
 
     public DriverAccountFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
