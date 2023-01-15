@@ -7,6 +7,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -101,7 +105,7 @@ public class MapFragment extends Fragment implements LocationListener {
         map.invalidate();
     }
 
-    public void createMarker(double latitude, double longitude, String title){
+    public void createMarker(double latitude, double longitude, String title,Integer drawableID){
         if(map == null || map.getRepository() == null) {
             return;
         }
@@ -120,6 +124,8 @@ public class MapFragment extends Fragment implements LocationListener {
         marker.setTitle(title);
         marker.setId(title);
         marker.setPanToView(true);
+        Drawable d = ResourcesCompat.getDrawable(getResources(), drawableID, null);
+        marker.setIcon(d);
         map.getOverlays().add(marker);
         map.invalidate();
         IMapController mapController = map.getController();
@@ -152,6 +158,8 @@ public class MapFragment extends Fragment implements LocationListener {
                     @Override
                     public void run() {
                         map.getOverlays().add(roadOverlay);
+                        createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin);
+                        createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin);
                         map.invalidate();
                         IMapController mapController = map.getController();
                         mapController.setZoom(14.0);
@@ -238,6 +246,6 @@ public class MapFragment extends Fragment implements LocationListener {
         if(map == null || map.getRepository() == null) {
             return;
         }
-        createMarker(location.getLatitude(), location.getLongitude(), "Current location");
+        createMarker(location.getLatitude(), location.getLongitude(), "Current location",R.drawable.current_location_pin);
     }
 }

@@ -63,8 +63,6 @@ public class HomeFragment extends Fragment {
 
                     LocationDTO departure = ride.getLocations().get(0).getDeparture();
                     LocationDTO destination = ride.getLocations().get(0).getDestination();
-                    mapFragment.createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
-                    mapFragment.createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
                     mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
                             destination.getLatitude(), destination.getLongitude());
 

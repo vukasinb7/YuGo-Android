@@ -5,6 +5,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -107,8 +109,8 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     numOfPerson.setText(Integer.toString(ride.getPassengers().size()));
 
 
-                    createMarker(departure.getLatitude(), departure.getLongitude(), "Departure");
-                    createMarker(destination.getLatitude(), destination.getLongitude(), "Destination");
+                    createMarker(departure.getLatitude(), departure.getLongitude(), "Departure",R.drawable.start_location_pin);
+                    createMarker(destination.getLatitude(), destination.getLongitude(), "Destination",R.drawable.finish_location_pin);
                     createRoute(departure.getLatitude(), departure.getLongitude(),destination.getLatitude(), destination.getLongitude());
                 }
             }
@@ -173,7 +175,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         map.setMultiTouchControls(true);
         map.invalidate();
     }
-    public void createMarker(double latitude, double longitude, String title){
+    public void createMarker(double latitude, double longitude, String title,Integer drawableID){
         if(map == null || map.getRepository() == null) {
             return;
         }
@@ -192,12 +194,15 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         marker.setTitle(title);
         marker.setId(title);
         marker.setPanToView(true);
+        Drawable d = ResourcesCompat.getDrawable(getResources(), drawableID, null);
+        marker.setIcon(d);
         map.getOverlays().add(marker);
         map.invalidate();
         IMapController mapController = map.getController();
-        mapController.setZoom(12.0);
+        mapController.setZoom(14.0);
         mapController.setCenter(geoPoint);
     }
+
 
     public void createRoute(double startLatitude,double startLongitude, double endLatitude, double endLongitude){
         if(map == null || map.getRepository() == null) {
