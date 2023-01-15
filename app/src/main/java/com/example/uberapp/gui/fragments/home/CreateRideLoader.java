@@ -26,13 +26,15 @@ public class CreateRideLoader extends Fragment {
     public void changeLoadingStatus(RideDetailedDTO ride){
         if(ride.getStatus().equals("SCHEDULED")){
             message.setText("The ride has been scheduled. You will get a confirmation notification, 30 minutes before ride.");
+            progressBar.setVisibility(View.GONE);
         }else if(ride.getStatus().equals("REJECTED")){
             message.setText("We couldn't find available driver, please try again later.");
+            progressBar.setVisibility(View.GONE);
         }else if(ride.getStatus().equals("ACCEPTED")){
             LocalDateTime startTime = LocalDateTime.parse(ride.getStartTime(), DateTimeFormatter.ISO_DATE_TIME);
             message.setText("Driver is on his way.\nEstimated time of arrival: " + startTime.getHour() + ":" + startTime.getMinute() + "h");
+            progressBar.setVisibility(View.GONE);
         }
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override

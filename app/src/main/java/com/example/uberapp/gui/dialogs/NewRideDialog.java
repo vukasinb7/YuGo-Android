@@ -25,6 +25,7 @@ import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
+import com.example.uberapp.gui.fragments.home.CreateRideSubfragment01;
 import com.example.uberapp.gui.fragments.home.MapFragment;
 
 import org.osmdroid.api.IMapController;
@@ -59,6 +60,11 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
     RideService rideService = APIClient.getClient().create(RideService.class);
     public static String TAG = "NewRideDialog";
 
+    public interface OnAcceptRideListener{
+        void acceptRide(RideDetailedDTO ride);
+    }
+    OnAcceptRideListener acceptRideListener;
+
     public NewRideDialog(Integer rideID) {
         this.rideID=rideID;
     }
@@ -66,6 +72,7 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        acceptRideListener = (OnAcceptRideListener) getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_acceptance_ride, null, false);
 
@@ -135,8 +142,9 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     @Override
                     public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                         if (response.code() == 200) {
+                            acceptRideListener.acceptRide(response.body());
                             dismiss();
-                            }
+                        }
                     }
 
                     @Override

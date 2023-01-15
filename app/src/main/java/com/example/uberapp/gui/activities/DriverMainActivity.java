@@ -1,18 +1,18 @@
 package com.example.uberapp.gui.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.uberapp.R;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.DriverAccountFragment;
-import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
-public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, NewRideDialog.OnAcceptRideListener {
     BottomNavigationView bottomNavigationView;
     private StompClient mStompClient;
 
@@ -40,7 +40,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.105:9000/api/socket/websocket");
 
         mStompClient.topic("/ride-topic/driver-request/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
@@ -118,5 +118,10 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         super.onDestroy();
         mStompClient.disconnect();
 
+    }
+
+    @Override
+    public void acceptRide(RideDetailedDTO ride) {
+        homeFragment.acceptRide(ride);
     }
 }

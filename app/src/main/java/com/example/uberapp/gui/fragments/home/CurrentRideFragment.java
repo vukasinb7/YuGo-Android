@@ -53,6 +53,11 @@ public class CurrentRideFragment extends Fragment {
     public CurrentRideFragment() {
     }
 
+    public interface OnEndCurrentRideListener{
+        void endCurrentRide();
+    }
+    public OnEndCurrentRideListener endCurrentRideListener;
+
     public static CurrentRideFragment newInstance(RideDetailedDTO ride) {
         CurrentRideFragment fragment = new CurrentRideFragment();
         Bundle args = new Bundle();
@@ -64,6 +69,7 @@ public class CurrentRideFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        endCurrentRideListener = (OnEndCurrentRideListener) getParentFragment();
         ride = (RideDetailedDTO) getArguments().get(ARG_RIDE);
         passengerService = APIClient.getClient().create(PassengerService.class);
         driverService = APIClient.getClient().create(DriverService.class);
@@ -132,6 +138,7 @@ public class CurrentRideFragment extends Fragment {
                             public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(getContext(), "Ride Ended!", Toast.LENGTH_SHORT).show();
+                                    endCurrentRideListener.endCurrentRide();
                                 }
                             }
 
