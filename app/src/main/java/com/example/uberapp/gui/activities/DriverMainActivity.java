@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
@@ -40,7 +41,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
 
         mStompClient.topic("/ride-topic/driver-request/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {

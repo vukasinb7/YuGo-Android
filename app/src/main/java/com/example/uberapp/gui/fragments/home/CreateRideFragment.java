@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.PathDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
@@ -149,7 +150,7 @@ public class CreateRideFragment extends DialogFragment implements
                     subFrag02.vehicleTypes = vehicleTypes;
                 });
 
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.33:9000/api/socket/websocket");
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
 
         mStompClient.topic("/ride-topic/notify-passenger/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {

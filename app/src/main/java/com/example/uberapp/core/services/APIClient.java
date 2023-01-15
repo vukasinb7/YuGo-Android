@@ -1,5 +1,6 @@
 package com.example.uberapp.core.services;
 
+import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.auth.TokenInterceptor;
 
 import okhttp3.OkHttpClient;
@@ -22,7 +23,7 @@ public class APIClient {
                 .build();
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.33:9000")
+                .baseUrl("http://" + LocalSettings.localIP + ":9000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .client(client)
