@@ -30,13 +30,12 @@ import retrofit2.Response;
 public class UserChatChannel extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
-    UserService userService;
+    private final UserService userService = APIClient.getClient().create(UserService.class);;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_chat_channel);
 
-        userService = APIClient.getClient().create(UserService.class);
         Bundle b = getIntent().getExtras();
         Integer senderId = (int) b.get("senderId");
         Integer rideId = (int) b.get("rideId");

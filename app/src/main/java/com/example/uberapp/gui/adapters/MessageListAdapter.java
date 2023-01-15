@@ -40,8 +40,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<MessageDTO> messages;
     private Integer rideId;
-    private ImageService imageService = APIClient.getClient().create(ImageService.class);
-    private UserService userService = APIClient.getClient().create(UserService.class);
+    private final ImageService imageService = APIClient.getClient().create(ImageService.class);
+    private final UserService userService = APIClient.getClient().create(UserService.class);
     public MessageListAdapter(Context context, UserDetailedDTO user, Integer rideId, List<MessageDTO> messages) {
         this.context = context;
         this.messages = messages;

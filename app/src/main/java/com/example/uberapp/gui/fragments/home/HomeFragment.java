@@ -35,7 +35,7 @@ import ua.naiksoftware.stomp.StompClient;
 public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener {
     private MapFragment mapFragment;
     private CurrentRideFragment currentRideFragment;
-    private RideService rideService;
+    private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO nextRide;
     private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
@@ -51,7 +51,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rideService = APIClient.getClient().create(RideService.class);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
