@@ -10,6 +10,6 @@ public interface ImageService {
     @GET("/api/image/{imgName}")
     Observable<ResponseBody> getImage(@Path("imgName") String imgName);
 
-    @GET("/api/image/{profilePictureName}")
-    Call<ResponseBody> getProfilePicture(@Path("profilePictureName") String profilePictureName);
+    @GET("/api/image/profilePicture/{pictureName}")
+    Call<ResponseBody> getProfilePicture(@Path("pictureName") String pictureName);
 }

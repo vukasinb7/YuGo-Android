@@ -1,6 +1,7 @@
 package com.example.uberapp.core.services;
 
 import com.example.uberapp.core.dto.AllMessagesDTO;
+import com.example.uberapp.core.dto.ChangePasswordDTO;
 import com.example.uberapp.core.dto.LoginCredentialsDTO;
 import com.example.uberapp.core.dto.MessageDTO;
 import com.example.uberapp.core.dto.MessageSendDTO;
@@ -14,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserService {
@@ -29,4 +31,7 @@ public interface UserService {
     Call<MessageDTO> sendMessageToUser(@Path("id") Integer id, @Body MessageSendDTO messageSendDTO);
     @GET("/api/user/{id}")
     Call<UserDetailedDTO> getUser(@Path("id") Integer id);
+    @PUT("/api/user/{id}/changePassword")
+    Call<ResponseBody> updatePassword(@Path("id") Integer id, @Body ChangePasswordDTO  changePasswordDTO);
+
 }
