@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 
@@ -138,7 +139,7 @@ public class InboxMessageAdapter extends BaseAdapter {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                            Toast.makeText(activity, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -146,7 +147,7 @@ public class InboxMessageAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(Call<UserDetailedDTO> call, Throwable t) {
-
+                Toast.makeText(activity, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.auth.TokenManager;
@@ -66,7 +67,7 @@ public class UserMessagesFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<AllMessagesDTO> call, @NonNull Throwable t) {
-                System.out.println("ASD");
+                Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

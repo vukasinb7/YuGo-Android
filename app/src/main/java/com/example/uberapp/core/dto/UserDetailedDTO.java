@@ -24,6 +24,15 @@ public class UserDetailedDTO {
         this.isBlocked = isBlocked;
     }
 
+    public UserDetailedDTO(String name, String surname, String profilePicture, String telephoneNumber, String email, String address) {
+        this.name = name;
+        this.surname = surname;
+        this.profilePicture = profilePicture;
+        this.telephoneNumber = telephoneNumber;
+        this.email = email;
+        this.address = address;
+    }
+
     public UserDetailedDTO() {
     }
 

@@ -64,7 +64,7 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         Fragment parentFragment = this;
 
@@ -106,6 +106,7 @@ public class AccountFragment extends Fragment {
                 if (TokenManager.getRole().equals("DRIVER")){
                     accountAdapter =  new DriverAccountViewPagerAdapter(parentFragment, user);
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Info"));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Password"));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Documents"));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Statistics"));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Report"));
@@ -113,6 +114,7 @@ public class AccountFragment extends Fragment {
                 else{
                     accountAdapter =  new PassengerAccountViewPagerAdapter(parentFragment, user);
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Info"));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Password"));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Favourites"));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("Report"));
                 }
@@ -163,7 +165,7 @@ public class AccountFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
+                    Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
                 }
             });
         });

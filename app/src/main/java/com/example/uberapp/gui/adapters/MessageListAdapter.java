@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,7 +69,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -103,7 +104,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void onFailure(Call<MessageDTO> call, Throwable t) {
-                    System.out.println("ASD");
+                    Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
                 }
             });
         });

@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.gui.fragments.account.PassengerFavouritesFragment;
 import com.example.uberapp.gui.fragments.account.PassengerReportFragment;
+import com.example.uberapp.gui.fragments.account.PasswordFragment;
 import com.example.uberapp.gui.fragments.account.UserInfoFragment;
 
 public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
@@ -23,8 +24,10 @@ public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new UserInfoFragment(user);
             case 1:
-                return new PassengerFavouritesFragment();
+                return new PasswordFragment(user);
             case 2:
+                return new PassengerFavouritesFragment();
+            case 3:
                 return new PassengerReportFragment();
             default:
                 return new UserInfoFragment(user);
@@ -33,6 +36,6 @@ public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }
