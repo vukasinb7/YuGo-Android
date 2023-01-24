@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uberapp.R;
@@ -20,10 +21,12 @@ import com.example.uberapp.core.dto.VehicleDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.VehicleService;
+import com.example.uberapp.gui.validators.TextValidator;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.TextInputLayout;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,8 +38,8 @@ public class VehicleFragment extends Fragment {
     DriverService driverService = APIClient.getClient().create(DriverService.class);
     VehicleService vehicleService = APIClient.getClient().create(VehicleService.class);
 
-    EditText modelEditText;
-    EditText licenceNumberEditText;
+    TextInputLayout model;
+    TextInputLayout licenseNumber;
     MaterialButtonToggleGroup vehicleTypeGroup;
     MaterialButton luxButton;
     MaterialButton standardButton;
@@ -48,6 +51,7 @@ public class VehicleFragment extends Fragment {
     MaterialButton editVehicle;
     MaterialButton sendVehicleRequest;
     LinearLayout optionsLayout;
+    String LICENSE_NUMBER_REGEX= "[A-Z][A-Z][0-9]*[A-Z][A-Z]";
     public VehicleFragment(UserDetailedDTO user) {
         this.user = user;
     }
@@ -60,8 +64,8 @@ public class VehicleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
 
-        modelEditText = view.findViewById(R.id.modelEditText);
-        licenceNumberEditText = view.findViewById(R.id.licenceNumberEditText);
+        model= view.findViewById(R.id.modelTextField);
+        licenseNumber = view.findViewById(R.id.licenseNumberTextField);
         vehicleTypeGroup = view.findViewById(R.id.vehicleTypeGroup);
         luxButton = view.findViewById(R.id.luxButton);
         standardButton = view.findViewById(R.id.standardButton);
@@ -74,8 +78,20 @@ public class VehicleFragment extends Fragment {
         editVehicle = view.findViewById(R.id.editVehicle);
         sendVehicleRequest = view.findViewById(R.id.sendVehicleRequest);
 
-        this.loadVehicleData();
+        this.setupFormValidators();
+        this.setupButtons();
 
+        return view;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        this.loadVehicleData();
+    }
+
+    public void setupButtons(){
+        this.triggerValidations();
         cancel.setOnClickListener(v -> {
             this.disableAndRefreshForm();
         });
@@ -83,8 +99,8 @@ public class VehicleFragment extends Fragment {
         editVehicle.setOnClickListener(v -> {
             editVehicle.setVisibility(View.GONE);
             optionsLayout.setVisibility(View.VISIBLE);
-            modelEditText.setEnabled(true);
-            licenceNumberEditText.setEnabled(true);
+            model.setEnabled(true);
+            licenseNumber.setEnabled(true);
             babyTransport.setEnabled(true);
             petTransport.setEnabled(true);
             passengerSeats.setEnabled(true);
@@ -94,6 +110,11 @@ public class VehicleFragment extends Fragment {
         });
 
         sendVehicleRequest.setOnClickListener(v -> {
+            if (!isFormValid()){
+                Toast.makeText(getContext(), "Form is incorrect!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String vehicleType = "STANDARD";
             if (vehicleTypeGroup.getCheckedButtonId() == R.id.luxButton){
                 vehicleType = "LUX";
@@ -104,7 +125,7 @@ public class VehicleFragment extends Fragment {
 
             LocationDTO locationDTO = new LocationDTO("Null island", 0, 0);
             NewVehicleDTO newVehicleDTO = new NewVehicleDTO(vehicleType,
-                    modelEditText.getText().toString(), licenceNumberEditText.getText().toString(),
+                    model.getEditText().getText().toString(), licenseNumber.getEditText().getText().toString(),
                     locationDTO, (int)passengerSeats.getValue(),
                     babyTransport.isChecked(), babyTransport.isChecked());
             Call<ResponseBody> makeVehicleChangeRequestCall = vehicleService.makeVehicleChangeRequest(user.getId(), newVehicleDTO);
@@ -124,22 +145,25 @@ public class VehicleFragment extends Fragment {
 
             disableAndRefreshForm();
         });
-
-        return view;
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        this.loadVehicleData();
+    public boolean isFormValid(){
+        if (model.getError() == null && licenseNumber.getError() == null){
+            return true;
+        }
+        return false;
     }
 
+    public void triggerValidations(){
+        model.getEditText().setText(model.getEditText().getText().toString());
+        licenseNumber.getEditText().setText(licenseNumber.getEditText().getText().toString());
+    }
     public void disableAndRefreshForm(){
         this.loadVehicleData();
         editVehicle.setVisibility(View.VISIBLE);
         optionsLayout.setVisibility(View.GONE);
-        modelEditText.setEnabled(false);
-        licenceNumberEditText.setEnabled(false);
+        model.setEnabled(false);
+        licenseNumber.setEnabled(false);
         babyTransport.setEnabled(false);
         petTransport.setEnabled(false);
         passengerSeats.setEnabled(false);
@@ -155,8 +179,8 @@ public class VehicleFragment extends Fragment {
             public void onResponse(@NonNull Call<VehicleDTO> call, @NonNull Response<VehicleDTO> response) {
                 if (response.code() == 200){
                     VehicleDTO vehicleDTO = response.body();
-                    modelEditText.setText(vehicleDTO.getModel());
-                    licenceNumberEditText.setText(vehicleDTO.getLicenseNumber());
+                    model.getEditText().setText(vehicleDTO.getModel());
+                    licenseNumber.getEditText().setText(vehicleDTO.getLicenseNumber());
                     if (vehicleDTO.getVehicleType().equals("LUX")){
                         vehicleTypeGroup.check(R.id.luxButton);
                     }
@@ -175,6 +199,35 @@ public class VehicleFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<VehicleDTO> call, @NonNull Throwable t) {
 
+            }
+        });
+    }
+
+    public void setupFormValidators(){
+        model.getEditText().addTextChangedListener(new TextValidator(model.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (model.getEditText().getText().toString().isEmpty()){
+                    model.setError("Field is necessary!");
+                }
+                else{
+                    model.setError(null);
+                }
+            }
+        });
+
+        licenseNumber.getEditText().addTextChangedListener(new TextValidator(licenseNumber.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (licenseNumber.getEditText().getText().toString().isEmpty()){
+                    licenseNumber.setError("Field is necessary!");
+                }
+                else if (!licenseNumber.getEditText().getText().toString().matches(LICENSE_NUMBER_REGEX)){
+                    licenseNumber.setError("Not a valid license plate!");
+                }
+                else{
+                    licenseNumber.setError(null);
+                }
             }
         });
     }

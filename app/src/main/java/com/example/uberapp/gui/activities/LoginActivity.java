@@ -25,6 +25,9 @@ public class LoginActivity extends AppCompatActivity {
     UserService userService;
     TextView emailTextView;
     TextView passwordTextView;
+    TextView forgotPassword;
+    Button loginButton;
+    Button signUpButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         userService = APIClient.getClient().create(UserService.class);
         emailTextView = findViewById(R.id.loginEmailAddress);
         passwordTextView = findViewById(R.id.loginPassword);
-        TextView forgotPassword=findViewById(R.id.forgotPassword);
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ForgotPasswordDialog fpd=new ForgotPasswordDialog(LoginActivity.this);
-                fpd.show();
-            }
-        });
-        Button loginButton = findViewById(R.id.loginButton);
+        forgotPassword=findViewById(R.id.forgotPassword);
+        loginButton = findViewById(R.id.loginButton);
+        signUpButton = findViewById(R.id.registerButton);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("CheckResult")
             @Override
@@ -74,7 +72,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button signUpButton = findViewById(R.id.registerButton);
+
+        forgotPassword.setOnClickListener(view -> {
+            ForgotPasswordDialog fpd=new ForgotPasswordDialog(LoginActivity.this);
+            fpd.show();
+        });
+
         signUpButton.setOnClickListener(v -> {
             Intent registerActivity = new Intent(LoginActivity.this, NewUserRegisterActivity.class);
             startActivity(registerActivity);

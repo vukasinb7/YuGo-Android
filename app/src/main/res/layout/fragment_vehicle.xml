@@ -12,8 +12,10 @@
         android:id="@+id/modelTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+
+        app:errorEnabled="true"
         android:hint="@string/model"
+        app:startIconDrawable="@drawable/icon_car"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -25,29 +27,36 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/licenceNumberTextField"
+        android:id="@+id/licenseNumberTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:hint="@string/licence_plate"
+        android:hint="@string/license_plate"
+        app:startIconDrawable="@drawable/icon_numbers"
+        app:errorEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/licenceNumberEditText"
+            android:id="@+id/licenseNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:enabled="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vehicle_type"
+        android:textColor="@color/dark_gray_pewter"
+        android:textSize="15sp"/>
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/vehicleTypeGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         app:singleSelection="true"
-        app:selectionRequired="true"
-        android:gravity="center_horizontal">
+        app:selectionRequired="true">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/standardButton"
             android:layout_width="wrap_content"
@@ -90,7 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/passenger_seats"
-        android:layout_marginStart="10dp"
         android:textColor="@color/dark_gray_pewter"
         android:textSize="15sp"/>
     <com.google.android.material.slider.Slider

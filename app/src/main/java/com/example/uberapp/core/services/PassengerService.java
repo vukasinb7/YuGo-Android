@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 
 public interface PassengerService {
         @POST("/api/passenger")
-        Call<UserDetailedDTO> createPassenger(NewUserDTO newUserDTO);
+        Call<UserDetailedDTO> createPassenger(@Body NewUserDTO newUserDTO);
         @GET("/api/passenger/{id}")
         Call<UserDetailedDTO> getPassenger(@Path("id") Integer id);
 
