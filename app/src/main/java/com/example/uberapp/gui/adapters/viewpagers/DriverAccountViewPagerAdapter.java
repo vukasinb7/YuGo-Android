@@ -10,6 +10,7 @@ import com.example.uberapp.gui.fragments.account.UserDocumentsFragment;
 import com.example.uberapp.gui.fragments.account.DriverReportFragment;
 import com.example.uberapp.gui.fragments.account.DriverStatisticsFragment;
 import com.example.uberapp.gui.fragments.account.UserInfoFragment;
+import com.example.uberapp.gui.fragments.account.VehicleFragment;
 
 public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
 
@@ -28,10 +29,12 @@ public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new PasswordFragment(user);
             case 2:
-                return new UserDocumentsFragment();
+                return new VehicleFragment(user);
             case 3:
-                return new DriverStatisticsFragment();
+                return new UserDocumentsFragment();
             case 4:
+                return new DriverStatisticsFragment();
+            case 5:
                 return new DriverReportFragment();
             default:
                 return new UserInfoFragment(user);
@@ -40,6 +43,6 @@ public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 6;
     }
 }

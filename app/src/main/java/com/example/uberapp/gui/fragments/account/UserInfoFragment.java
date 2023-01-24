@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,9 +30,17 @@ import retrofit2.Response;
 
 public class UserInfoFragment extends Fragment {
     UserDetailedDTO user;
-    View view;
     DriverService driverService = APIClient.getClient().create(DriverService.class);
     PassengerService passengerService = APIClient.getClient().create(PassengerService.class);
+    EditText firstName;
+    EditText lastName;
+    EditText phone;
+    EditText address;
+    EditText email;
+    LinearLayout optionsLayout;
+    Button editAccount;
+    Button saveChanges;
+    Button cancel;
     public UserInfoFragment(UserDetailedDTO user) {
         this.user = user;
     }
@@ -42,38 +51,26 @@ public class UserInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
-        this.view = view;
-        loadUserInfo();
-        return view;
-    }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        this.loadUserInfo();
-    }
+        firstName = view.findViewById(R.id.firstNameEditText);
+        lastName = view.findViewById(R.id.lastNameEditText);
+        phone = view.findViewById(R.id.phoneEditText);
+        address = view.findViewById(R.id.addressEditText);
+        email = view.findViewById(R.id.emailEditText);
 
-    public void loadUserInfo(){
-        EditText firstName = view.findViewById(R.id.editTextFirstName);
-        firstName.setText(user.getName());
-        EditText lastName = view.findViewById(R.id.editTextLastName);
-        lastName.setText(user.getSurname());
-        EditText phone = view.findViewById(R.id.editTextPhone);
-        phone.setText(user.getTelephoneNumber());
-        EditText address = view.findViewById(R.id.editTextAddress);
-        address.setText(user.getAddress());
-        address.setInputType(InputType.TYPE_CLASS_NUMBER);
-        EditText email = view.findViewById(R.id.editTextEmail);
-        email.setText(user.getEmail());
-        email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        optionsLayout = view.findViewById(R.id.optionsLayoutInfo);
 
-        Button editAccount = view.findViewById(R.id.buttonEditInfo);
-        Button saveChanges = view.findViewById(R.id.buttonSaveInfo);
+        editAccount = view.findViewById(R.id.buttonEditInfo);
+        saveChanges = view.findViewById(R.id.buttonSaveInfo);
+        cancel = view.findViewById(R.id.cancelInfoChange);
+
+        cancel.setOnClickListener(v -> {
+            this.disableAndRefreshForm();
+        });
 
         editAccount.setOnClickListener(v -> {
-            saveChanges.setVisibility(View.VISIBLE);
+            optionsLayout.setVisibility(View.VISIBLE);
             editAccount.setVisibility(View.GONE);
             firstName.setEnabled(true);
             lastName.setEnabled(true);
@@ -97,13 +94,8 @@ public class UserInfoFragment extends Fragment {
                 @Override
                 public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
                     if (response.code() == 200) {
-                        saveChanges.setVisibility(View.GONE);
-                        editAccount.setVisibility(View.VISIBLE);
-                        firstName.setEnabled(false);
-                        lastName.setEnabled(false);
-                        phone.setEnabled(false);
-                        address.setEnabled(false);
-                        email.setEnabled(false);
+                        user = response.body();
+                        disableAndRefreshForm();
                     }
                     else{
                         Toast.makeText(getContext(), "Invalid input!", Toast.LENGTH_SHORT).show();
@@ -116,5 +108,32 @@ public class UserInfoFragment extends Fragment {
                 }
             });
         });
+
+        return view;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        this.loadUserInfo();
+    }
+
+    public void disableAndRefreshForm(){
+        this.loadUserInfo();
+        optionsLayout.setVisibility(View.GONE);
+        editAccount.setVisibility(View.VISIBLE);
+        firstName.setEnabled(false);
+        lastName.setEnabled(false);
+        phone.setEnabled(false);
+        address.setEnabled(false);
+        email.setEnabled(false);
+    }
+
+    public void loadUserInfo(){
+        firstName.setText(user.getName());
+        lastName.setText(user.getSurname());
+        phone.setText(user.getTelephoneNumber());
+        address.setText(user.getAddress());
+        email.setText(user.getEmail());
     }
 }

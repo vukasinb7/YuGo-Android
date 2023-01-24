@@ -105,18 +105,19 @@ public class AccountFragment extends Fragment {
                 accountViewPager = view.findViewById(R.id.accountViewPager);
                 if (TokenManager.getRole().equals("DRIVER")){
                     accountAdapter =  new DriverAccountViewPagerAdapter(parentFragment, user);
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Info"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Password"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Documents"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Statistics"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Report"));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_round_account));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_key));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_car));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_document));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_chart));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_newspaper));
                 }
                 else{
                     accountAdapter =  new PassengerAccountViewPagerAdapter(parentFragment, user);
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Info"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Password"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Favourites"));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("Report"));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_round_account));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_key));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_star));
+                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_newspaper));
                 }
                 accountViewPager.setAdapter(accountAdapter);
                 accountTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){

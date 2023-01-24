@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         }, throwable -> Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show());
             }
         });
+
         Button signUpButton = findViewById(R.id.registerButton);
         signUpButton.setOnClickListener(v -> {
             Intent registerActivity = new Intent(LoginActivity.this, NewUserRegisterActivity.class);
@@ -80,13 +81,5 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-    }
-
-    public void onClick(View view) {
-        if (view.getId() == R.id.registerButton) {
-            Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
-            startActivity(registerActivity);
-            finish();
-        }
     }
 }

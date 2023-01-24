@@ -32,4 +32,8 @@
         <item name="android:divider">@color/yellowish</item>
         <item name="android:dividerHeight">1dp</item>
     </style>
+
+    <style name="VehicleTypeStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/vehicle_type_selected_button_selector</item>
+    </style>
 </resources>
