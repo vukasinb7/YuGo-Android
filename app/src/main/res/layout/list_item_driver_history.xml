@@ -31,7 +31,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/profilePic"
+                android:id="@+id/profilePicHistory"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="15dp"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="25dp"
-                android:layout_toEndOf="@+id/profilePic"
+                android:layout_toEndOf="@+id/profilePicHistory"
                 android:text="Vukasin Bogdanovic"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -69,7 +69,7 @@
                 android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/profilePic"
+                android:layout_below="@+id/profilePicHistory"
                 android:layout_marginTop="10dp"
                 android:background="?attr/colorPrimary"
                 android:alpha="0.6"/>
@@ -323,7 +323,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_baby"
-                    app:tint="@color/dark_gray_pewter"
+                    app:tint="@color/pewter_dark_blue"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/babyIconDriverHistoryTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_baby"
+                    app:tint="@color/yellowish"
                     android:contentDescription="@string/person" />
                 <ImageView
                     android:layout_marginStart="5dp"
@@ -331,7 +339,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_pet"
-                    app:tint="@color/dark_gray_pewter"
+                    app:tint="@color/pewter_dark_blue"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/petIconDriverHistoryTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_pet"
+                    app:tint="@color/yellowish"
                     android:contentDescription="@string/person" />
 
             </LinearLayout>
@@ -341,56 +357,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/personNumLayout"
-                android:layout_marginBottom="10dp">
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/passenger1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:shapeAppearanceOverlay="@style/roundImageView"
-                    tools:ignore="ImageContrastCheck"
-                    android:src="@color/pewter_dark_blue"/>
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/passenger2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:shapeAppearanceOverlay="@style/roundImageView"
-                    tools:ignore="ImageContrastCheck"
-                    android:src="@color/pewter_dark_blue"/>
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/passenger3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:shapeAppearanceOverlay="@style/roundImageView"
-                    tools:ignore="ImageContrastCheck"
-                    android:src="@color/pewter_dark_blue"/>
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/passenger4"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:shapeAppearanceOverlay="@style/roundImageView"
-                    tools:ignore="ImageContrastCheck"
-                    android:src="@color/pewter_dark_blue"/>
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/passenger5"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:shapeAppearanceOverlay="@style/roundImageView"
-                    tools:ignore="ImageContrastCheck"
-                    android:src="@color/pewter_dark_blue"/>
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
             </LinearLayout>
             <View
@@ -401,19 +369,24 @@
                 android:layout_marginTop="5dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/mapHistory"
+            <LinearLayout
+                android:id="@+id/mapHistoryLayout"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="match_parent"
                 android:layout_below="@id/delimiterLine4"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@raw/cover_photo_mockup"/>
+                android:orientation="horizontal">
+                <!--<org.osmdroid.views.MapView
+                    android:id="@+id/mapViewHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    />-->
+            </LinearLayout>
+
             <View
                 android:id="@+id/delimiterLine5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/mapHistory"
+                android:layout_below="@+id/mapHistoryLayout"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
 
