@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="3000"
+                    android:text=""
                     android:textSize="46sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
@@ -73,8 +73,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="5/5"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -114,8 +114,8 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:layout_centerVertical="true"
-                android:text="3"
-                android:textSize="46sp"
+                android:text=""
+                android:textSize="40sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_gray_pewter"/>
 
@@ -152,8 +152,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="50"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -193,8 +193,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="30"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -203,12 +203,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/accepted"
+                    android:text="Distance"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
@@ -234,8 +233,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="20"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -244,12 +243,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/rejected"
+                    android:text="Passengers"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
