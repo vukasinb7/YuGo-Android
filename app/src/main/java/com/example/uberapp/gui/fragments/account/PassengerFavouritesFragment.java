@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.fragments.account;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,12 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.dto.FavoritePathDTO;
+import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.RideService;
+import com.example.uberapp.gui.adapters.FavoritePathAdapter;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PassengerFavouritesFragment extends Fragment {
 
+
+    RideService rideService = APIClient.getClient().create(RideService.class);
     public PassengerFavouritesFragment() {
         // Required empty public constructor
     }
@@ -29,22 +44,24 @@ public class PassengerFavouritesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v= inflater.inflate(R.layout.fragment_passenger_favourites, container, false);
-        ImageButton arrowF = v.findViewById(R.id.arrowBtnFavouriteRoute);
-        RelativeLayout hiddenViewF = v.findViewById(R.id.hiddenFavouritePathPart);
-        LinearLayout hiddenView2F = v.findViewById(R.id.hiddenPathCheckPoints);
+        ListView listView=(ListView) v.findViewById(R.id.favoritesList);
+        Call<List<FavoritePathDTO>> getFavorites=rideService.getFavoritePath();
+        getFavorites.enqueue(new Callback<List<FavoritePathDTO>>() {
+            @Override
+            public void onResponse(Call<List<FavoritePathDTO>> call, Response<List<FavoritePathDTO>> response) {
+                List<FavoritePathDTO> favorites=response.body();
+                FavoritePathAdapter favoritePathAdapter= new FavoritePathAdapter(((Activity)v.getContext()),favorites);
+                listView.setAdapter(favoritePathAdapter);
 
-        arrowF.setOnClickListener(view_clickF -> {
-            if (hiddenViewF.getVisibility() == View.VISIBLE) {
-                hiddenViewF.setVisibility(View.GONE);
-                hiddenView2F.setVisibility(View.GONE);
-                arrowF.setImageResource(R.drawable.icon_arrow_down);
+
             }
-            else {
-                hiddenViewF.setVisibility(View.VISIBLE);
-                hiddenView2F.setVisibility(View.VISIBLE);
-                arrowF.setImageResource(R.drawable.icon_arrow_up);
+
+            @Override
+            public void onFailure(Call<List<FavoritePathDTO>> call, Throwable t) {
+                Toast.makeText(v.getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
+
         return v;
     }
 }
