@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -178,6 +179,8 @@ public class FavoritePathAdapter extends BaseAdapter {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Toast.makeText(v.getContext(), "Favorite path deleted!", Toast.LENGTH_SHORT).show();
+                        favoritePaths.remove(i);
+                        ((ListView)activity.findViewById(R.id.favoritesList)).invalidateViews();
                     }
 
                     @Override

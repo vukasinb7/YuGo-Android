@@ -23,6 +23,14 @@ public class FavoritePathDTO {
         this.petTransport = petTransport;
         this.id = id;
     }
+    public FavoritePathDTO(String favoriteName, List<PathDTO> locations, List<UserSimplifiedDTO> passengers, String vehicleType, Boolean babyTransport, Boolean petTransport) {
+        this.favoriteName = favoriteName;
+        this.locations = locations;
+        this.passengers = passengers;
+        this.vehicleType = vehicleType;
+        this.babyTransport = babyTransport;
+        this.petTransport = petTransport;
+    }
 
     public String getFavoriteName() {
         return favoriteName;
