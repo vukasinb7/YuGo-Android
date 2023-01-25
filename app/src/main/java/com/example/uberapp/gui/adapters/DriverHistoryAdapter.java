@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.dto.FavoritePathDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.dto.UserSimplifiedDTO;
@@ -33,6 +34,7 @@ import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
 import com.example.uberapp.gui.dialogs.AddReviewDialog;
+import com.example.uberapp.gui.dialogs.AddToFavoritesDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.dialogs.ReasonDialog;
 import com.example.uberapp.gui.dialogs.ReviewListDialog;
@@ -301,6 +303,14 @@ public class DriverHistoryAdapter extends BaseAdapter {
                 //TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 hiddenView.setVisibility(View.VISIBLE);
                 arrow.setImageResource(R.drawable.icon_arrow_up);
+            }
+        });
+        addToFavoritesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FavoritePathDTO favorite=new FavoritePathDTO("",vht.getLocations(),vht.getPassengers(),vht.getVehicleType(),vht.isBabyTransport(),vht.isPetTransport());
+                Dialog dialog = new AddToFavoritesDialog(activity,favorite);
+                dialog.show();
             }
         });
         reviewBtn.setOnClickListener(new View.OnClickListener() {
