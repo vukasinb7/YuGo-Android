@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.fragments.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -7,13 +8,17 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.uberapp.R;
+import com.example.uberapp.gui.activities.LoginActivity;
+
 public class UserDocumentsFragment extends Fragment {
     public UserDocumentsFragment() {
 
@@ -29,37 +34,38 @@ public class UserDocumentsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_documents, container, false);
 
-        ActivityResultLauncher<PickVisualMediaRequest> pickDriversLicnece =
-                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                    // Callback is invoked after the user selects a media item or closes the
-                    // photo picker.
-                    if (uri != null) {
-                        Log.d("PhotoPicker", "Selected URI: " + uri);
-                    } else {
-                        Log.d("PhotoPicker", "No media selected");
+        ActivityResultLauncher<Intent> pickDriversLicense =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+
+                        Toast.makeText(getContext(), "Uspeo", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(), "nije", Toast.LENGTH_SHORT).show();
                     }
                 });
 
         Button buttonDriversLicence = view.findViewById(R.id.buttonPickDriversLicence);
-        buttonDriversLicence.setOnClickListener(view12 -> pickDriversLicnece.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build()));
+        buttonDriversLicence.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickDriversLicense.launch(intent);
+        });
 
-        ActivityResultLauncher<PickVisualMediaRequest> pickRegistrationLicence =
-                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                    // Callback is invoked after the user selects a media item or closes the
-                    // photo picker.
-                    if (uri != null) {
-                        Log.d("PhotoPicker", "Selected URI: " + uri);
-                    } else {
-                        Log.d("PhotoPicker", "No media selected");
+        ActivityResultLauncher<Intent> pickRegistrationLicence =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Toast.makeText(getContext(), "Uspeo", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(), "nije", Toast.LENGTH_SHORT).show();
                     }
                 });
 
         Button buttonRegistrationLicence = view.findViewById(R.id.buttonPickRegistrationLicence);
-        buttonRegistrationLicence.setOnClickListener(view1 -> pickRegistrationLicence.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build()));
+        buttonRegistrationLicence.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickRegistrationLicence.launch(intent);
+        });
 
         return view;
     }
