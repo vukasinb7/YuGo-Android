@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.example.uberapp.R;
@@ -47,32 +48,12 @@ import retrofit2.Response;
 
 public class InboxMessageAdapter extends BaseAdapter {
     public Activity activity;
-    private List<MessageDTO> conversations;
+    private final List<MessageDTO> conversations;
     private final UserService userService = APIClient.getClient().create(UserService.class);
     private final ImageService imageService = APIClient.getClient().create(ImageService.class);
-    public InboxMessageAdapter(Activity activity, List<MessageDTO> messages){
+    public InboxMessageAdapter(Activity activity, List<MessageDTO> conversations){
         this.activity = activity;
-        this.conversations = getConversations(messages);
-    }
-
-    public List<MessageDTO> getConversations(List<MessageDTO> messages){
-        HashMap<Integer, MessageDTO> hashMap = new HashMap<>();
-        messages.sort(Comparator.comparing(MessageDTO::getTimeOfSending));
-        for(int i=0 ; i < messages.size(); i++){
-            if (messages.get(i).getSenderId().equals(TokenManager.getUserId())){
-                MessageDTO tempMess = new MessageDTO(messages.get(i));
-                tempMess.setMessage("Me: " + tempMess.getMessage());
-                Integer tempReceiverId = tempMess.getReceiverId();
-                Integer tempSenderId = tempMess.getSenderId();
-                tempMess.setSenderId(tempReceiverId);
-                tempMess.setReceiverId(tempSenderId);
-                hashMap.put(tempReceiverId,tempMess);
-            }
-            else{
-                hashMap.put(messages.get(i).getSenderId(), messages.get(i));
-            }
-        }
-        return new ArrayList<>(hashMap.values());
+        this.conversations = conversations;
     }
 
     @Override
@@ -118,7 +99,7 @@ public class InboxMessageAdapter extends BaseAdapter {
         Call<UserDetailedDTO> userCall = userService.getUser(msg.getSenderId());
         userCall.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<UserDetailedDTO> call, Response<UserDetailedDTO> response) {
+            public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
                 if (response.code() == 200) {
                     UserDetailedDTO user = response.body();
                     senderName.setText(String.format("%s %s", user.getName(), user.getSurname()));
@@ -126,10 +107,9 @@ public class InboxMessageAdapter extends BaseAdapter {
                     Call<ResponseBody> profilePictureCall = imageService.getProfilePicture(user.getProfilePicture());
                     profilePictureCall.enqueue(new Callback<>() {
                         @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                             try {
-                                byte[] bytes = new byte[0];
-                                bytes = response.body().bytes();
+                                byte[] bytes = response.body().bytes();
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 icon.setImageBitmap(bitmap);
                             } catch (IOException e) {
@@ -138,16 +118,16 @@ public class InboxMessageAdapter extends BaseAdapter {
                         }
 
                         @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(activity, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                        public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                            Toast.makeText(activity, "Oops, something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
 
             @Override
-            public void onFailure(Call<UserDetailedDTO> call, Throwable t) {
-                Toast.makeText(activity, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
+                Toast.makeText(activity, "Oops, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 
