@@ -2,6 +2,7 @@ package com.example.uberapp.core.services;
 
 import com.example.uberapp.core.dto.AllRidesDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
+import com.example.uberapp.core.dto.StatisticsDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.dto.VehicleDTO;
 
@@ -25,4 +26,7 @@ public interface DriverService {
 
     @GET("/api/driver/{driverId}/vehicle")
     Call<VehicleDTO> getVehicle(@Path("driverId") Integer driverId);
+
+    @GET("/api/driver/{driverId}/statistics")
+    Call<StatisticsDTO> getDriverStatistics(@Path("driverId") Integer driverId);
 }
