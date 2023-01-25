@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.uberapp.core.dto.UserDetailedDTO;
+import com.example.uberapp.gui.fragments.account.PassengerReportFragment;
 import com.example.uberapp.gui.fragments.account.PasswordFragment;
 import com.example.uberapp.gui.fragments.account.UserDocumentsFragment;
-import com.example.uberapp.gui.fragments.account.DriverReportFragment;
 import com.example.uberapp.gui.fragments.account.DriverStatisticsFragment;
 import com.example.uberapp.gui.fragments.account.UserInfoFragment;
 import com.example.uberapp.gui.fragments.account.VehicleFragment;
@@ -35,7 +35,7 @@ public class DriverAccountViewPagerAdapter extends FragmentStateAdapter {
             case 4:
                 return new DriverStatisticsFragment();
             case 5:
-                return new DriverReportFragment();
+                return new PassengerReportFragment();
             default:
                 return new UserInfoFragment(user);
         }
