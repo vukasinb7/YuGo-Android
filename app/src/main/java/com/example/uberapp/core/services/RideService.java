@@ -39,4 +39,5 @@ public interface RideService {
     @PUT("/api/ride/{id}/start")
     Call<RideDetailedDTO> startRide(@Path("id") Integer rideId);
 
+
 }

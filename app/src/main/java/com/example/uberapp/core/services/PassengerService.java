@@ -1,7 +1,11 @@
 package com.example.uberapp.core.services;
 
+import com.example.uberapp.core.dto.AllRidesDTO;
+import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.NewUserDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,4 +22,7 @@ public interface PassengerService {
 
         @PUT("/api/passenger/{id}")
         Call<UserDetailedDTO> updatePassenger(@Path("id") Integer id, @Body UserDetailedDTO userDetailedDTO);
+
+        @GET("/api/passenger/{id}/rides")
+        Call<AllRidesDTO> getPassengerRides(@Path("id") Integer id);
 }
