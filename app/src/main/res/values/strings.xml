@@ -91,4 +91,18 @@
     <string name="current_password">Current password</string>
     <string name="new_password">New password</string>
     <string name="edit_password">Edit password</string>
+    <string name="standard">STANDARD</string>
+    <string name="lux">LUX</string>
+    <string name="van">VAN</string>
+    <string name="model">Model</string>
+    <string name="license_plate">License plate</string>
+    <string name="baby_transport">Baby transport</string>
+    <string name="pet_transport">Pet transport</string>
+    <string name="passenger_seats">Passenger seats</string>
+    <string name="edit_vehicle">Edit vehicle</string>
+    <string name="send_request">Send request</string>
+    <string name="cancel">Cancel</string>
+    <string name="vehicle_type">Vehicle type</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
+    <string name="profile_picture">Profile picture</string>
 </resources>

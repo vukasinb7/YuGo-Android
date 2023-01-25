@@ -1,15 +1,12 @@
 package com.example.uberapp.gui.fragments.account;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +18,9 @@ import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.PassengerService;
-import com.example.uberapp.gui.activities.LoginActivity;
+import com.example.uberapp.gui.activities.NewUserRegisterActivity;
+import com.example.uberapp.gui.validators.TextValidator;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,9 +28,19 @@ import retrofit2.Response;
 
 public class UserInfoFragment extends Fragment {
     UserDetailedDTO user;
-    View view;
     DriverService driverService = APIClient.getClient().create(DriverService.class);
     PassengerService passengerService = APIClient.getClient().create(PassengerService.class);
+    TextInputLayout firstName;
+    TextInputLayout lastName;
+    TextInputLayout phone;
+    TextInputLayout address;
+    TextInputLayout email;
+    LinearLayout optionsLayout;
+    Button editAccount;
+    Button saveChanges;
+    Button cancel;
+    String TEL_REGEX = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s./0-9]{0,10}$";
+    String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public UserInfoFragment(UserDetailedDTO user) {
         this.user = user;
     }
@@ -42,10 +51,23 @@ public class UserInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
-        this.view = view;
-        loadUserInfo();
+
+        firstName = view.findViewById(R.id.firstNameTextField);
+        lastName = view.findViewById(R.id.lastNameTextField);
+        phone = view.findViewById(R.id.phoneTextField);
+        address = view.findViewById(R.id.addressTextField);
+        email = view.findViewById(R.id.emailTextField);
+
+        optionsLayout = view.findViewById(R.id.optionsLayoutInfo);
+
+        editAccount = view.findViewById(R.id.buttonEditInfo);
+        saveChanges = view.findViewById(R.id.buttonSaveInfo);
+        cancel = view.findViewById(R.id.cancelInfoChange);
+
+        this.setupFormValidators();
+        this.setupButtons();
+
         return view;
     }
 
@@ -55,25 +77,13 @@ public class UserInfoFragment extends Fragment {
         this.loadUserInfo();
     }
 
-    public void loadUserInfo(){
-        EditText firstName = view.findViewById(R.id.editTextFirstName);
-        firstName.setText(user.getName());
-        EditText lastName = view.findViewById(R.id.editTextLastName);
-        lastName.setText(user.getSurname());
-        EditText phone = view.findViewById(R.id.editTextPhone);
-        phone.setText(user.getTelephoneNumber());
-        EditText address = view.findViewById(R.id.editTextAddress);
-        address.setText(user.getAddress());
-        address.setInputType(InputType.TYPE_CLASS_NUMBER);
-        EditText email = view.findViewById(R.id.editTextEmail);
-        email.setText(user.getEmail());
-        email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-
-        Button editAccount = view.findViewById(R.id.buttonEditInfo);
-        Button saveChanges = view.findViewById(R.id.buttonSaveInfo);
+    public void setupButtons(){
+        cancel.setOnClickListener(v -> {
+            this.disableAndRefreshForm();
+        });
 
         editAccount.setOnClickListener(v -> {
-            saveChanges.setVisibility(View.VISIBLE);
+            optionsLayout.setVisibility(View.VISIBLE);
             editAccount.setVisibility(View.GONE);
             firstName.setEnabled(true);
             lastName.setEnabled(true);
@@ -83,9 +93,19 @@ public class UserInfoFragment extends Fragment {
         });
 
         saveChanges.setOnClickListener(v -> {
-            UserDetailedDTO updatedUser = new UserDetailedDTO(firstName.getText().toString(),
-                    lastName.getText().toString(), user.getProfilePicture(),
-                    phone.getText().toString(), email.getText().toString(), address.getText().toString());
+            this.triggerValidations();
+            if (!isFormValid()){
+                Toast.makeText(getContext(), "Form is incorrect!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            UserDetailedDTO updatedUser = new UserDetailedDTO(
+                    firstName.getEditText().getText().toString(),
+                    lastName.getEditText().getText().toString(),
+                    user.getProfilePicture(),
+                    phone.getEditText().getText().toString(),
+                    email.getEditText().getText().toString(),
+                    address.getEditText().getText().toString());
             Call<UserDetailedDTO> userCall;
             if (TokenManager.getRole().equals("DRIVER")){
                 userCall = driverService.updateDriver(TokenManager.getUserId(), updatedUser);
@@ -97,13 +117,8 @@ public class UserInfoFragment extends Fragment {
                 @Override
                 public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
                     if (response.code() == 200) {
-                        saveChanges.setVisibility(View.GONE);
-                        editAccount.setVisibility(View.VISIBLE);
-                        firstName.setEnabled(false);
-                        lastName.setEnabled(false);
-                        phone.setEnabled(false);
-                        address.setEnabled(false);
-                        email.setEnabled(false);
+                        user = response.body();
+                        disableAndRefreshForm();
                     }
                     else{
                         Toast.makeText(getContext(), "Invalid input!", Toast.LENGTH_SHORT).show();
@@ -115,6 +130,110 @@ public class UserInfoFragment extends Fragment {
 
                 }
             });
+        });
+    }
+
+    public boolean isFormValid(){
+        if (firstName.getError() == null && lastName.getError() == null &&
+                phone.getError() == null && address.getError() == null &&
+                email.getError() == null){
+            return true;
+        }
+        return false;
+    }
+
+    public void triggerValidations(){
+        firstName.getEditText().setText(firstName.getEditText().getText().toString());
+        lastName.getEditText().setText(lastName.getEditText().getText().toString());
+        phone.getEditText().setText(phone.getEditText().getText().toString());
+        email.getEditText().setText(email.getEditText().getText().toString());
+        address.getEditText().setText(address.getEditText().getText().toString());
+    }
+
+    public void disableAndRefreshForm(){
+        this.loadUserInfo();
+        optionsLayout.setVisibility(View.GONE);
+        editAccount.setVisibility(View.VISIBLE);
+        firstName.setEnabled(false);
+        lastName.setEnabled(false);
+        phone.setEnabled(false);
+        address.setEnabled(false);
+        email.setEnabled(false);
+    }
+
+    public void loadUserInfo(){
+        firstName.getEditText().setText(user.getName());
+        lastName.getEditText().setText(user.getSurname());
+        phone.getEditText().setText(user.getTelephoneNumber());
+        address.getEditText().setText(user.getAddress());
+        email.getEditText().setText(user.getEmail());
+    }
+
+    public void setupFormValidators(){
+        firstName.getEditText().addTextChangedListener(new TextValidator(firstName.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (firstName.getEditText().getText().toString().isEmpty()){
+                    firstName.setError("Field is necessary!");
+                }
+                else{
+                    firstName.setError(null);
+                }
+            }
+        });
+
+        lastName.getEditText().addTextChangedListener(new TextValidator(lastName.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (lastName.getEditText().getText().toString().isEmpty()){
+                    lastName.setError("Field is necessary!");
+                }
+                else{
+                    lastName.setError(null);
+                }
+            }
+        });
+
+        phone.getEditText().addTextChangedListener(new TextValidator(phone.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (phone.getEditText().getText().toString().isEmpty()){
+                    phone.setError("Field is necessary!");
+                }
+                else if (!phone.getEditText().getText().toString().matches(TEL_REGEX)){
+                    phone.setError("Not a valid phone number!");
+                }
+                else{
+                    phone.setError(null);
+                }
+            }
+        });
+
+        address.getEditText().addTextChangedListener(new TextValidator(address.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (address.getEditText().getText().toString().isEmpty()){
+                    address.setError("Field is necessary!");
+                }
+                else{
+                    address.setError(null);
+                }
+            }
+        });
+
+        email.getEditText().addTextChangedListener(new TextValidator(email.getEditText()){
+            @Override
+            public void validate(TextView textView, String text) {
+                if (email.getEditText().getText().toString().isEmpty()){
+                    email.setError("Field is necessary!");
+                }
+                else if (!email.getEditText().getText().toString().matches(EMAIL_REGEX)){
+                    email.setError("Not a valid email!");
+                }
+                else{
+                    email.setError(null);
+                }
+            }
         });
     }
 }

@@ -25,6 +25,9 @@ public class LoginActivity extends AppCompatActivity {
     UserService userService;
     TextView emailTextView;
     TextView passwordTextView;
+    TextView forgotPassword;
+    Button loginButton;
+    Button signUpButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         userService = APIClient.getClient().create(UserService.class);
         emailTextView = findViewById(R.id.loginEmailAddress);
         passwordTextView = findViewById(R.id.loginPassword);
-        TextView forgotPassword=findViewById(R.id.forgotPassword);
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ForgotPasswordDialog fpd=new ForgotPasswordDialog(LoginActivity.this);
-                fpd.show();
-            }
-        });
-        Button loginButton = findViewById(R.id.loginButton);
+        forgotPassword=findViewById(R.id.forgotPassword);
+        loginButton = findViewById(R.id.loginButton);
+        signUpButton = findViewById(R.id.registerButton);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("CheckResult")
             @Override
@@ -73,20 +71,18 @@ public class LoginActivity extends AppCompatActivity {
                         }, throwable -> Toast.makeText(LoginActivity.this, "Email or password is incorrect", Toast.LENGTH_SHORT).show());
             }
         });
-        Button signUpButton = findViewById(R.id.registerButton);
+
+
+        forgotPassword.setOnClickListener(view -> {
+            ForgotPasswordDialog fpd=new ForgotPasswordDialog(LoginActivity.this);
+            fpd.show();
+        });
+
         signUpButton.setOnClickListener(v -> {
             Intent registerActivity = new Intent(LoginActivity.this, NewUserRegisterActivity.class);
             startActivity(registerActivity);
             finish();
         });
 
-    }
-
-    public void onClick(View view) {
-        if (view.getId() == R.id.registerButton) {
-            Intent registerActivity = new Intent(this, NewUserRegisterActivity.class);
-            startActivity(registerActivity);
-            finish();
-        }
     }
 }

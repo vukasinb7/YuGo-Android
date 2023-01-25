@@ -19,7 +19,7 @@ public class UserInboxFragment extends Fragment {
     UserInboxViewPagerAdapter inboxAdapter;
 
     public UserInboxFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
