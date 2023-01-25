@@ -51,6 +51,7 @@ public class ReasonDialog extends Dialog implements android.view.View.OnClickLis
         super.onCreate(savedInstanceState);
         if (Objects.equals(type, "REJECTION")){
             this.setCancelable(false);
+            ((TextView) findViewById(R.id.titleReasonDialog)).setText("Rejection");
         }
         setContentView(R.layout.dialog_reason);
         reasonTb=(TextView) findViewById(R.id.reasonReasonDialog);

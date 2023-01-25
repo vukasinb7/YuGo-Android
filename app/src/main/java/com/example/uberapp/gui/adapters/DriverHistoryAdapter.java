@@ -1,6 +1,7 @@
 package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -31,7 +32,10 @@ import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
+import com.example.uberapp.gui.dialogs.AddReviewDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
+import com.example.uberapp.gui.dialogs.ReasonDialog;
+import com.example.uberapp.gui.dialogs.ReviewListDialog;
 import com.example.uberapp.gui.fragments.home.MapFragment;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -115,13 +119,21 @@ public class DriverHistoryAdapter extends BaseAdapter {
         TextView distance = (TextView) v.findViewById(R.id.distanceText);
         TextView personNum = (TextView) v.findViewById(R.id.personNum);
         TextView dateTitle = (TextView) v.findViewById(R.id.dateTitleHistory);
-        RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBarHistory);
         ShapeableImageView profilePic= (ShapeableImageView) v.findViewById(R.id.profilePicHistory);
         ImageView babyTransportFalse= (ImageView) v.findViewById(R.id.babyIconDriverHistory);
         ImageView babyTransportTrue= (ImageView) v.findViewById(R.id.babyIconDriverHistoryTrue);
         ImageView petTransportFalse= (ImageView) v.findViewById(R.id.petIconDriverHistory);
         ImageView petTransportTrue= (ImageView) v.findViewById(R.id.petIconDriverHistoryTrue);
         LinearLayout linearLayout= (LinearLayout) v.findViewById(R.id.profilesHistory);
+        ImageButton reviewBtn=(ImageButton) v.findViewById(R.id.showRatingsHistory);
+        ImageButton createRideBtn=(ImageButton) v.findViewById(R.id.createRideHistory);
+        ImageButton addToFavoritesBtn=(ImageButton) v.findViewById(R.id.addToFavoritesHistory);
+
+        if (TokenManager.getRole().equals("DRIVER")){
+            createRideBtn.setVisibility(View.GONE);
+            addToFavoritesBtn.setVisibility(View.GONE);
+
+        }
 
         //SET PET AND BABY TRANSPORT
         if (vht.isBabyTransport())
@@ -131,7 +143,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         if (vht.isPetTransport())
             petTransportFalse.setVisibility(View.GONE);
         else
-            babyTransportTrue.setVisibility(View.GONE);
+            petTransportTrue.setVisibility(View.GONE);
 
 
         //SET START AND END TIME OF THE RIDE
@@ -158,7 +170,6 @@ public class DriverHistoryAdapter extends BaseAdapter {
         price.setText("$" + String.format("%.2f", vht.getTotalCost()));
         dateTitle.setText(fromTime.format(formatter));
         personNum.setText(String.valueOf(vht.getPassengers().size()));
-        ratingBar.setRating(1 + (int) (Math.random() * ((5 - 1) + 1)));
 
 
         //GET MAIN USER NAME AND DETAILS
@@ -243,7 +254,12 @@ public class DriverHistoryAdapter extends BaseAdapter {
                                 bytes = response.body().bytes();
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
                                 ShapeableImageView imageView = new ShapeableImageView(activity);
-                                imageView.setLayoutParams(new LinearLayout.LayoutParams(pixels,pixels));
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                        pixels,pixels
+                                );
+                                params.setMarginStart((int) (5*scale+0.5f));
+                                params.setMarginEnd((int) (5*scale+0.5f));
+                                imageView.setLayoutParams(params);
                                 imageView.setTag(vht.getId()+"_"+detailedUser.getId());
                                 imageView.setAdjustViewBounds(true);
                                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -287,11 +303,23 @@ public class DriverHistoryAdapter extends BaseAdapter {
                 arrow.setImageResource(R.drawable.icon_arrow_up);
             }
         });
+        reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TokenManager.getRole().equals("PASSENGER")){
+                    Dialog dialog=new AddReviewDialog(activity,vht.getId());
+                    dialog.show();
+                }
+                else{
+                    Dialog dialog=new ReviewListDialog(activity,vht.getId());
+                    dialog.show();
+                }
+        }});
 
 
         return v;
     }
-    public void createMarker(double latitude, double longitude, String title,Integer drawableID,MapView map){
+    public void createMarker(double latitude, double longitude, String title,Integer drawableID,MapView map,View v){
         if(map == null || map.getRepository() == null) {
             return;
         }
@@ -310,8 +338,8 @@ public class DriverHistoryAdapter extends BaseAdapter {
         marker.setTitle(title);
         marker.setId(title);
         marker.setPanToView(true);
-        /*Drawable d = ResourcesCompat.getDrawable(getResources(), drawableID, null);
-        marker.setIcon(d);*/
+        Drawable d = ResourcesCompat.getDrawable(v.getResources(), drawableID, null);
+        marker.setIcon(d);
         map.getOverlays().add(marker);
         map.invalidate();
         IMapController mapController = map.getController();
@@ -344,11 +372,11 @@ public class DriverHistoryAdapter extends BaseAdapter {
                     @Override
                     public void run() {
                         map.getOverlays().add(roadOverlay);
-                        createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin,map);
-                        createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin,map);
+                        createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin,map,v);
+                        createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin,map,v);
                         map.invalidate();
                         IMapController mapController = map.getController();
-                        mapController.setZoom(14.0);
+                        mapController.setZoom(12.0);
                         mapController.setCenter(new GeoPoint((startLatitude+endLatitude)/2,
                                 (startLongitude+endLongitude)/2));
                     }

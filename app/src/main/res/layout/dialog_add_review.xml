@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/titleDriverRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Driver Review"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <RatingBar
+        android:id="@+id/driverRatingReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/titleDriverRating"
+        android:layout_marginTop="10dp"
+        android:progressTint="@color/yellowish"
+        android:layout_marginStart="10dp"
+        android:isIndicator="false"
+        android:stepSize="1"
+        />
+    <TextView
+        android:id="@+id/commentDriverRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/driverRatingReview"
+        android:layout_marginTop="10dp"
+        android:text="Comment:"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:id="@+id/commentInputDriverRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentDriverRating"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="5dp"
+        android:hint="Enter your comment..."
+        android:inputType="text|textMultiLine"
+        android:background="@null"
+        android:lines="6" />
+
+    <View
+        android:id="@+id/delimiterLine"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/commentInputDriverRating"
+        android:layout_marginTop="10dp"
+        android:alpha="0.6"
+        android:background="?attr/colorPrimary"/>
+
+
+    <TextView
+        android:id="@+id/titleVehicleReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/delimiterLine"
+        android:text="Vehicle Review"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <RatingBar
+        android:id="@+id/vehicleRatingReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/titleVehicleReview"
+        android:layout_marginTop="10dp"
+        android:progressTint="@color/yellowish"
+        android:layout_marginStart="10dp"
+        android:isIndicator="false"
+        android:stepSize="1"
+        />
+    <TextView
+        android:id="@+id/commentVehicleRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/vehicleRatingReview"
+        android:layout_marginTop="10dp"
+        android:text="Driver Review"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:id="@+id/commentInputPassengerRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentVehicleRating"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="5dp"
+        android:hint="Enter your comment..."
+        android:inputType="text|textMultiLine"
+        android:background="@null"
+        android:lines="6" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/commentInputPassengerRating"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp">
+        <Button
+            android:id="@+id/cancelReview"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/white_dark_blue"
+            android:textColor="@color/black_white"
+
+            android:text="Exit" />
+
+        <Button
+            android:id="@+id/submitReview"
+            android:layout_width="120dp"
+            android:layout_marginStart="15dp"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

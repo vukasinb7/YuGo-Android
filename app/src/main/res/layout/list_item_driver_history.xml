@@ -251,45 +251,14 @@
                 android:layout_marginTop="15dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
-            <View
-                android:id="@+id/delimiterLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/durationIcon"
-                android:layout_marginTop="15dp"
-                android:alpha="0.6"
-                android:background="?attr/colorPrimary"/>
-            <RatingBar
-                android:id="@+id/ratingBarHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/delimiterLine"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:progressTint="@color/yellowish"
-                android:layout_marginStart="10dp"
-                android:isIndicator="true"
-                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
-                />
-            <TextView
-                android:id="@+id/commentText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@+id/ratingBarHistory"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                android:textColor="?attr/colorSecondaryVariant"
-                android:alpha="0.7"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="italic"/>
+
             <View
                 android:id="@+id/delimiterLine3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/commentText"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/durationIcon"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
             <LinearLayout
@@ -375,11 +344,43 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/delimiterLine4"
                 android:orientation="horizontal">
-                <!--<org.osmdroid.views.MapView
-                    android:id="@+id/mapViewHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    />-->
+            </LinearLayout>
+            <View
+                android:id="@+id/delimiterLine6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mapHistoryLayout"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/delimiterLine6"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+                <ImageButton
+                    android:id="@+id/showRatingsHistory"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_rating" />
+
+
+                <ImageButton
+                    android:id="@+id/createRideHistory"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:src="@drawable/icon_add" />
+                <ImageButton
+                    android:id="@+id/addToFavoritesHistory"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_favorites" />
+
+
             </LinearLayout>
 
             <View
@@ -389,6 +390,7 @@
                 android:layout_below="@+id/mapHistoryLayout"
                 android:alpha="0.6"
                 android:background="?attr/colorPrimary"/>
+
 
         </RelativeLayout>
             <ImageButton
