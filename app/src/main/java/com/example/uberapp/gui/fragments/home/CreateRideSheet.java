@@ -127,7 +127,9 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
                 });
     }
 
+    public CreateRideSheet(){
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

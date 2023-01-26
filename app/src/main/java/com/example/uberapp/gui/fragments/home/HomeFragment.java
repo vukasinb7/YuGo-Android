@@ -75,6 +75,10 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null){
+            CreateRideSheet createRideSheet = new CreateRideSheet();
+            getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
+        }
     }
     @SuppressLint("CheckResult")
     @Override

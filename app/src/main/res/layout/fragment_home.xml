@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.fragments.home.HomeFragment">
+    tools:context=".gui.fragments.home.HomeFragment"
+    android:id="@+id/homeFragmentContentHolder">
 
     <FrameLayout
         android:id="@+id/fragment_home_map"
@@ -72,8 +73,5 @@
         android:textSize="15sp"
         android:backgroundTint="@color/pewter_dark_gray"
         android:visibility="gone"/>
-
-    <include layout="@layout/fragment_create_ride_sheet"/>
-
 
 </RelativeLayout>

@@ -53,7 +53,7 @@ public class CreateRideSubfragment04 extends Fragment {
         ImageButton button = view.findViewById(R.id.buttonReturnBack);
         final Boolean[] clicked = {false};
         ImageButton favourites=view.findViewById(R.id.addToFavouritesBtn);
-        CreateRideFragment fragment = (CreateRideFragment) getParentFragment();
+        CreateRideSheet fragment = (CreateRideSheet) getParentFragment();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
