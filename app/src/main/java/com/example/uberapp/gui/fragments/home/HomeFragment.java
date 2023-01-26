@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +19,33 @@ import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.APIMaps;
+import com.example.uberapp.core.services.APIRouting;
+import com.example.uberapp.core.services.MapService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.services.RoutingService;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.osmdroid.util.GeoPoint;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -53,6 +75,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    @SuppressLint("CheckResult")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -217,10 +240,67 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         });
     }
 
+    @SuppressLint("CheckResult")
+    private void simulateRide(double departureLatitude, double departureLongitude, double destinationLatitude, double destinationLongitude){
+        ScheduledExecutorService timerExecutor = Executors.newScheduledThreadPool(1);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        RoutingService routingService = APIRouting.getClient().create(RoutingService.class);
+        routingService.getRoute(departureLatitude, departureLongitude, destinationLatitude, destinationLongitude)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(responseBody -> {
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Gson gson = new Gson();
+                            JsonObject response;
+                            try {
+                                response = gson.fromJson(responseBody.string(), JsonObject.class);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            Queue<GeoPoint> points = new LinkedList<>();
+
+                            JsonArray routes = response.getAsJsonArray("routes");
+                            JsonObject route = (JsonObject) routes.get(0);
+                            JsonArray legs = route.getAsJsonArray("legs");
+                            JsonObject leg = (JsonObject) legs.get(0);
+                            JsonArray steps = leg.getAsJsonArray("steps");
+                            for(JsonElement step : steps){
+                                JsonObject geometry = step.getAsJsonObject().getAsJsonObject("geometry");
+                                JsonArray coordinates = geometry.getAsJsonArray("coordinates");
+                                for(JsonElement coord : coordinates){
+                                    double latitude = coord.getAsJsonArray().get(1).getAsDouble();
+                                    double longitude = coord.getAsJsonArray().get(0).getAsDouble();
+                                    points.add(new GeoPoint(latitude, longitude));
+                                }
+                            }
+                            ScheduledFuture<?> validateStepHandler = timerExecutor.scheduleWithFixedDelay(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // TODO pop value from list of points, update driver location on map and send new location to the backend
+                                    GeoPoint point = points.remove();
+                                    if(points.isEmpty()){
+                                        timerExecutor.shutdown();
+                                    }
+                                    getActivity().runOnUiThread(() -> mapFragment.createRoute(point.getLatitude(), point.getLongitude(), destinationLatitude, destinationLongitude));
+
+                                }
+                            }, 0, 1, TimeUnit.SECONDS);
+
+                        }
+                    });
+
+                },throwable -> Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show());
+    }
     public void acceptRide(RideDetailedDTO ride){
         nextRide = ride;
+        LocationDTO departure = ride.getLocations().get(0).getDeparture();
+        LocationDTO destination = ride.getLocations().get(0).getDestination();
         if(!hasActiveRide){
             startRideButton.setVisibility(View.VISIBLE);
+            this.simulateRide(departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude());
         }
     }
 

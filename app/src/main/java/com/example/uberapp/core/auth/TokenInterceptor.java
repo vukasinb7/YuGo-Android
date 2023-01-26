@@ -14,7 +14,7 @@ public class TokenInterceptor implements Interceptor {
         Request original = chain.request();
         HttpUrl originalURL = original.url();
 
-        if(TokenManager.getToken() != null){
+        if(TokenManager.getToken() != null || originalURL.toString().contains("openstreetmap")){
             Builder newRequestBuilder = original.newBuilder().addHeader("authorization", TokenManager.getTokenType()+ " " + TokenManager.getToken()).url(originalURL);
             return chain.proceed(newRequestBuilder.build());
         }

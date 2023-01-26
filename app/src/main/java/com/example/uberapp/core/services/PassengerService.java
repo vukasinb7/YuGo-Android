@@ -1,11 +1,9 @@
 package com.example.uberapp.core.services;
 
 import com.example.uberapp.core.dto.AllRidesDTO;
-import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.NewUserDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

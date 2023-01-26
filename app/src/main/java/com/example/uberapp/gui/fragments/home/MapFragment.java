@@ -55,6 +55,7 @@ public class MapFragment extends Fragment implements LocationListener {
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private boolean showCurrentLocation = false;
 
+    private Polyline path;
     public static MapFragment newInstance(boolean showCurrentLocation) {
         MapFragment fragment = new MapFragment();
         Bundle args = new Bundle();
@@ -155,10 +156,15 @@ public class MapFragment extends Fragment implements LocationListener {
                 Road road = roadManager.getRoad(track);
 
                 Polyline roadOverlay = RoadManager.buildRoadOverlay(road);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        map.getOverlays().add(roadOverlay);
+                        if(path != null){
+                            map.getOverlays().remove(path);
+                        }
+                        path = roadOverlay;
+                        map.getOverlays().add(path);
                         createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin);
                         createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin);
                         map.invalidate();

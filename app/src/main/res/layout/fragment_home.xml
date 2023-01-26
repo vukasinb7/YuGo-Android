@@ -73,4 +73,7 @@
         android:backgroundTint="@color/pewter_dark_gray"
         android:visibility="gone"/>
 
+    <include layout="@layout/fragment_create_ride_sheet"/>
+
+
 </RelativeLayout>
