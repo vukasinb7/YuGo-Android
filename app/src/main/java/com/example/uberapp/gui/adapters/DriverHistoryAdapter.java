@@ -88,6 +88,10 @@ public class DriverHistoryAdapter extends BaseAdapter {
         this.rides = rides;
         this.mapViews=new HashMap<>();
         this.isFirst=new HashMap<>();
+        for(int i=0;i<=rides.size();i++){
+            MapView mapView= new MapView(activity);
+            mapViews.put(i,mapView);
+        }
     }
 
     @Override
@@ -110,6 +114,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         return minute+"min";
 
     }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         RideDetailedDTO vht = rides.get(i);
@@ -222,8 +227,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
 
         GeoPoint startPoint = new GeoPoint(vht.getLocations().get(0).getDeparture().getLatitude(),vht.getLocations().get(0).getDeparture().getLongitude() );
         GeoPoint endPoint = new GeoPoint(vht.getLocations().get(0).getDestination().getLatitude(),vht.getLocations().get(0).getDestination().getLongitude() );
-        MapView mapView= new MapView(activity);
-        mapViews.put(i,mapView);
+
         final float scale = activity.getResources().getDisplayMetrics().density;
         LinearLayout mapLayout = (LinearLayout) v.findViewById(R.id.mapHistoryLayout);
         if (mapLayout.findViewWithTag(vht.getId()+"_map")==null) {
