@@ -139,7 +139,7 @@ public class VehicleFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -198,7 +198,7 @@ public class VehicleFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<VehicleDTO> call, @NonNull Throwable t) {
-
+                Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }

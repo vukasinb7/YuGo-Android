@@ -127,7 +127,7 @@ public class UserMessagesFragment extends Fragment implements SensorEventListene
 
             @Override
             public void onFailure(@NonNull Call<AllMessagesDTO> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }
