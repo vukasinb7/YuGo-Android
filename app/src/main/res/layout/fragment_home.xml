@@ -43,23 +43,6 @@
             android:checked="true"/>
     </androidx.cardview.widget.CardView>
 
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/buttonCreateRide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="25dp"
-        app:icon="@drawable/icon_add"
-        app:iconTint="@color/dark_gray_pewter"
-        android:text="@string/new_ride"
-        android:textColor="@color/dark_gray_pewter"
-        android:textSize="15sp"
-        app:iconSize="25dp"
-        android:backgroundTint="@color/pewter_dark_gray"
-        android:visibility="gone"/>
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonStartRide"
         android:layout_width="wrap_content"

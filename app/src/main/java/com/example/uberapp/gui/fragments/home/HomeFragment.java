@@ -85,16 +85,11 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        createRideButton = view.findViewById(R.id.buttonCreateRide);
+        
         startRideButton = view.findViewById(R.id.buttonStartRide);
         onlineButton = view.findViewById(R.id.online_offline_button);
 
         fragmentManager = getActivity().getSupportFragmentManager();
-
-        createRideButton.setOnClickListener(view1 -> new CreateRideFragment()
-                .show(getChildFragmentManager().beginTransaction(),
-                        CreateRideFragment.TAG));
 
         Call<RideDetailedDTO> activeRide;
         if (TokenManager.getRole().equals("DRIVER")){
