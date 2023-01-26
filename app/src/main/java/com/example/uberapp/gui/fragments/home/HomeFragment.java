@@ -18,6 +18,7 @@ import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.VehicleDTO;
+import com.example.uberapp.core.model.LocationInfo;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.APIRouting;
 import com.example.uberapp.core.services.DriverService;
@@ -51,14 +52,13 @@ import retrofit2.Response;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
-public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener {
+public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener, CreateRideSheet.OnRouteChangedListener {
     private MapFragment mapFragment;
     private CurrentRideFragment currentRideFragment;
     private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO currentRide;
     private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
-    private ExtendedFloatingActionButton createRideButton;
     private CardView onlineButton;
     private Fragment parentFragment;
     private FragmentManager fragmentManager;
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        
+
         startRideButton = view.findViewById(R.id.buttonStartRide);
         onlineButton = view.findViewById(R.id.online_offline_button);
 
@@ -123,7 +123,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                         mapFragment = MapFragment.newInstance(true);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
-                        createRideButton.setVisibility(View.VISIBLE);
+                        // TODO unlock bottom sheet
+                        //createRideButton.setVisibility(View.VISIBLE);
 
                     }, new Consumer<Throwable>() {
                         @Override
@@ -135,7 +136,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             mStompClient.topic("/ride-topic/notify-passenger-start-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
                         hasActiveRide = true;
-                        createRideButton.setVisibility(View.GONE);
+                        // TODO lock bottom sheet
+                        //createRideButton.setVisibility(View.GONE);
                         mapFragment = MapFragment.newInstance(false);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         Call<RideDetailedDTO> activeRideNotified;
@@ -210,7 +212,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                         // TODO kada se vozac uloguje proveriti da li ima ACCEPTED voznje, ako ima postaviti start ride dugme na VISIBLE
                     }
                     else{
-                        createRideButton.setVisibility(View.VISIBLE);
+                        // TODO unlock bottom sheet
+                        //createRideButton.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -350,5 +353,19 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public void onDestroy() {
         super.onDestroy();
         mapFragment.onPause();
+    }
+
+    @Override
+    public void onRideRouteChanged(LocationInfo departure, LocationInfo destination) {
+        if(departure != null && destination != null){
+            mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude());
+        }
+        else if(departure != null){
+            mapFragment.createMarker(departure.getLatitude(), departure.getLongitude(),"Departure",R.drawable.start_location_pin);
+
+        }
+        else if(destination != null){
+            mapFragment.createMarker(destination.getLatitude(),destination.getLongitude(),"Destination",R.drawable.finish_location_pin);
+        }
     }
 }

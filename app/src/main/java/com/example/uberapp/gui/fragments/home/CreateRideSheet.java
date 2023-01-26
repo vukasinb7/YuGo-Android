@@ -69,6 +69,11 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
     CreateRideSubfragment03.OnDateTimeChangedListener,
             CreateRideSubfragment04.OnAcceptRideListener {
 
+    public interface OnRouteChangedListener{
+        void onRideRouteChanged(LocationInfo departure, LocationInfo destination);
+    }
+    private OnRouteChangedListener routeChangedListener;
+
     public static final String TAG = "CREATE_RIDE_SHEET";
     private int currentSubfragment;
     private CreateRideSubfragment01 subFrag01;
@@ -174,6 +179,7 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
 
     @Override
     public void onRideRouteChanged(LocationInfo departure, LocationInfo destination) {
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
         this.departure = departure;
         this.destination = destination;
         this.buttonNext.setEnabled(departure != null && destination != null);
@@ -196,6 +202,7 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
             });
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -268,6 +275,7 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        routeChangedListener = (OnRouteChangedListener) getParentFragment();
         vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
         imageService = APIClient.getClient().create(ImageService.class);
         rideService = APIClient.getClient().create(RideService.class);
