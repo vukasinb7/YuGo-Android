@@ -9,7 +9,7 @@
     <ListView
         android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:divider="@android:color/transparent"

@@ -36,7 +36,7 @@
     <string name="price">Price</string>
     <string name="confirm_your_ride">Confirm your ride</string>
     <string name="accept">Accept</string>
-    <string name="drivers_licence">Drivers licence:</string>
+    <string name="driving_licence">Driving licence:</string>
     <string name="select_from_gallery">select from gallery</string>
     <string name="registration_licence">Registration licence:</string>
     <string name="split_fare">split fare</string>

@@ -120,6 +120,7 @@ public class AccountFragment extends Fragment {
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_newspaper));
                 }
                 accountViewPager.setAdapter(accountAdapter);
+                accountViewPager.setOffscreenPageLimit(5);
                 accountTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
 
                     @Override
