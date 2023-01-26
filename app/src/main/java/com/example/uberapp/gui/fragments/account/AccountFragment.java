@@ -116,7 +116,6 @@ public class AccountFragment extends Fragment {
                     accountAdapter =  new PassengerAccountViewPagerAdapter(parentFragment, user);
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_round_account));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_key));
-                    accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_star));
                     accountTabLayout.addTab(accountTabLayout.newTab().setText("").setIcon(R.drawable.icon_newspaper));
                 }
                 accountViewPager.setAdapter(accountAdapter);

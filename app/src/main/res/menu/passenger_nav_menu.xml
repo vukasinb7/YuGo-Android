@@ -9,6 +9,10 @@
         android:title="Inbox"
         android:icon="@drawable/icon_inbox"/>
     <item
+        android:id="@+id/passenger_favorites"
+        android:title="Favorites"
+        android:icon="@drawable/icon_star_filled"/>
+    <item
         android:id="@+id/passanger_history"
         android:title="History"
         android:icon="@drawable/icon_history"/>

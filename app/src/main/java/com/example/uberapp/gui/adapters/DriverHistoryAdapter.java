@@ -60,6 +60,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -76,12 +77,17 @@ public class DriverHistoryAdapter extends BaseAdapter {
 
     public Activity activity;
     public List<RideDetailedDTO> rides;
+    public HashMap<Integer,MapView> mapViews;
     DriverService driverService = APIClient.getClient().create(DriverService.class);
     PassengerService passengerService = APIClient.getClient().create(PassengerService.class);
     ImageService imageService = APIClient.getClient().create(ImageService.class);
+
+    public HashMap<Integer,Boolean> isFirst;
     public DriverHistoryAdapter(Activity activity, List<RideDetailedDTO>rides){
         this.activity = activity;
         this.rides = rides;
+        this.mapViews=new HashMap<>();
+        this.isFirst=new HashMap<>();
     }
 
     @Override
@@ -111,6 +117,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         if(view == null) {
             v = LayoutInflater.from(activity).inflate(R.layout.list_item_driver_history, null);
         }
+
         //LAYOUT ITEMS
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         TextView nameLb = (TextView) v.findViewById(R.id.nameLb);
@@ -205,8 +212,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
                      }
                      @Override
                      public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                         Toast.makeText(finalV1.getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
-                     }
+                         }
                  });
 
              }
@@ -217,25 +223,27 @@ public class DriverHistoryAdapter extends BaseAdapter {
         GeoPoint startPoint = new GeoPoint(vht.getLocations().get(0).getDeparture().getLatitude(),vht.getLocations().get(0).getDeparture().getLongitude() );
         GeoPoint endPoint = new GeoPoint(vht.getLocations().get(0).getDestination().getLatitude(),vht.getLocations().get(0).getDestination().getLongitude() );
         MapView mapView= new MapView(activity);
+        mapViews.put(i,mapView);
         final float scale = activity.getResources().getDisplayMetrics().density;
         LinearLayout mapLayout = (LinearLayout) v.findViewById(R.id.mapHistoryLayout);
         if (mapLayout.findViewWithTag(vht.getId()+"_map")==null) {
-            mapLayout.addView(mapView);
-            mapView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (150 * scale + 0.5f)));
-            mapView.setTag(vht.getId() + "_map");
-            loadMap(mapView);
-            IMapController mapController = mapView.getController();
+            mapLayout.addView(mapViews.get(i));
+            mapViews.get(i).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (150 * scale + 0.5f)));
+            mapViews.get(i).setTag(vht.getId() + "_map");
+            loadMap(mapViews.get(i));
+            IMapController mapController = mapViews.get(i).getController();
             mapController.setZoom(14.0);
             mapController.setCenter(new GeoPoint(44.97639, 19.61222));
             //SET ROUTE DISTANCE
 
-            getLength(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), mapView, new DriverHistoryAdapter.CallbackLengthHistory() {
+            getLength(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), mapViews.get(i), new DriverHistoryAdapter.CallbackLengthHistory() {
                 @Override
                 public void onSuccess(Double value) {
                     distance.setText(Double.toString(Math.round(value * 100) / 100.0) + "km");
                 }
             });
         }
+
 
         //SET OTHER PASSENGER ICONS
         linearLayout.removeAllViews();
@@ -300,8 +308,10 @@ public class DriverHistoryAdapter extends BaseAdapter {
             // If the CardView is not expanded, set its visibility to
             // visible and change the expand more icon to expand less.
             else {
-                createRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), finalV2, mapView);
-                //TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                if (!isFirst.containsKey(i)) {
+                    createRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), finalV2, mapViews.get(i));
+                    isFirst.put(i,true);
+                }
                 hiddenView.setVisibility(View.VISIBLE);
                 arrow.setImageResource(R.drawable.icon_arrow_up);
             }

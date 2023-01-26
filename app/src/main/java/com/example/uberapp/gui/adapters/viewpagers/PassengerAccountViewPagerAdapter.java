@@ -26,8 +26,6 @@ public class PassengerAccountViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new PasswordFragment(user);
             case 2:
-                return new PassengerFavouritesFragment();
-            case 3:
                 return new PassengerReportFragment();
             default:
                 return new UserInfoFragment(user);
