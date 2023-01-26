@@ -82,10 +82,13 @@ public class PasswordFragment extends Fragment {
             editPassword.setVisibility(View.VISIBLE);
             currentPassword.setEnabled(false);
             currentPassword.getEditText().setText("");
+            currentPassword.setError(null);
             newPassword.setEnabled(false);
             newPassword.getEditText().setText("");
+            newPassword.setError(null);
             confirmPassword.setEnabled(false);
             confirmPassword.getEditText().setText("");
+            confirmPassword.setError(null);
         });
 
         editPassword.setOnClickListener(v -> {

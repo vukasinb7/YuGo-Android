@@ -56,7 +56,7 @@ public class UserChatChannel extends AppCompatActivity {
                             if (response.code() == 200) {
                                 UserDetailedDTO user = response.body();
 
-                                mMessageRecycler = (RecyclerView) findViewById(R.id.recyclerViewChat);
+                                mMessageRecycler = findViewById(R.id.recyclerViewChat);
                                 mMessageAdapter = new MessageListAdapter(activity, user, rideId, messages);
                                 LinearLayoutManager llm = new LinearLayoutManager(activity);
                                 llm.setStackFromEnd(true);
