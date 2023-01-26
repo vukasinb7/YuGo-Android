@@ -142,35 +142,10 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
         View view = inflater.inflate(R.layout.fragment_create_ride_sheet, container, false);
 
         buttonNext = view.findViewById(R.id.nextSubfragmentButton);
-        buttonNext.setEnabled(false);
         buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (currentSubfragment){
-                    case 0:
-                        buttonNext.setEnabled(false);
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
-                        buttonPrev.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
-                        break;
-                    case 2:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag04).commit();
-                        buttonNext.setVisibility(View.GONE);
-                        buttonPrev.setVisibility(View.GONE);
-                        break;
-                }
-                currentSubfragment++;
-            }
-        });
-
-
-        buttonPrev.setVisibility(View.GONE);
+        configureButtons();
         buttonPrev.setOnClickListener(view1 -> buttonPrevOnClick());
-        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment01()).commit();
+
         return view;
 
     }
@@ -254,10 +229,10 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
         List<UserSimpleDTO> passengers = new ArrayList<>();
         UserSimpleDTO passenger = new UserSimpleDTO();
         passenger.id = TokenManager.getUserId();
-        passenger.email = "NA";
+        passenger.email = TokenManager.getEmail();
         passengers.add(passenger);
         ride.passengers = passengers;
-        rideService.createRide(ride).enqueue(new Callback<RideDetailedDTO>() {
+        rideService.createRide(ride).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
                 createRideLoader.changeLoadingStatus(response.body());
@@ -271,6 +246,40 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, createRideLoader).commit();
     }
 
+    private void configureButtons(){
+        buttonNext.setEnabled(false);
+        buttonNext.setVisibility(View.VISIBLE);
+        buttonPrev.setVisibility(View.GONE);
+        buttonNext.setOnClickListener(view -> {
+            switch (currentSubfragment){
+                case 0:
+                    buttonNext.setEnabled(false);
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
+                    buttonPrev.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
+                    break;
+                case 2:
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag04).commit();
+                    buttonNext.setVisibility(View.GONE);
+                    buttonPrev.setVisibility(View.GONE);
+                    break;
+            }
+            currentSubfragment++;
+        });
+    }
+    public void loadSubfragemnts(){
+        this.subFrag01 = new CreateRideSubfragment01();
+        this.subFrag02 = new CreateRideSubfragment02();
+        this.subFrag03 = new CreateRideSubfragment03();
+        this.subFrag04 = new CreateRideSubfragment04();
+        this.createRideLoader = new CreateRideLoader();
+        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, this.subFrag01).commit();
+        configureButtons();
+
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -279,11 +288,14 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
         vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
         imageService = APIClient.getClient().create(ImageService.class);
         rideService = APIClient.getClient().create(RideService.class);
+
         this.subFrag01 = new CreateRideSubfragment01();
         this.subFrag02 = new CreateRideSubfragment02();
         this.subFrag03 = new CreateRideSubfragment03();
         this.subFrag04 = new CreateRideSubfragment04();
         this.createRideLoader = new CreateRideLoader();
+        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, this.subFrag01).commit();
+
         Single<List<VehicleType>> result = vehicleTypeService.getVehicleTypes()
                 .flatMapIterable(vehicleTypeDTOS -> vehicleTypeDTOS)
                 .flatMap(vehicleTypeDTO -> fetchImage(vehicleTypeDTO).subscribeOn(Schedulers.io())).toList();
@@ -311,13 +323,8 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
 
                         }
                     });
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
+                }, throwable -> System.out.println(throwable.getMessage()));
 
-                        System.out.println(throwable.getMessage());
-                    }
-                });
         mStompClient.lifecycle().subscribe(lifecycleEvent -> {
             switch (lifecycleEvent.getType()) {
 

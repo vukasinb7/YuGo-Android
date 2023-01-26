@@ -1,6 +1,9 @@
 package com.example.uberapp.gui.fragments.home;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +62,14 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     private CurrentRideFragment currentRideFragment;
     private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO currentRide;
+    private RideDetailedDTO nextRide;
     private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
     private CardView onlineButton;
     private Fragment parentFragment;
     private FragmentManager fragmentManager;
+    private CreateRideSheet createRideSheet;
+    private Vibrator vibrator;
 
     private VehicleDTO vehicle;
 
@@ -75,10 +83,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null){
-            CreateRideSheet createRideSheet = new CreateRideSheet();
-            getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
-        }
+        vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
     @SuppressLint("CheckResult")
     @Override
@@ -112,19 +117,43 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
         }
         else{
+            if(savedInstanceState == null){
+                createRideSheet = new CreateRideSheet();
+                getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
+            }
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
             mapFragment = MapFragment.newInstance(false);
 
             mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://"+ LocalSettings.localIP +":9000/api/socket/websocket");
 
+            mStompClient.topic("/ride-topic/notify-passenger-vehicle-arrival/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        Toast.makeText(getContext(), "Vehicle has arrived and pickup location", Toast.LENGTH_SHORT).show();
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    }, throwable -> System.out.println(throwable.getMessage()));
+
+            mStompClient.topic("/ride-topic/notify-passenger-vehicle-location/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        ExecutorService executor = Executors.newSingleThreadExecutor();
+                        executor.execute(() -> {
+                            if(currentRide != null){
+                                Gson gson = new Gson();
+                                JsonObject coordinates = gson.fromJson(topicMessage.getPayload(), JsonObject.class);
+                                double latitude = coordinates.get("latitude").getAsDouble();
+                                double longitude = coordinates.get("longitude").getAsDouble();
+                                LocationDTO destination = currentRide.getLocations().get(0).getDestination();
+                                getActivity().runOnUiThread(() -> mapFragment.createRoute(latitude, longitude, destination.getLatitude(), destination.getLongitude()));
+                            }
+                        });
+                    }, throwable -> System.out.println(throwable.getMessage()));
+
             mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        createRideSheet.loadSubfragemnts();
                         hasActiveRide = false;
                         mapFragment = MapFragment.newInstance(true);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
-                        // TODO unlock bottom sheet
-                        //createRideButton.setVisibility(View.VISIBLE);
 
                     }, new Consumer<Throwable>() {
                         @Override
@@ -136,8 +165,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             mStompClient.topic("/ride-topic/notify-passenger-start-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
                         hasActiveRide = true;
-                        // TODO lock bottom sheet
-                        //createRideButton.setVisibility(View.GONE);
                         mapFragment = MapFragment.newInstance(false);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         Call<RideDetailedDTO> activeRideNotified;
@@ -147,6 +174,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                            public void onResponse(@NonNull Call<RideDetailedDTO> call, @NonNull Response<RideDetailedDTO> response) {
                                if (response.code() == 200) {
                                    RideDetailedDTO ride = response.body();
+                                   currentRide = ride;
                                    currentRideFragment =  CurrentRideFragment.newInstance(ride, parentFragment);
                                    fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
                                    hasActiveRide = true;
@@ -212,8 +240,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                         // TODO kada se vozac uloguje proveriti da li ima ACCEPTED voznje, ako ima postaviti start ride dugme na VISIBLE
                     }
                     else{
-                        // TODO unlock bottom sheet
-                        //createRideButton.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -240,8 +266,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     LocationDTO departure = currentRide.getLocations().get(0).getDeparture();
                     LocationDTO destination = currentRide.getLocations().get(0).getDestination();
                     simulateRide(departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude(), vehicle.getId());
-                    currentRide = null;
-
                 }
 
                 @Override
@@ -320,19 +344,25 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 },throwable -> Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show());
     }
     public void acceptRide(RideDetailedDTO ride){
-        currentRide = ride;
-        LocationDTO departure = ride.getLocations().get(0).getDeparture();
-        if(!hasActiveRide){
+        if(currentRide == null){
+            currentRide = ride;
+            LocationDTO departure = ride.getLocations().get(0).getDeparture();
             startRideButton.setVisibility(View.VISIBLE);
             simulateRide(vehicle.getCurrentLocation().getLatitude(), vehicle.getCurrentLocation().getLongitude(), departure.getLatitude(), departure.getLongitude(), vehicle.getId());
+        }else {
+            nextRide = ride;
         }
     }
 
     @Override
     public void endCurrentRide() {
         hasActiveRide = false;
-        if(currentRide != null){
+        if(nextRide != null){
+            currentRide = nextRide;
+            nextRide = null;
             startRideButton.setVisibility(View.VISIBLE);
+        }else{
+            currentRide = null;
         }
 
         if(TokenManager.getRole().equals("DRIVER"))
