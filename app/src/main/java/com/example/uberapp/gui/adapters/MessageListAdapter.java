@@ -69,7 +69,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,7 +104,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void onFailure(Call<MessageDTO> call, Throwable t) {
-                    Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
         });

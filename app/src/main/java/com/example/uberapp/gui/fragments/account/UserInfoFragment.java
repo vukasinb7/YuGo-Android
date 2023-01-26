@@ -127,7 +127,7 @@ public class UserInfoFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
-
+                    Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
         });
