@@ -61,15 +61,10 @@ public class UserDocumentsFragment extends Fragment {
         this.user = userDetailedDTO;
     }
 
+    public UserDocumentsFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (!Environment.isExternalStorageManager()) {
-            Intent getpermission = new Intent();
-            getpermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-            startActivity(getpermission);
-        }
     }
 
     public String getPath(Uri uri) {
@@ -189,11 +184,23 @@ public class UserDocumentsFragment extends Fragment {
                 });
 
         buttonPickDrivingLicence.setOnClickListener(v -> {
+            if (!Environment.isExternalStorageManager()) {
+                Intent getPermission = new Intent();
+                getPermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(getPermission);
+            }
+
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickDrivingLicence.launch(intent);
         });
 
         buttonPickRegistrationLicence.setOnClickListener(v -> {
+            if (!Environment.isExternalStorageManager()) {
+                Intent getPermission = new Intent();
+                getPermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(getPermission);
+            }
+
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickRegistrationLicence.launch(intent);
         });
