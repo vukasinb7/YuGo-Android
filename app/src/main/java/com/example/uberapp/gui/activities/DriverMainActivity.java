@@ -30,6 +30,7 @@ import ua.naiksoftware.stomp.StompClient;
 
 public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, NewRideDialog.OnAcceptRideListener {
     BottomNavigationView bottomNavigationView;
+    NewRideDialog nrd;
     private StompClient mStompClient;
 
     @SuppressLint("CheckResult")
@@ -48,7 +49,8 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                     Gson gson= new Gson();
                     JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
                     Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
-                    new NewRideDialog(rideID).show(getSupportFragmentManager(),NewRideDialog.TAG);
+                    nrd=new NewRideDialog(rideID);
+                    nrd.show(getSupportFragmentManager(),NewRideDialog.TAG);
 
                 }, new Consumer<Throwable>() {
                     @Override
@@ -118,7 +120,16 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     public void onDestroy() {
         super.onDestroy();
         mStompClient.disconnect();
+        if (nrd!=null)
+            nrd.onDestroy();
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (nrd!=null)
+            nrd.onPause();
     }
 
     @Override

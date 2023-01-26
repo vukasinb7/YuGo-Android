@@ -62,6 +62,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -215,11 +216,10 @@ public class DriverHistoryAdapter extends BaseAdapter {
 
         GeoPoint startPoint = new GeoPoint(vht.getLocations().get(0).getDeparture().getLatitude(),vht.getLocations().get(0).getDeparture().getLongitude() );
         GeoPoint endPoint = new GeoPoint(vht.getLocations().get(0).getDestination().getLatitude(),vht.getLocations().get(0).getDestination().getLongitude() );
-
+        MapView mapView= new MapView(activity);
         final float scale = activity.getResources().getDisplayMetrics().density;
         LinearLayout mapLayout = (LinearLayout) v.findViewById(R.id.mapHistoryLayout);
         if (mapLayout.findViewWithTag(vht.getId()+"_map")==null) {
-            MapView mapView = new MapView(activity);
             mapLayout.addView(mapView);
             mapView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (150 * scale + 0.5f)));
             mapView.setTag(vht.getId() + "_map");
@@ -227,7 +227,6 @@ public class DriverHistoryAdapter extends BaseAdapter {
             IMapController mapController = mapView.getController();
             mapController.setZoom(14.0);
             mapController.setCenter(new GeoPoint(44.97639, 19.61222));
-            createRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), v, mapView);
             //SET ROUTE DISTANCE
 
             getLength(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), mapView, new DriverHistoryAdapter.CallbackLengthHistory() {
@@ -286,6 +285,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         ImageButton arrow = v.findViewById(R.id.arrowBtnDriverHistory);
         RelativeLayout hiddenView = v.findViewById(R.id.hiddenDriverHistory);
         View finalV = v;
+        View finalV2 = v;
         arrow.setOnClickListener(view_click -> {
             // If the CardView is already expanded, set its visibility
             // to gone and change the expand less icon to expand more.
@@ -300,6 +300,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
             // If the CardView is not expanded, set its visibility to
             // visible and change the expand more icon to expand less.
             else {
+                createRoute(startPoint.getLatitude(), startPoint.getLongitude(), endPoint.getLatitude(), endPoint.getLongitude(), finalV2, mapView);
                 //TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 hiddenView.setVisibility(View.VISIBLE);
                 arrow.setImageResource(R.drawable.icon_arrow_up);
@@ -330,9 +331,8 @@ public class DriverHistoryAdapter extends BaseAdapter {
         return v;
     }
     public void createMarker(double latitude, double longitude, String title,Integer drawableID,MapView map,View v){
-        if(map == null || map.getRepository() == null) {
+        if(map == null || map.getRepository() == null||activity.isDestroyed())
             return;
-        }
 
         for(int i=0;i<map.getOverlays().size();i++){
             Overlay overlay=map.getOverlays().get(i);
@@ -340,7 +340,11 @@ public class DriverHistoryAdapter extends BaseAdapter {
                 map.getOverlays().remove(overlay);
             }
         }
-
+        if (map==null)
+            return;
+        else if (map.getRepository()==null) {
+            return;
+        }
         Marker marker = new Marker(map);
         GeoPoint geoPoint = new GeoPoint(latitude,longitude);
         marker.setPosition(geoPoint);
@@ -382,8 +386,12 @@ public class DriverHistoryAdapter extends BaseAdapter {
                     @Override
                     public void run() {
                         map.getOverlays().add(roadOverlay);
-                        createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin,map,v);
-                        createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin,map,v);
+                        if(map!=null)
+                            if(map.getRepository()!=null)
+                                createMarker(startLatitude, startLongitude, "Departure", R.drawable.start_location_pin, map, v);
+                        if (map!=null)
+                            if(map.getRepository()!=null)
+                                createMarker(endLatitude, endLongitude, "Destination", R.drawable.finish_location_pin, map, v);
                         map.invalidate();
                         IMapController mapController = map.getController();
                         mapController.setZoom(12.0);
