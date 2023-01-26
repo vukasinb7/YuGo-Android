@@ -55,6 +55,8 @@ public class VehicleFragment extends Fragment {
     public VehicleFragment(UserDetailedDTO user) {
         this.user = user;
     }
+
+    public VehicleFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

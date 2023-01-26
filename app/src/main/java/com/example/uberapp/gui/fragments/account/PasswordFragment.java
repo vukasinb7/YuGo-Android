@@ -45,6 +45,8 @@ public class PasswordFragment extends Fragment {
     public PasswordFragment(UserDetailedDTO user) {
         this.user = user;
     }
+
+    public PasswordFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

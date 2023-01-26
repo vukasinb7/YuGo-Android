@@ -44,6 +44,8 @@ public class UserInfoFragment extends Fragment {
     public UserInfoFragment(UserDetailedDTO user) {
         this.user = user;
     }
+
+    public UserInfoFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
