@@ -55,8 +55,8 @@ public class UserDocumentsFragment extends Fragment {
     ImageButton buttonPreviewRegistrationLicence;
     TextView drivingLicenceText;
     TextView registrationLicenceText;
-    String drivingLicencePath;
-    String registrationLicencePath;
+    DocumentDTO drivingLicence;
+    DocumentDTO registrationLicence;
     public UserDocumentsFragment(UserDetailedDTO userDetailedDTO) {
         this.user = userDetailedDTO;
     }
@@ -112,9 +112,69 @@ public class UserDocumentsFragment extends Fragment {
                         createDocumentCall.enqueue(new Callback<>() {
                             @Override
                             public void onResponse(@NonNull Call<DocumentDTO> call, @NonNull Response<DocumentDTO> response) {
-                                drivingLicencePath = response.body().getName();
-                                drivingLicenceText.setText("Driving licence present. Click icon for preview");
+                                DocumentDTO oldDrivingLicence = drivingLicence;
+                                drivingLicence = response.body();
+                                drivingLicenceText.setText("Registration licence present. Click icon for preview");
                                 Toast.makeText(getContext(), "Driving Licence uploaded successfully!", Toast.LENGTH_SHORT).show();
+
+                                if (oldDrivingLicence != null) {
+                                    Call<ResponseBody> deleteDocumentCall = driverService.deleteDocument(oldDrivingLicence.getId());
+
+                                    deleteDocumentCall.enqueue(new Callback<>() {
+                                        @Override
+                                        public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                                            Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<DocumentDTO> call, @NonNull Throwable t) {
+                                Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getContext(), "You didn't select any image!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        ActivityResultLauncher<Intent> pickRegistrationLicence =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        File file = new File(getPath(result.getData().getData()));
+                        RequestBody body =  RequestBody.create(file, MediaType.parse("multipart/form-data"));
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), body);
+                        Call<DocumentDTO> createDocumentCall = driverService.createDocument(user.getId(), "VEHICLE_REGISTRATION", filePart);
+                        createDocumentCall.enqueue(new Callback<>() {
+                            @Override
+                            public void onResponse(@NonNull Call<DocumentDTO> call, @NonNull Response<DocumentDTO> response) {
+                                DocumentDTO oldRegistrationLicence = registrationLicence;
+                                registrationLicence = response.body();
+                                registrationLicenceText.setText("Registration licence present. Click icon for preview");
+                                Toast.makeText(getContext(), "Driving Licence uploaded successfully!", Toast.LENGTH_SHORT).show();
+
+                                if (oldRegistrationLicence != null) {
+                                    Call<ResponseBody> deleteDocumentCall = driverService.deleteDocument(oldRegistrationLicence.getId());
+
+                                    deleteDocumentCall.enqueue(new Callback<>() {
+                                        @Override
+                                        public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                                            Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
 
                             @Override
@@ -133,32 +193,6 @@ public class UserDocumentsFragment extends Fragment {
             pickDrivingLicence.launch(intent);
         });
 
-        ActivityResultLauncher<Intent> pickRegistrationLicence =
-                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
-                        File file = new File(getPath(result.getData().getData()));
-                        RequestBody body =  RequestBody.create(file, MediaType.parse("multipart/form-data"));
-                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), body);
-                        Call<DocumentDTO> createDocumentCall = driverService.createDocument(user.getId(), "VEHICLE_REGISTRATION", filePart);
-                        createDocumentCall.enqueue(new Callback<>() {
-                            @Override
-                            public void onResponse(@NonNull Call<DocumentDTO> call, @NonNull Response<DocumentDTO> response) {
-                                registrationLicencePath = response.body().getName();
-                                registrationLicenceText.setText("Registration licence present. Click icon for preview");
-                                Toast.makeText(getContext(), "Driving Licence uploaded successfully!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<DocumentDTO> call, @NonNull Throwable t) {
-                                Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else{
-                        Toast.makeText(getContext(), "You didn't select any image!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
         buttonPickRegistrationLicence.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickRegistrationLicence.launch(intent);
@@ -167,8 +201,8 @@ public class UserDocumentsFragment extends Fragment {
 
     public void setupPreviewButtons(){
         buttonPreviewDrivingLicence.setOnClickListener(v -> {
-            if (drivingLicencePath != null){
-                Call<ResponseBody> imageCall = imageService.getImageCall(drivingLicencePath);
+            if (drivingLicence != null){
+                Call<ResponseBody> imageCall = imageService.getDocumentPicture(drivingLicence.getName());
                 imageCall.enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -199,8 +233,8 @@ public class UserDocumentsFragment extends Fragment {
         });
 
         buttonPreviewRegistrationLicence.setOnClickListener(v -> {
-            if (registrationLicencePath != null){
-                Call<ResponseBody> imageCall = imageService.getImageCall(registrationLicencePath);
+            if (registrationLicence != null){
+                Call<ResponseBody> imageCall = imageService.getDocumentPicture(registrationLicence.getName());
                 imageCall.enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -240,11 +274,11 @@ public class UserDocumentsFragment extends Fragment {
                     DocumentDTO[] documentsDTOs = response.body();
                     for (DocumentDTO document : documentsDTOs){
                         if (document.getDocumentType().equals("DRIVING_LICENCE")){
-                            drivingLicencePath = document.getName();
+                            drivingLicence = document;
                             drivingLicenceText.setText("Driving licence present. Click icon for preview");
                         }
                         else if (document.getDocumentType().equals("VEHICLE_REGISTRATION")){
-                            registrationLicencePath = document.getName();
+                            registrationLicence = document;
                             registrationLicenceText.setText("Registration licence present. Click icon for preview");
                         }
                     }

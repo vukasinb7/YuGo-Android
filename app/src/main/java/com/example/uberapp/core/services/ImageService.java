@@ -13,4 +13,6 @@ public interface ImageService {
     Call<ResponseBody> getImageCall(@Path("imgName") String imgName);
     @GET("/api/image/profilePicture/{pictureName}")
     Call<ResponseBody> getProfilePicture(@Path("pictureName") String pictureName);
+    @GET("/api/image/document/{documentName}")
+    Call<ResponseBody> getDocumentPicture(@Path("documentName") String documentName);
 }
