@@ -1,13 +1,19 @@
 package com.example.uberapp.gui.fragments.home;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -25,8 +31,10 @@ import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.VehicleDTO;
 import com.example.uberapp.core.model.LocationInfo;
 import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.APIMaps;
 import com.example.uberapp.core.services.APIRouting;
 import com.example.uberapp.core.services.DriverService;
+import com.example.uberapp.core.services.MapService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.services.RoutingService;
@@ -41,6 +49,8 @@ import org.osmdroid.util.GeoPoint;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,19 +61,19 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
-public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener, CreateRideSheet.OnRouteChangedListener {
+public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndCurrentRideListener, CreateRideSheet.OnRouteChangedListener, MapFragment.OnLocationSelectedListener {
     private MapFragment mapFragment;
     private CurrentRideFragment currentRideFragment;
     private final RideService rideService = APIClient.getClient().create(RideService.class);
     private RideDetailedDTO currentRide;
     private RideDetailedDTO nextRide;
-    private boolean hasActiveRide;
     private ExtendedFloatingActionButton startRideButton;
     private CardView onlineButton;
     private Fragment parentFragment;
@@ -75,8 +85,10 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
     VehicleService vehicleService = APIClient.getClient().create(VehicleService.class);
     DriverService driverService = APIClient.getClient().create(DriverService.class);
+    MapService mapService = APIMaps.getClient().create(MapService.class);
 
     private StompClient mStompClient;
+
     public HomeFragment() {
     }
 
@@ -84,7 +96,50 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        createNotificationChannel();
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "YuGo Notification";
+            String description = "This is default description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("YuGoNotificationID", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private ScheduledExecutorService vehiclesExecutor = Executors.newScheduledThreadPool(1);
+    private void showVehicles(){
+        vehiclesExecutor.shutdown();
+        vehiclesExecutor = Executors.newScheduledThreadPool(1);
+        ScheduledFuture<?> showVehiclesHandler = vehiclesExecutor.scheduleWithFixedDelay(() -> {
+            getActivity().runOnUiThread(() -> {
+                Call<List<VehicleDTO>> vehiclesRequest = vehicleService.getVehicles();
+                vehiclesRequest.enqueue(new Callback<List<VehicleDTO>>() {
+                    @Override
+                    public void onResponse(Call<List<VehicleDTO>> call, Response<List<VehicleDTO>> response) {
+                        List<VehicleDTO> vehicles = response.body();
+                        for(VehicleDTO vehicleDTO : vehicles){
+                            if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
+                                mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + String.valueOf(vehicleDTO.getId()), R.drawable.current_location_pin);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<VehicleDTO>> call, Throwable t) {
+
+                    }
+                });
+            });
+        }, 0, 1, TimeUnit.SECONDS);
+
+
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,10 +149,11 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         startRideButton = view.findViewById(R.id.buttonStartRide);
         onlineButton = view.findViewById(R.id.online_offline_button);
 
-        fragmentManager = getActivity().getSupportFragmentManager();
+        //fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager = getChildFragmentManager();
 
         Call<RideDetailedDTO> activeRide;
-        if (TokenManager.getRole().equals("DRIVER")){
+        if (TokenManager.getRole().equals("DRIVER")) {
             activeRide = rideService.getActiveDriverRide(TokenManager.getUserId());
             mapFragment = MapFragment.newInstance(false);
             Call<VehicleDTO> vehicleRequest = driverService.getVehicle(TokenManager.getUserId());
@@ -115,21 +171,30 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 }
             });
 
-        }
-        else{
-            if(savedInstanceState == null){
+        } else {
+            if (savedInstanceState == null) {
                 createRideSheet = new CreateRideSheet();
                 getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
             }
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
             mapFragment = MapFragment.newInstance(false);
 
-            mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://"+ LocalSettings.localIP +":9000/api/socket/websocket");
+            mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
 
-            mStompClient.topic("/ride-topic/notify-passenger-vehicle-arrival/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+            mStompClient.topic("/ride-topic/notify-passenger-vehicle-arrival/" + TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
                         Toast.makeText(getContext(), "Vehicle has arrived and pickup location", Toast.LENGTH_SHORT).show();
                         vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "YuGoNotificationID")
+                                .setSmallIcon(R.drawable.icon_notification)
+                                .setContentTitle("Vehicle has arrived at pickup location.")
+                                .setChannelId("YuGoNotificationID")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        notificationManager.notify(99, builder.build());
                     }, throwable -> System.out.println(throwable.getMessage()));
 
             mStompClient.topic("/ride-topic/notify-passenger-vehicle-location/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
@@ -150,7 +215,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
                         createRideSheet.loadSubfragemnts();
-                        hasActiveRide = false;
                         mapFragment = MapFragment.newInstance(true);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
@@ -164,7 +228,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     });
             mStompClient.topic("/ride-topic/notify-passenger-start-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
-                        hasActiveRide = true;
                         mapFragment = MapFragment.newInstance(false);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         Call<RideDetailedDTO> activeRideNotified;
@@ -177,7 +240,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                                    currentRide = ride;
                                    currentRideFragment =  CurrentRideFragment.newInstance(ride, parentFragment);
                                    fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
-                                   hasActiveRide = true;
                                    LocationDTO departure = ride.getLocations().get(0).getDeparture();
                                    LocationDTO destination = ride.getLocations().get(0).getDestination();
                                    mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
@@ -216,7 +278,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             });
 
             mStompClient.connect();
-
         }
 
         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
@@ -228,7 +289,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     RideDetailedDTO ride = response.body();
                     currentRideFragment =  CurrentRideFragment.newInstance(ride, parentFragment);
                     fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
-                    hasActiveRide = true;
                     LocationDTO departure = ride.getLocations().get(0).getDeparture();
                     LocationDTO destination = ride.getLocations().get(0).getDestination();
                     mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
@@ -249,7 +309,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
+        showVehicles();
         return view;
     }
 
@@ -262,7 +322,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     currentRideFragment = CurrentRideFragment.newInstance(currentRide, parentFragment);
                     fragmentManager.beginTransaction().replace(R.id.fragment_current_ride, currentRideFragment).commit();
                     startRideButton.setVisibility(View.GONE);
-                    hasActiveRide = true;
                     LocationDTO departure = currentRide.getLocations().get(0).getDeparture();
                     LocationDTO destination = currentRide.getLocations().get(0).getDestination();
                     simulateRide(departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude(), vehicle.getId());
@@ -356,7 +415,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
     @Override
     public void endCurrentRide() {
-        hasActiveRide = false;
         if(nextRide != null){
             currentRide = nextRide;
             nextRide = null;
@@ -396,6 +454,72 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         }
         else if(destination != null){
             mapFragment.createMarker(destination.getLatitude(),destination.getLongitude(),"Destination",R.drawable.finish_location_pin);
+        }
+    }
+
+    @Override
+    public void enableManualDestinationPicker() {
+        isManualDepartureSelectionEnabled = false;
+        isManualDestinationSelectionEnabled = true;
+    }
+
+    @Override
+    public void enableManualDeparturePicker() {
+        isManualDepartureSelectionEnabled = true;
+        isManualDestinationSelectionEnabled = false;
+    }
+
+    private boolean isManualDestinationSelectionEnabled;
+    private boolean isManualDepartureSelectionEnabled;
+    @Override
+    public void onLocationSelectedEvent(GeoPoint point) {
+        if(isManualDepartureSelectionEnabled){
+            isManualDepartureSelectionEnabled = false;
+            Call<ResponseBody> addressRequest = mapService.reverseSearch(Double.toString(point.getLatitude()), Double.toString(point.getLongitude()));
+            addressRequest.enqueue(new Callback<>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Gson gson = new Gson();
+                    JsonObject responseJson = null;
+                    try {
+                        responseJson = gson.fromJson(response.body().string(), JsonObject.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    String address = responseJson.get("display_name").getAsString();
+                    LocationInfo locationInfo = new LocationInfo(address, point.getLatitude(), point.getLongitude());
+                    createRideSheet.setDeparture(locationInfo);
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+
+        } else if (isManualDestinationSelectionEnabled) {
+            isManualDestinationSelectionEnabled = false;
+            Call<ResponseBody> addressRequest = mapService.reverseSearch(Double.toString(point.getLatitude()), Double.toString(point.getLongitude()));
+            addressRequest.enqueue(new Callback<>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Gson gson = new Gson();
+                    JsonObject responseJson = null;
+                    try {
+                        responseJson = gson.fromJson(response.body().string(), JsonObject.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    String address = responseJson.get("display_name").getAsString();
+                    LocationInfo locationInfo = new LocationInfo(address, point.getLatitude(), point.getLongitude());
+                    createRideSheet.setDestination(locationInfo);
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
     }
 }

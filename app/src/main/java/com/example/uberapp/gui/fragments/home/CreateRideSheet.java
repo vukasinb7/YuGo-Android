@@ -71,6 +71,9 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
 
     public interface OnRouteChangedListener{
         void onRideRouteChanged(LocationInfo departure, LocationInfo destination);
+
+        void enableManualDestinationPicker();
+        void enableManualDeparturePicker();
     }
     private OnRouteChangedListener routeChangedListener;
 
@@ -179,6 +182,16 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
     }
 
     @Override
+    public void enableManualDeparturePicker() {
+        routeChangedListener.enableManualDeparturePicker();
+    }
+
+    @Override
+    public void enableManualDestinationPicker() {
+        routeChangedListener.enableManualDestinationPicker();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mStompClient.disconnect();
@@ -278,6 +291,17 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, this.subFrag01).commit();
         configureButtons();
 
+    }
+
+    public void setDestination(LocationInfo destination) {
+        this.destination = destination;
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
+        subFrag01.setDestinationAddress(destination);
+    }
+    public void setDeparture(LocationInfo departure){
+        this.departure = departure;
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
+        subFrag01.setDepartureAddress(departure);
     }
 
     @SuppressLint("CheckResult")
