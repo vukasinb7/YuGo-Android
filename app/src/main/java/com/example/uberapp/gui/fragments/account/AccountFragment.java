@@ -1,7 +1,9 @@
 package com.example.uberapp.gui.fragments.account;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -185,6 +187,9 @@ public class AccountFragment extends Fragment {
                     Intent loginPage = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginPage);
                     getActivity().finish();
+                    SharedPreferences preferences = getActivity().getSharedPreferences("YuGo", Context.MODE_PRIVATE);
+                    preferences.edit().remove("accessToken").commit();
+                    preferences.edit().remove("refreshToken").commit();
                 }
 
                 @Override

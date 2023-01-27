@@ -15,7 +15,6 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.auth.TokenManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +23,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 SharedPreferences preferences = getSharedPreferences("YuGo", Context.MODE_PRIVATE);
-                String retrivedToken  = preferences.getString("accessToken",null);
-                if (retrivedToken!=null)
+                String retrievedToken  = preferences.getString("accessToken",null);
+                if (retrievedToken!=null)
                 {
-                    TokenManager.setToken(retrivedToken);
+                    TokenManager.setToken(retrievedToken);
                     TokenManager.setRefreshToken(preferences.getString("refreshToken",null));
-                    if (TokenManager.getRole()=="PASSENGER")
+                    if (TokenManager.getRole().equals("PASSENGER"))
                         startActivity(new Intent(SplashScreenActivity.this, PassengerMainActivity.class));
                     else
                         startActivity(new Intent(SplashScreenActivity.this, DriverMainActivity.class));

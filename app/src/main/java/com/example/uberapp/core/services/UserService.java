@@ -5,6 +5,7 @@ import com.example.uberapp.core.dto.ChangePasswordDTO;
 import com.example.uberapp.core.dto.LoginCredentialsDTO;
 import com.example.uberapp.core.dto.MessageDTO;
 import com.example.uberapp.core.dto.MessageSendDTO;
+import com.example.uberapp.core.dto.RefreshTokenDTO;
 import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.auth.TokenState;
 
@@ -21,6 +22,9 @@ import retrofit2.http.Path;
 public interface UserService {
     @POST("/api/user/login")
     Observable<TokenState> login(@Body LoginCredentialsDTO credentials);
+
+    @POST("/api/user/refreshToken")
+    Call<TokenState> refreshToken(@Body RefreshTokenDTO refreshTokenDTO);
     @POST("/api/user/logout")
     Call<ResponseBody> logout();
     @GET("/api/user/{id}/message")

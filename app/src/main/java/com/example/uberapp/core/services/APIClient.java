@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class APIClient {
-
     static public Retrofit getClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
