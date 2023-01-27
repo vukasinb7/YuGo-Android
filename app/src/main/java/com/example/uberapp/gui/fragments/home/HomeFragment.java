@@ -101,13 +101,15 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "YuGo Notification";
-            String description = "This is default description";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("YuGoNotificationID", name, importance);
-            channel.setDescription(description);
+            NotificationChannel vehicleArrivalChannel = new NotificationChannel("VehicleArrivalNotificationID", "Vehicle arrival", NotificationManager.IMPORTANCE_DEFAULT);
+            vehicleArrivalChannel.setDescription("Notifies you that driver has arrived at pickup location.");
+
+            NotificationChannel rideOfferChannel = new NotificationChannel("RideOfferNotificationID", "Ride offer", NotificationManager.IMPORTANCE_DEFAULT);
+            rideOfferChannel.setDescription("Notifies you about new ride offer.");
+
             NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            notificationManager.createNotificationChannel(vehicleArrivalChannel);
+            notificationManager.createNotificationChannel(rideOfferChannel);
         }
     }
 
@@ -185,10 +187,9 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
                         Toast.makeText(getContext(), "Vehicle has arrived and pickup location", Toast.LENGTH_SHORT).show();
                         vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "YuGoNotificationID")
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "VehicleArrivalNotificationID")
                                 .setSmallIcon(R.drawable.icon_notification)
                                 .setContentTitle("Vehicle has arrived at pickup location.")
-                                .setChannelId("YuGoNotificationID")
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
                         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {

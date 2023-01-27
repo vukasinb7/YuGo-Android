@@ -1,16 +1,24 @@
 package com.example.uberapp.gui.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
+import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.AccountFragment;
@@ -25,12 +33,51 @@ import com.google.gson.JsonObject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
 public class DriverMainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, NewRideDialog.OnAcceptRideListener {
     BottomNavigationView bottomNavigationView;
     private StompClient mStompClient;
+    private final RideService rideService = APIClient.getClient().create(RideService.class);
+
+    private void sendNotification(Integer rideID){
+        Call<RideDetailedDTO> call = rideService.getRide(rideID);
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                RideDetailedDTO ride = response.body();
+                LocationDTO departure = ride.getLocations().get(0).getDeparture();
+                LocationDTO destination = ride.getLocations().get(0).getDestination();
+
+                String notifText = "Departure: " + departure.getAddress().substring(0, 20) + "\n" +
+                        "Destination: " + destination.getAddress().substring(0, 20) + "\n" +
+                        "Estimated time: " + ride.getEstimatedTimeInMinutes() + "min" + "\n" +
+                        "Number of passengers: " + ride.getPassengers().size() + "\n" +
+                        "Total cost: $" + ride.getTotalCost();
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(DriverMainActivity.this, "RideOfferNotificationID")
+                        .setSmallIcon(R.drawable.icon_notification)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(notifText))
+                        .setContentTitle("You have a new ride offer.")
+                        .setContentText(notifText)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DriverMainActivity.this);
+                if (ActivityCompat.checkSelfPermission(DriverMainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                notificationManager.notify(199, builder.build());
+            }
+
+            @Override
+            public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+            }
+        });
+    }
 
     @SuppressLint("CheckResult")
     @Override
@@ -48,15 +95,12 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                     Gson gson= new Gson();
                     JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
                     Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
+
+                    sendNotification(rideID);
+
                     new NewRideDialog(rideID).show(getSupportFragmentManager(),NewRideDialog.TAG);
 
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                        System.out.println(throwable.getMessage());
-                    }
-                });
+                }, throwable -> System.out.println(throwable.getMessage()));
         mStompClient.lifecycle().subscribe(lifecycleEvent -> {
             switch (lifecycleEvent.getType()) {
 
