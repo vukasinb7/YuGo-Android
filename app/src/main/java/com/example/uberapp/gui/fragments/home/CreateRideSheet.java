@@ -67,13 +67,21 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
     CreateRideSubfragment01.OnRouteChangedListener,
     CreateRideSubfragment02.OnRidePropertiesChangedListener,
     CreateRideSubfragment03.OnDateTimeChangedListener,
-            CreateRideSubfragment04.OnAcceptRideListener {
+            CreateRideSubfragment04.OnAcceptRideListener,
+        CreateRideLoader.RefreshPageEvent {
+
+    @Override
+    public void onRefreshPage() {
+        routeChangedListener.refreshPage();
+    }
 
     public interface OnRouteChangedListener{
         void onRideRouteChanged(LocationInfo departure, LocationInfo destination);
 
         void enableManualDestinationPicker();
         void enableManualDeparturePicker();
+
+        void refreshPage();
     }
     private OnRouteChangedListener routeChangedListener;
 
@@ -336,17 +344,22 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
                     Gson gson= new Gson();
                     JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
                     Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
-                    rideService.getRide(rideID).enqueue(new Callback<RideDetailedDTO>() {
-                        @Override
-                        public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
-                            createRideLoader.changeLoadingStatus(response.body());
-                        }
+                    if(rideID == -1){
+                        createRideLoader.changeLoadingStatus(null);
+                    }else{
+                        rideService.getRide(rideID).enqueue(new Callback<RideDetailedDTO>() {
+                            @Override
+                            public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                                createRideLoader.changeLoadingStatus(response.body());
+                            }
 
-                        @Override
-                        public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 }, throwable -> System.out.println(throwable.getMessage()));
 
         mStompClient.lifecycle().subscribe(lifecycleEvent -> {

@@ -214,7 +214,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
             mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
-                        createRideSheet.loadSubfragemnts();
+                        createRideSheet = new CreateRideSheet();
+                        getChildFragmentManager().beginTransaction().replace(R.id.homeFragmentContentHolder, createRideSheet).commit();
                         mapFragment = MapFragment.newInstance(true);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
@@ -467,6 +468,14 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
     public void enableManualDeparturePicker() {
         isManualDepartureSelectionEnabled = true;
         isManualDestinationSelectionEnabled = false;
+    }
+
+    @Override
+    public void refreshPage() {
+        this.createRideSheet = new CreateRideSheet();
+        mapFragment.removeMarker("Departure");
+        mapFragment.removeMarker("Destination");
+        getChildFragmentManager().beginTransaction().replace(R.id.homeFragmentContentHolder, createRideSheet).commit();
     }
 
     private boolean isManualDestinationSelectionEnabled;

@@ -151,6 +151,18 @@ public class MapFragment extends Fragment implements LocationListener{
         map.getOverlays().add(marker);
         map.invalidate();
     }
+    public void removeMarker(String title){
+        if(map == null || map.getRepository() == null) {
+            return;
+        }
+
+        for(int i=0;i<map.getOverlays().size();i++){
+            Overlay overlay=map.getOverlays().get(i);
+            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
+                map.getOverlays().remove(overlay);
+            }
+        }
+    }
     public void createMarker(double latitude, double longitude, String title,Integer drawableID){
         if(map == null || map.getRepository() == null) {
             return;
