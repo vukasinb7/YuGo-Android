@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
+import com.example.uberapp.core.dto.AllRidesDTO;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.VehicleDTO;
@@ -120,14 +121,40 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
         ScheduledFuture<?> showVehiclesHandler = vehiclesExecutor.scheduleWithFixedDelay(() -> {
             getActivity().runOnUiThread(() -> {
                 Call<List<VehicleDTO>> vehiclesRequest = vehicleService.getVehicles();
+
                 vehiclesRequest.enqueue(new Callback<List<VehicleDTO>>() {
                     @Override
                     public void onResponse(Call<List<VehicleDTO>> call, Response<List<VehicleDTO>> response) {
                         List<VehicleDTO> vehicles = response.body();
                         for(VehicleDTO vehicleDTO : vehicles){
-                            if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
-                                mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + String.valueOf(vehicleDTO.getId()), R.drawable.current_location_pin);
-                            }
+                            Call<RideDetailedDTO> activeRide = rideService.getActiveDriverRide(vehicleDTO.getDriverId());
+
+                            activeRide.enqueue(new Callback<>() {
+                                @Override
+                                public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                                    if(response.body() == null){
+                                        if(vehicle != null && Objects.equals(vehicle.getId(), vehicleDTO.getId())){
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.current_location_pin);
+                                        }else{
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.busy_vehicle_pin);
+                                        }
+                                    }else{
+                                        if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.available_vehicle_pin);
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+                                }
+                            });
+
+//                            if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
+//                                mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + String.valueOf(vehicleDTO.getId()), R.drawable.current_location_pin);
+//                            }
                         }
                     }
 
