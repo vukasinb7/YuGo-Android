@@ -44,6 +44,8 @@ public class UserInfoFragment extends Fragment {
     public UserInfoFragment(UserDetailedDTO user) {
         this.user = user;
     }
+
+    public UserInfoFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +129,7 @@ public class UserInfoFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
-
+                    Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
         });

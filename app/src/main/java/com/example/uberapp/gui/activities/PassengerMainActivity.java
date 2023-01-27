@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.fragments.account.AccountFragment;
 import com.example.uberapp.R;
+import com.example.uberapp.gui.fragments.account.PassengerFavouritesFragment;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
 import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
@@ -22,6 +23,8 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
     AccountFragment accountFragment = new AccountFragment();
     UserInboxFragment inboxFragment = new UserInboxFragment();
     UserHistoryFragment historyFragment = new UserHistoryFragment();
+
+    PassengerFavouritesFragment passengerFavouritesFragment = new PassengerFavouritesFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,9 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
             case R.id.passanger_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, historyFragment).commit();
                 break;
+            case R.id.passenger_favorites:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, passengerFavouritesFragment).commit();
+                    break;
         }
         return true;
     }

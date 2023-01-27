@@ -49,8 +49,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         this.conversationWith = user;
         this.rideId = rideId;
 
-        TextView sender = (TextView) ((Activity) context).findViewById(R.id.senderName);
-        ShapeableImageView profilePic = (ShapeableImageView) ((Activity) context).findViewById(R.id.profilePic);
+        TextView sender = ((Activity) context).findViewById(R.id.senderName);
+        ShapeableImageView profilePic = ((Activity) context).findViewById(R.id.profilePic);
         sender.setText(String.format("%s %s", conversationWith.getName(), conversationWith.getSurname()));
 
         Call<ResponseBody> profilePictureCall = imageService.getProfilePicture(user.getProfilePicture());
@@ -58,8 +58,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    byte[] bytes = new byte[0];
-                    bytes = response.body().bytes();
+                    byte[] bytes = response.body().bytes();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     profilePic.setImageBitmap(bitmap);
                 } catch (IOException e) {
@@ -69,20 +68,21 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        ImageButton backBtn = (ImageButton) ((Activity) context).findViewById(R.id.buttonBack);
-        ImageButton sendBtn = (ImageButton) ((Activity) context).findViewById(R.id.buttonSend);
+        ImageButton backBtn = ((Activity) context).findViewById(R.id.buttonBack);
+        ImageButton sendBtn = ((Activity) context).findViewById(R.id.buttonSend);
 
         backBtn.setOnClickListener(view -> {
             ((Activity) context).finish();
         });
 
         sendBtn.setOnClickListener(view -> {
-            TextView text = (TextView) ((Activity) context).findViewById(R.id.editChatMessage);
+            TextView text = ((Activity) context).findViewById(R.id.editChatMessage);
             if (text.getText().toString().equals("")){
+
                 return;
             }
             MessageSendDTO newMsg = new MessageSendDTO("RIDE", text.getText().toString(),
@@ -92,19 +92,19 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             Call<MessageDTO> sendMessageCall = userService.sendMessageToUser(user.getId(), newMsg);
             sendMessageCall.enqueue(new Callback<>() {
                 @Override
-                public void onResponse(Call<MessageDTO> call, Response<MessageDTO> response) {
+                public void onResponse(@NonNull Call<MessageDTO> call, @NonNull Response<MessageDTO> response) {
                     MessageDTO messageDTO = response.body();
                     messages.add(messageDTO);
 
                     int conversationSize = messages.size();
                     notifyItemRangeInserted(conversationSize - 1, conversationSize);
-                    RecyclerView rv = (RecyclerView) ((Activity) context).findViewById(R.id.recyclerViewChat);
+                    RecyclerView rv = ((Activity) context).findViewById(R.id.recyclerViewChat);
                     rv.smoothScrollToPosition(conversationSize - 1);
                 }
 
                 @Override
-                public void onFailure(Call<MessageDTO> call, Throwable t) {
-                    Toast.makeText(context, "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                public void onFailure(@NonNull Call<MessageDTO> call, @NonNull Throwable t) {
+                    Toast.makeText(context, "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -117,7 +117,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        MessageDTO message = (MessageDTO) messages.get(position);
+        MessageDTO message = messages.get(position);
 
         if (message.getSenderId().equals(TokenManager.getUserId())) {
             return VIEW_TYPE_MESSAGE_SENT;
@@ -145,7 +145,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MessageDTO message = (MessageDTO) messages.get(position);
+        MessageDTO message = messages.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -162,9 +162,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.textChatMessageMe);
-            timeText = (TextView) itemView.findViewById(R.id.textChatTimestampMe);
-            dateText = (TextView) itemView.findViewById(R.id.textChatDateMe);
+            messageText = itemView.findViewById(R.id.textChatMessageMe);
+            timeText = itemView.findViewById(R.id.textChatTimestampMe);
+            dateText = itemView.findViewById(R.id.textChatDateMe);
         }
 
         void bind(MessageDTO message, int position) {
@@ -189,9 +189,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         ReceivedMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.textChatMessageOther);
-            timeText = (TextView) itemView.findViewById(R.id.textChatTimestampOther);
-            dateText = (TextView) itemView.findViewById(R.id.textChatDateOther);
+            messageText = itemView.findViewById(R.id.textChatMessageOther);
+            timeText = itemView.findViewById(R.id.textChatTimestampOther);
+            dateText = itemView.findViewById(R.id.textChatDateOther);
         }
 
         void bind(MessageDTO message, int position) {

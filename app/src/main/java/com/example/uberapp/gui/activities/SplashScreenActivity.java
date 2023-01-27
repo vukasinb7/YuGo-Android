@@ -3,13 +3,16 @@ package com.example.uberapp.gui.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.VideoView;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.auth.TokenManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -20,7 +23,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                SharedPreferences preferences = getSharedPreferences("YuGo", Context.MODE_PRIVATE);
+                String retrivedToken  = preferences.getString("accessToken",null);
+                if (retrivedToken!=null)
+                {
+                    TokenManager.setToken(retrivedToken);
+                    TokenManager.setRefreshToken(preferences.getString("refreshToken",null));
+                    if (TokenManager.getRole()=="PASSENGER")
+                        startActivity(new Intent(SplashScreenActivity.this, PassengerMainActivity.class));
+                    else
+                        startActivity(new Intent(SplashScreenActivity.this, DriverMainActivity.class));
+                }else
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 finish();
             }
         },500);

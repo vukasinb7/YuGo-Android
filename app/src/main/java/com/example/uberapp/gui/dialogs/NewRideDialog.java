@@ -278,6 +278,17 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
         });
         return length[0];
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationManager = null;
+    }
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+        locationManager = null;
+    }
     private interface CallbackLength {
         void onSuccess(Double value);
     }

@@ -45,6 +45,8 @@ public class PasswordFragment extends Fragment {
     public PasswordFragment(UserDetailedDTO user) {
         this.user = user;
     }
+
+    public PasswordFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +84,13 @@ public class PasswordFragment extends Fragment {
             editPassword.setVisibility(View.VISIBLE);
             currentPassword.setEnabled(false);
             currentPassword.getEditText().setText("");
+            currentPassword.setError(null);
             newPassword.setEnabled(false);
             newPassword.getEditText().setText("");
+            newPassword.setError(null);
             confirmPassword.setEnabled(false);
             confirmPassword.getEditText().setText("");
+            confirmPassword.setError(null);
         });
 
         editPassword.setOnClickListener(v -> {
@@ -125,7 +130,7 @@ public class PasswordFragment extends Fragment {
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
+                    Toast.makeText(getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
         });

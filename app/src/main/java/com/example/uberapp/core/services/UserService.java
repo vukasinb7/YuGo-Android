@@ -33,5 +33,7 @@ public interface UserService {
     Call<UserDetailedDTO> getUser(@Path("id") Integer id);
     @PUT("/api/user/{id}/changePassword")
     Call<ResponseBody> updatePassword(@Path("id") Integer id, @Body ChangePasswordDTO  changePasswordDTO);
+    @POST("/api/user/{email}/resetPassword")
+    Call<String> sendResetCode(@Path("email") String email);
 
 }

@@ -3,7 +3,9 @@ package com.example.uberapp.gui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +55,9 @@ public class LoginActivity extends AppCompatActivity {
                         .subscribeOn(Schedulers.io())
                         .subscribe(tokenState -> {
                             TokenManager.setToken(tokenState.accessToken);
-                            TokenManager.setRefreshToken(tokenState.refreshToken);
-
+                            SharedPreferences preferences = getSharedPreferences("YuGo", Context.MODE_PRIVATE);
+                            preferences.edit().putString("accessToken",tokenState.accessToken).apply();
+                            preferences.edit().putString("refreshToken",tokenState.refreshToken).apply();
                             if (TokenManager.getRole().equals("PASSENGER")){
                                 Intent homePage = new Intent(LoginActivity.this, PassengerMainActivity.class);
                                 startActivity(homePage);

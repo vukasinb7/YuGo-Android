@@ -7,10 +7,16 @@ import com.example.uberapp.core.dto.VehicleDTO;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface DriverService {
@@ -28,4 +34,14 @@ public interface DriverService {
 
     @GET("/api/driver/{driverId}/statistics")
     Call<StatisticsDTO> getDriverStatistics(@Path("driverId") Integer driverId);
+
+    @Multipart
+    @POST("api/driver/{driverId}/document/{type}")
+    Call<DocumentDTO> createDocument(@Path("driverId") Integer driverId, @Path("type") String type, @Part MultipartBody.Part filePart);
+
+    @GET("api/driver/{driverId}/documents")
+    Call<DocumentDTO[]> getDocuments(@Path("driverId") Integer driverId);
+
+    @DELETE("api/driver/document/{documentId}")
+    Call<ResponseBody> deleteDocument(@Path("documentId") Integer documentId);
 }
