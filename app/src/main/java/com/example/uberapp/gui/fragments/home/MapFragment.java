@@ -7,8 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -29,17 +27,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.uberapp.R;
-import com.example.uberapp.core.dto.RideDetailedDTO;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polyline;
@@ -48,13 +47,18 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MapFragment extends Fragment implements LocationListener {
+public class MapFragment extends Fragment implements LocationListener{
     private static final String ARG_CURRENT_LOCATION = "showCurrentLocation";
     private MapView map;
     private LocationManager locationManager;
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private boolean showCurrentLocation = false;
 
+    public interface OnLocationSelectedListener{
+        void onLocationSelectedEvent(GeoPoint point);
+    }
+    private OnLocationSelectedListener parentComponent;
+    private Polyline path;
     public static MapFragment newInstance(boolean showCurrentLocation) {
         MapFragment fragment = new MapFragment();
         Bundle args = new Bundle();
@@ -73,10 +77,27 @@ public class MapFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+        parentComponent = (OnLocationSelectedListener) getParentFragment();
         Context context = getContext();
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
         map = view.findViewById(R.id.mapView);
+
+        MapEventsReceiver eventsReceiver = new MapEventsReceiver() {
+            @Override
+            public boolean singleTapConfirmedHelper(GeoPoint p) {
+                parentComponent.onLocationSelectedEvent(p);
+                return true;
+            }
+
+            @Override
+            public boolean longPressHelper(GeoPoint p) {
+                return false;
+            }
+        };
+        MapEventsOverlay overlay = new MapEventsOverlay(eventsReceiver);
+        map.getOverlays().add(overlay);
+
         loadMap();
         IMapController mapController = map.getController();
         mapController.setZoom(14.0);
@@ -106,6 +127,42 @@ public class MapFragment extends Fragment implements LocationListener {
         map.invalidate();
     }
 
+    public void createSecondaryMarker(double latitude, double longitude, String title,Integer drawableID){
+        if(map == null || map.getRepository() == null) {
+            return;
+        }
+
+        for(int i=0;i<map.getOverlays().size();i++){
+            Overlay overlay=map.getOverlays().get(i);
+            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
+                map.getOverlays().remove(overlay);
+            }
+        }
+
+        Marker marker = new Marker(map);
+        GeoPoint geoPoint = new GeoPoint(latitude,longitude);
+        marker.setPosition(geoPoint);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(title);
+        marker.setId(title);
+        marker.setPanToView(true);
+        Drawable d = ResourcesCompat.getDrawable(getResources(), drawableID, null);
+        marker.setIcon(d);
+        map.getOverlays().add(marker);
+        map.invalidate();
+    }
+    public void removeMarker(String title){
+        if(map == null || map.getRepository() == null) {
+            return;
+        }
+
+        for(int i=0;i<map.getOverlays().size();i++){
+            Overlay overlay=map.getOverlays().get(i);
+            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
+                map.getOverlays().remove(overlay);
+            }
+        }
+    }
     public void createMarker(double latitude, double longitude, String title,Integer drawableID){
         if(map == null || map.getRepository() == null) {
             return;
@@ -129,6 +186,7 @@ public class MapFragment extends Fragment implements LocationListener {
         marker.setIcon(d);
         map.getOverlays().add(marker);
         map.invalidate();
+
         IMapController mapController = map.getController();
         mapController.setZoom(14.0);
         mapController.setCenter(geoPoint);
@@ -155,10 +213,15 @@ public class MapFragment extends Fragment implements LocationListener {
                 Road road = roadManager.getRoad(track);
 
                 Polyline roadOverlay = RoadManager.buildRoadOverlay(road);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        map.getOverlays().add(roadOverlay);
+                        if(path != null){
+                            map.getOverlays().remove(path);
+                        }
+                        path = roadOverlay;
+                        map.getOverlays().add(path);
                         createMarker(startLatitude,startLongitude,"Departure",R.drawable.start_location_pin);
                         createMarker(endLatitude,endLongitude,"Destination",R.drawable.finish_location_pin);
                         map.invalidate();
@@ -255,4 +318,5 @@ public class MapFragment extends Fragment implements LocationListener {
         }
         createMarker(location.getLatitude(), location.getLongitude(), "Current location",R.drawable.current_location_pin);
     }
+
 }

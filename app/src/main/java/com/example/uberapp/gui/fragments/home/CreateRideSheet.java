@@ -1,21 +1,27 @@
 package com.example.uberapp.gui.fragments.home;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.fragment.app.DialogFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
+import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.dto.LocationDTO;
 import com.example.uberapp.core.dto.PathDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
@@ -29,7 +35,7 @@ import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.services.VehicleTypeService;
-import com.example.uberapp.core.auth.TokenManager;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -57,13 +63,29 @@ import retrofit2.Response;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
+public class CreateRideSheet extends BottomSheetDialogFragment implements
+    CreateRideSubfragment01.OnRouteChangedListener,
+    CreateRideSubfragment02.OnRidePropertiesChangedListener,
+    CreateRideSubfragment03.OnDateTimeChangedListener,
+            CreateRideSubfragment04.OnAcceptRideListener,
+        CreateRideLoader.RefreshPageEvent {
 
-public class CreateRideFragment extends DialogFragment implements
-        CreateRideSubfragment01.OnRouteChangedListener,
-        CreateRideSubfragment02.OnRidePropertiesChangedListener,
-        CreateRideSubfragment03.OnDateTimeChangedListener,
-        CreateRideSubfragment04.OnAcceptRideListener {
+    @Override
+    public void onRefreshPage() {
+        routeChangedListener.refreshPage();
+    }
 
+    public interface OnRouteChangedListener{
+        void onRideRouteChanged(LocationInfo departure, LocationInfo destination);
+
+        void enableManualDestinationPicker();
+        void enableManualDeparturePicker();
+
+        void refreshPage();
+    }
+    private OnRouteChangedListener routeChangedListener;
+
+    public static final String TAG = "CREATE_RIDE_SHEET";
     private int currentSubfragment;
     private CreateRideSubfragment01 subFrag01;
     private CreateRideSubfragment02 subFrag02;
@@ -88,15 +110,6 @@ public class CreateRideFragment extends DialogFragment implements
     private Road road;
 
     private StompClient mStompClient;
-
-    public static String TAG = "CreateRideFragmentDialog";
-
-    public CreateRideFragment() {
-        // Required empty public constructor
-        super(R.layout.fragment_create_ride);
-        currentSubfragment = 0;
-    }
-
 
     public void buttonPrevOnClick(){
         switch (currentSubfragment){
@@ -129,118 +142,30 @@ public class CreateRideFragment extends DialogFragment implements
                     return Observable.just(vehicleType);
                 });
     }
-    @SuppressLint("CheckResult")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
-        imageService = APIClient.getClient().create(ImageService.class);
-        rideService = APIClient.getClient().create(RideService.class);
-        this.subFrag01 = new CreateRideSubfragment01();
-        this.subFrag02 = new CreateRideSubfragment02();
-        this.subFrag03 = new CreateRideSubfragment03();
-        this.subFrag04 = new CreateRideSubfragment04();
-        this.createRideLoader = new CreateRideLoader();
-        Single<List<VehicleType>> result = vehicleTypeService.getVehicleTypes()
-                .flatMapIterable(vehicleTypeDTOS -> vehicleTypeDTOS)
-                .flatMap(vehicleTypeDTO -> fetchImage(vehicleTypeDTO).subscribeOn(Schedulers.io())).toList();
-        result.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(vehicleTypes -> {
-                    subFrag02.vehicleTypes = vehicleTypes;
-                });
 
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
-
-        mStompClient.topic("/ride-topic/notify-passenger/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
-                    Gson gson= new Gson();
-                    JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
-                    Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
-                    rideService.getRide(rideID).enqueue(new Callback<RideDetailedDTO>() {
-                        @Override
-                        public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
-                            createRideLoader.changeLoadingStatus(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
-
-                        }
-                    });
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                        System.out.println(throwable.getMessage());
-                    }
-                });
-        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
-            switch (lifecycleEvent.getType()) {
-
-                case OPENED:
-                    System.out.println("OPENED");
-                    break;
-
-                case ERROR:
-                    System.out.println(lifecycleEvent.getException().getMessage());
-                    break;
-
-                case CLOSED:
-                    System.out.println("CLOSED");
-                    break;
-            }
-        });
-
-        mStompClient.connect();
+    public CreateRideSheet(){
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_create_ride, container, false);
-        if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        }
+            Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_create_ride_sheet, container, false);
 
         buttonNext = view.findViewById(R.id.nextSubfragmentButton);
-        buttonNext.setEnabled(false);
         buttonPrev = view.findViewById(R.id.previouosSubfragmentButton);
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (currentSubfragment){
-                    case 0:
-                        buttonNext.setEnabled(false);
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
-                        buttonPrev.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
-                        break;
-                    case 2:
-                        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag04).commit();
-                        buttonNext.setVisibility(View.GONE);
-                        buttonPrev.setVisibility(View.GONE);
-                        break;
-                }
-                currentSubfragment++;
-            }
-        });
-
-
-        buttonPrev.setVisibility(View.GONE);
+        configureButtons();
         buttonPrev.setOnClickListener(view1 -> buttonPrevOnClick());
-        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, new CreateRideSubfragment01()).commit();
+
         return view;
 
     }
 
+
+
     @Override
     public void onRideRouteChanged(LocationInfo departure, LocationInfo destination) {
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
         this.departure = departure;
         this.destination = destination;
         this.buttonNext.setEnabled(departure != null && destination != null);
@@ -263,6 +188,17 @@ public class CreateRideFragment extends DialogFragment implements
             });
         }
     }
+
+    @Override
+    public void enableManualDeparturePicker() {
+        routeChangedListener.enableManualDeparturePicker();
+    }
+
+    @Override
+    public void enableManualDestinationPicker() {
+        routeChangedListener.enableManualDestinationPicker();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -314,10 +250,10 @@ public class CreateRideFragment extends DialogFragment implements
         List<UserSimpleDTO> passengers = new ArrayList<>();
         UserSimpleDTO passenger = new UserSimpleDTO();
         passenger.id = TokenManager.getUserId();
-        passenger.email = "NA";
+        passenger.email = TokenManager.getEmail();
         passengers.add(passenger);
         ride.passengers = passengers;
-        rideService.createRide(ride).enqueue(new Callback<RideDetailedDTO>() {
+        rideService.createRide(ride).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
                 createRideLoader.changeLoadingStatus(response.body());
@@ -330,4 +266,121 @@ public class CreateRideFragment extends DialogFragment implements
         });
         getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, createRideLoader).commit();
     }
+
+    private void configureButtons(){
+        buttonNext.setEnabled(false);
+        buttonNext.setVisibility(View.VISIBLE);
+        buttonPrev.setVisibility(View.GONE);
+        buttonNext.setOnClickListener(view -> {
+            switch (currentSubfragment){
+                case 0:
+                    buttonNext.setEnabled(false);
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag02).commit();
+                    buttonPrev.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag03).commit();
+                    break;
+                case 2:
+                    getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, subFrag04).commit();
+                    buttonNext.setVisibility(View.GONE);
+                    buttonPrev.setVisibility(View.GONE);
+                    break;
+            }
+            currentSubfragment++;
+        });
+    }
+    public void loadSubfragemnts(){
+        this.subFrag01 = new CreateRideSubfragment01();
+        this.subFrag02 = new CreateRideSubfragment02();
+        this.subFrag03 = new CreateRideSubfragment03();
+        this.subFrag04 = new CreateRideSubfragment04();
+        this.createRideLoader = new CreateRideLoader();
+        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, this.subFrag01).commit();
+        configureButtons();
+
+    }
+
+    public void setDestination(LocationInfo destination) {
+        this.destination = destination;
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
+        subFrag01.setDestinationAddress(destination);
+    }
+    public void setDeparture(LocationInfo departure){
+        this.departure = departure;
+        this.routeChangedListener.onRideRouteChanged(departure, destination);
+        subFrag01.setDepartureAddress(departure);
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        routeChangedListener = (OnRouteChangedListener) getParentFragment();
+        vehicleTypeService = APIClient.getClient().create(VehicleTypeService.class);
+        imageService = APIClient.getClient().create(ImageService.class);
+        rideService = APIClient.getClient().create(RideService.class);
+
+        this.subFrag01 = new CreateRideSubfragment01();
+        this.subFrag02 = new CreateRideSubfragment02();
+        this.subFrag03 = new CreateRideSubfragment03();
+        this.subFrag04 = new CreateRideSubfragment04();
+        this.createRideLoader = new CreateRideLoader();
+        getChildFragmentManager().beginTransaction().replace(R.id.createRideFrameLayout, this.subFrag01).commit();
+
+        Single<List<VehicleType>> result = vehicleTypeService.getVehicleTypes()
+                .flatMapIterable(vehicleTypeDTOS -> vehicleTypeDTOS)
+                .flatMap(vehicleTypeDTO -> fetchImage(vehicleTypeDTO).subscribeOn(Schedulers.io())).toList();
+        result.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(vehicleTypes -> {
+                    subFrag02.vehicleTypes = vehicleTypes;
+                });
+
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
+
+        mStompClient.topic("/ride-topic/notify-passenger/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                    Gson gson= new Gson();
+                    JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
+                    Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
+                    if(rideID == -1){
+                        createRideLoader.changeLoadingStatus(null);
+                    }else{
+                        rideService.getRide(rideID).enqueue(new Callback<RideDetailedDTO>() {
+                            @Override
+                            public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
+                                createRideLoader.changeLoadingStatus(response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<RideDetailedDTO> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
+                }, throwable -> System.out.println(throwable.getMessage()));
+
+        mStompClient.lifecycle().subscribe(lifecycleEvent -> {
+            switch (lifecycleEvent.getType()) {
+
+                case OPENED:
+                    System.out.println("OPENED");
+                    break;
+
+                case ERROR:
+                    System.out.println(lifecycleEvent.getException().getMessage());
+                    break;
+
+                case CLOSED:
+                    System.out.println("CLOSED");
+                    break;
+            }
+        });
+
+        mStompClient.connect();
+    }
+
+
 }

@@ -41,12 +41,16 @@ public class CreateRideSubfragment01 extends Fragment {
     private EditText departureEditText;
     private View view;
 
+    private View btnManualDeparture;
+    private View btnManualDestination;
     LocationInfo departure;
     LocationInfo destination;
     private String recommendedAddressContext;
 
     public interface OnRouteChangedListener{
         void onRideRouteChanged(LocationInfo departure, LocationInfo destination);
+        void enableManualDeparturePicker();
+        void enableManualDestinationPicker();
     }
     OnRouteChangedListener routeChangedListener;
 
@@ -54,6 +58,16 @@ public class CreateRideSubfragment01 extends Fragment {
         // Required empty public constructor
     }
 
+    public void setDepartureAddress(LocationInfo locationInfo){
+        departureEditText.setText(locationInfo.getAddress());
+        departure = locationInfo;
+        routeChangedListener.onRideRouteChanged(departure, destination);
+    }
+    public void setDestinationAddress(LocationInfo locationInfo){
+        destinationEditText.setText(locationInfo.getAddress());
+        destination = locationInfo;
+        routeChangedListener.onRideRouteChanged(departure, destination);
+    }
 
     @SuppressLint("CheckResult")
     private void loadRecommendedAddresses(String searchText){
@@ -93,6 +107,11 @@ public class CreateRideSubfragment01 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_create_ride_subfragment01, container, false);
+
+        btnManualDeparture = view.findViewById(R.id.btnManualDeparture);
+        btnManualDeparture.setOnClickListener(v -> routeChangedListener.enableManualDeparturePicker());
+        btnManualDestination = view.findViewById(R.id.btnManualDestination);
+        btnManualDestination.setOnClickListener(v -> routeChangedListener.enableManualDestinationPicker());
 
         mapService= APIMaps.getClient().create(MapService.class);
 

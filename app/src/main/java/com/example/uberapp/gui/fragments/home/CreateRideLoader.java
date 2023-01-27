@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,10 +22,22 @@ import java.time.format.DateTimeFormatter;
 public class CreateRideLoader extends Fragment {
 
     TextView message;
-    RelativeLayout progressBar;
+    ProgressBar progressBar;
+
+    ImageButton returnBtn;
+
+    interface RefreshPageEvent{
+        void onRefreshPage();
+    }
+    private RefreshPageEvent refreshPage;
 
     public void changeLoadingStatus(RideDetailedDTO ride){
-        if(ride.getStatus().equals("SCHEDULED")){
+        if(ride == null){
+            message.setText("We couldn't find available driver, please try again later.");
+            returnBtn.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+        }
+        else if(ride.getStatus().equals("SCHEDULED")){
             message.setText("The ride has been scheduled. You will get a confirmation notification, 30 minutes before ride.");
             progressBar.setVisibility(View.GONE);
         }else if(ride.getStatus().equals("REJECTED")){
@@ -40,6 +53,7 @@ public class CreateRideLoader extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        refreshPage = (RefreshPageEvent) getParentFragment();
     }
 
     @Override
@@ -50,6 +64,13 @@ public class CreateRideLoader extends Fragment {
 
         message = view.findViewById(R.id.driverSearchingMessage);
         progressBar = view.findViewById(R.id.loadingPanel);
+        returnBtn = view.findViewById(R.id.buttonReturnToSubfrag01);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshPage.onRefreshPage();
+            }
+        });
 
         return view;
     }

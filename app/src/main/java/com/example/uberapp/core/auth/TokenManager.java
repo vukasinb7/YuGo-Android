@@ -37,6 +37,7 @@ public class TokenManager {
     public static Integer getUserId(){
         return token.getClaim("id").asInt();
     }
+    public static String getEmail(){return token.getClaim("email").asString();}
 
     public static String getTokenType(){
         return token.getClaim("type").asString();
