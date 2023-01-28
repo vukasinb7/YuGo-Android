@@ -26,10 +26,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ua.naiksoftware.stomp.StompClient;
 
 public class UserChatChannel extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
-    private MessageListAdapter mMessageAdapter;
+    private MessageListAdapter messageAdapter;
     private final UserService userService = APIClient.getClient().create(UserService.class);;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class UserChatChannel extends AppCompatActivity {
         Call<AllMessagesDTO> conversationCall = userService.getUsersConversation(senderId);
         conversationCall.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<AllMessagesDTO> call, Response<AllMessagesDTO> response) {
+            public void onResponse(@NonNull Call<AllMessagesDTO> call, @NonNull Response<AllMessagesDTO> response) {
                 if (response.code() == 200) {
                     AllMessagesDTO allMessagesDTO = response.body();
                     List<MessageDTO> messages = allMessagesDTO.getMessages();
@@ -52,16 +53,16 @@ public class UserChatChannel extends AppCompatActivity {
                     Call<UserDetailedDTO> userCall = userService.getUser(senderId);
                     userCall.enqueue(new Callback<>() {
                         @Override
-                        public void onResponse(Call<UserDetailedDTO> call, Response<UserDetailedDTO> response) {
+                        public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
                             if (response.code() == 200) {
                                 UserDetailedDTO user = response.body();
 
                                 mMessageRecycler = findViewById(R.id.recyclerViewChat);
-                                mMessageAdapter = new MessageListAdapter(activity, user, rideId, messages);
+                                messageAdapter = new MessageListAdapter(activity, user, rideId, messages);
                                 LinearLayoutManager llm = new LinearLayoutManager(activity);
                                 llm.setStackFromEnd(true);
                                 mMessageRecycler.setLayoutManager(llm);
-                                mMessageRecycler.setAdapter(mMessageAdapter);
+                                mMessageRecycler.setAdapter(messageAdapter);
                             }
                         }
 
@@ -78,5 +79,11 @@ public class UserChatChannel extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        messageAdapter.dispose();
     }
 }

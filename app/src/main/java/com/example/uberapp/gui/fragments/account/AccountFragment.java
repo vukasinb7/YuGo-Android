@@ -116,7 +116,6 @@ public class AccountFragment extends Fragment {
                             byte[] bytes = response.body().bytes();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             profilePicture.setImageBitmap(bitmap);
-                            Toast.makeText(getContext(), "Profile picture uploaded successfully!", Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -172,7 +171,7 @@ public class AccountFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Ups, something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Oops, something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -212,6 +211,7 @@ public class AccountFragment extends Fragment {
                                 if (response.code() == 200){
                                     user.setProfilePicture(response.body().getPictureName());
                                     profilePicture.setImageURI(result.getData().getData());
+                                    Toast.makeText(getContext(), "Profile picture uploaded successfully!", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

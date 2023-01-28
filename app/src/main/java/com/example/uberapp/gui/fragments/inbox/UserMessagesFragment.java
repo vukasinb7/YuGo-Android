@@ -40,7 +40,7 @@ public class UserMessagesFragment extends Fragment implements SensorEventListene
     private View view;
     private long lastUpdate;
     private float last_x, last_y, last_z;
-    private static final int SHAKE_THRESHOLD = 800;
+    private static final int SHAKE_THRESHOLD = 1500;
     private boolean sortDesc;
     public UserMessagesFragment() {
     }

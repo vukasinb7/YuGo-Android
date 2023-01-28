@@ -24,15 +24,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences preferences = getSharedPreferences("YuGo", Context.MODE_PRIVATE);
                 String retrievedToken  = preferences.getString("accessToken",null);
-                if (retrievedToken!=null)
-                {
-                    TokenManager.setToken(retrievedToken);
-                    TokenManager.setRefreshToken(preferences.getString("refreshToken",null));
-                    if (TokenManager.getRole().equals("PASSENGER"))
-                        startActivity(new Intent(SplashScreenActivity.this, PassengerMainActivity.class));
-                    else
-                        startActivity(new Intent(SplashScreenActivity.this, DriverMainActivity.class));
-                }else
+//                if (retrievedToken!=null)
+//                {
+//                    TokenManager.setToken(retrievedToken);
+//                    TokenManager.setRefreshToken(preferences.getString("refreshToken",null));
+//                    if (TokenManager.getRole().equals("PASSENGER"))
+//                        startActivity(new Intent(SplashScreenActivity.this, PassengerMainActivity.class));
+//                    else
+//                        startActivity(new Intent(SplashScreenActivity.this, DriverMainActivity.class));
+//                }else
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 finish();
             }

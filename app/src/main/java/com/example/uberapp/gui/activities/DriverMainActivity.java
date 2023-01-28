@@ -2,6 +2,8 @@ package com.example.uberapp.gui.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,14 +13,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.dto.LocationDTO;
+import com.example.uberapp.core.dto.MessageDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
+import com.example.uberapp.core.dto.UserDetailedDTO;
 import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.RideService;
+import com.example.uberapp.core.services.UserService;
 import com.example.uberapp.gui.dialogs.ExitAppDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.AccountFragment;
@@ -31,6 +37,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -44,7 +52,8 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     NewRideDialog nrd;
     private StompClient mStompClient;
     private final RideService rideService = APIClient.getClient().create(RideService.class);
-
+    private final UserService userService = APIClient.getClient().create(UserService.class);
+    public CompositeDisposable disposables;
     private void sendNotification(Integer rideID){
         Call<RideDetailedDTO> call = rideService.getRide(rideID);
         call.enqueue(new Callback<>() {
@@ -86,6 +95,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_main);
 
+        this.disposables = new CompositeDisposable();
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.driverHome);
@@ -121,7 +131,52 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
 
         mStompClient.connect();
 
+        this.setupMessagesSocket();
+    }
 
+    public void setupMessagesSocket(){
+        StompClient mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
+
+        Disposable webSocket = mStompClient.topic("/message-topic/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                    Gson gson = new Gson();
+                    MessageDTO messageDTO = gson.fromJson(topicMessage.getPayload(), MessageDTO.class);
+                    sendMessageNotification(messageDTO);
+
+                }, throwable -> System.out.println(throwable.getMessage()));
+
+        mStompClient.connect();
+        this.disposables.add(webSocket);
+    }
+
+    public void sendMessageNotification(MessageDTO messageDTO){
+
+        Call<UserDetailedDTO> userCall = userService.getUser(messageDTO.getSenderId());
+        userCall.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<UserDetailedDTO> call, @NonNull Response<UserDetailedDTO> response) {
+                if (response.code() == 200){
+                    UserDetailedDTO sender = response.body();
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(DriverMainActivity.this, "MessageNotificationID")
+                            .setSmallIcon(R.drawable.icon_notification)
+                            .setStyle(new NotificationCompat.BigTextStyle().bigText(messageDTO.getMessage().substring(0, 40)))
+                            .setContentTitle("Message from: " + sender.getName() + " " + sender.getSurname())
+                            .setContentText(messageDTO.getMessage().substring(0, 40) + "...")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DriverMainActivity.this);
+                    if (ActivityCompat.checkSelfPermission(DriverMainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    notificationManager.notify(199, builder.build());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserDetailedDTO> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -166,6 +221,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
         if (nrd!=null)
             nrd.onDestroy();
 
+        disposables.dispose();
     }
 
     @Override

@@ -108,9 +108,13 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
             NotificationChannel rideOfferChannel = new NotificationChannel("RideOfferNotificationID", "Ride offer", NotificationManager.IMPORTANCE_DEFAULT);
             rideOfferChannel.setDescription("Notifies you about new ride offer.");
 
+            NotificationChannel messageChannel = new NotificationChannel("MessageNotificationID", "Message notification", NotificationManager.IMPORTANCE_DEFAULT);
+            rideOfferChannel.setDescription("Notifies you about received message.");
+
             NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(vehicleArrivalChannel);
             notificationManager.createNotificationChannel(rideOfferChannel);
+            notificationManager.createNotificationChannel(messageChannel);
         }
     }
 
