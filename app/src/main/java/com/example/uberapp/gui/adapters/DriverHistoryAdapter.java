@@ -177,8 +177,10 @@ public class DriverHistoryAdapter extends BaseAdapter {
 
 
         // SET OTHER RIDE PARAMETERS
-        startLocation.setText(vht.getLocations().get(0).getDeparture().getAddress());
-        endLocation.setText(vht.getLocations().get(0).getDestination().getAddress());
+        startLocation.setText(cleanUpLocation(vht.getLocations().get(0).getDeparture().getAddress(),0));
+        startLocation.setTooltipText(cleanUpLocation(vht.getLocations().get(0).getDeparture().getAddress(),2));
+        endLocation.setText(cleanUpLocation(vht.getLocations().get(0).getDestination().getAddress(),0));
+        endLocation.setTooltipText(cleanUpLocation(vht.getLocations().get(0).getDestination().getAddress(),2));
         startTime.setText(fromTime.format(DateTimeFormatter.ofPattern("hh:mm")));
         if (toTime!=null)
             endTime.setText(toTime.format(DateTimeFormatter.ofPattern("hh:mm")));
@@ -466,6 +468,24 @@ public class DriverHistoryAdapter extends BaseAdapter {
         return length[0];
     }
 
+    private String cleanUpLocation(String location,int dataCols){
+        if (location.contains(",")){
+            String[] partialLocations=location.split(",");
+            String result="";
+            for (int i=0;i< partialLocations.length;i++){
+                if(i<=dataCols){
+                    if (i==partialLocations.length-1 || i==dataCols)
+                        result=result+partialLocations[i];
+                    else
+                        result=result+partialLocations[i]+", ";
+                }
+            }
+
+            return result;
+        }
+        return location;
+
+    }
     private interface CallbackLengthHistory {
         void onSuccess(Double value);
     }

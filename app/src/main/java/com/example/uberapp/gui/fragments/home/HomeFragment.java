@@ -2,6 +2,8 @@ package com.example.uberapp.gui.fragments.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -28,6 +30,7 @@ import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
 import com.example.uberapp.core.dto.AllRidesDTO;
 import com.example.uberapp.core.dto.LocationDTO;
+import com.example.uberapp.core.dto.MessageDTO;
 import com.example.uberapp.core.dto.RideDetailedDTO;
 import com.example.uberapp.core.dto.VehicleDTO;
 import com.example.uberapp.core.model.LocationInfo;
@@ -40,6 +43,7 @@ import com.example.uberapp.core.services.RideService;
 import com.example.uberapp.core.auth.TokenManager;
 import com.example.uberapp.core.services.RoutingService;
 import com.example.uberapp.core.services.VehicleService;
+import com.example.uberapp.gui.dialogs.AddReviewDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -246,11 +250,18 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
             mStompClient.topic("/ride-topic/notify-passenger-end-ride/"+ TokenManager.getUserId()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage -> {
+                        Gson gson= new Gson();
+                        JsonObject jsonObject=gson.fromJson(topicMessage.getPayload(), JsonObject.class);
+                        Integer rideID=jsonObject.getAsJsonPrimitive("rideID").getAsInt();
                         createRideSheet = new CreateRideSheet();
                         getChildFragmentManager().beginTransaction().replace(R.id.homeFragmentContentHolder, createRideSheet).commit();
                         mapFragment = MapFragment.newInstance(true);
                         fragmentManager.beginTransaction().replace(R.id.fragment_home_map, mapFragment).commit();
                         fragmentManager.beginTransaction().remove(currentRideFragment).commit();
+                        if (TokenManager.getRole().equals("PASSENGER")){
+                            Dialog dialog=new AddReviewDialog((Activity) getContext(),rideID);
+                            dialog.show();
+                        }
 
                     }, new Consumer<Throwable>() {
                         @Override

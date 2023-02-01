@@ -101,8 +101,8 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
                     RideDetailedDTO ride = response.body();
                     price.setText("$"+Double.toString(Math.round(ride.getTotalCost()*100)/100.0));
                     numOfPerson.setText("5");
-                    startLocation.setText(ride.getLocations().get(0).getDeparture().getAddress());
-                    endLocation.setText(ride.getLocations().get(0).getDestination().getAddress());
+                    startLocation.setText(cleanUpLocation(ride.getLocations().get(0).getDeparture().getAddress()));
+                    endLocation.setText(cleanUpLocation(ride.getLocations().get(0).getDestination().getAddress()));
                     loadMap();
 
                     LocationDTO departure = ride.getLocations().get(0).getDeparture();
@@ -291,5 +291,22 @@ public class NewRideDialog extends DialogFragment implements android.view.View.O
     }
     private interface CallbackLength {
         void onSuccess(Double value);
+    }
+    private String cleanUpLocation(String location){
+        if (location.contains(",")){
+            String[] partialLocations=location.split(",");
+            String result="";
+            for (int i=0;i< partialLocations.length;i++){
+                if(i<=2){
+                    if (i== partialLocations.length-1 || i==2)
+                        result=result+partialLocations[i];
+                    else
+                        result=result+partialLocations[i]+", ";
+                }
+            }
+            return result;
+        }
+        return location;
+
     }
 }

@@ -94,8 +94,10 @@ public class FavoritePathAdapter extends BaseAdapter {
         LinearLayout profilesLayout=(LinearLayout) v.findViewById(R.id.profilesFavorite);
         Button deleteFavorite=(Button) v.findViewById(R.id.deleteFavorite);
         name.setText(favoritePath.getFavoriteName());
-        start.setText(favoritePath.getLocations().get(0).getDeparture().getAddress());
-        end.setText(favoritePath.getLocations().get(0).getDestination().getAddress());
+        start.setText(cleanUpLocation(favoritePath.getLocations().get(0).getDeparture().getAddress(),0));
+        start.setTooltipText(cleanUpLocation(favoritePath.getLocations().get(0).getDeparture().getAddress(),2));
+        end.setText(cleanUpLocation(favoritePath.getLocations().get(0).getDestination().getAddress(),0));
+        end.setTooltipText(cleanUpLocation(favoritePath.getLocations().get(0).getDestination().getAddress(),2));
         personNum.setText(String.valueOf(favoritePath.getPassengers().size()));
         if (favoritePath.getBabyTransport())
             babyTransportFalse.setVisibility(View.GONE);
@@ -230,6 +232,24 @@ public class FavoritePathAdapter extends BaseAdapter {
             }
         });
         return length[0];
+    }
+
+    private String cleanUpLocation(String location,int dataCols) {
+        if (location.contains(",")) {
+            String[] partialLocations = location.split(",");
+            String result = "";
+            for (int i = 0; i < partialLocations.length; i++) {
+                if (i <= dataCols) {
+                    if (i == partialLocations.length - 1 || i == dataCols)
+                        result = result + partialLocations[i];
+                    else
+                        result = result + partialLocations[i] + ", ";
+                }
+            }
+
+            return result;
+        }
+        return location;
     }
     private interface CallbackLengthFavorites {
         void onSuccess(Double value);
