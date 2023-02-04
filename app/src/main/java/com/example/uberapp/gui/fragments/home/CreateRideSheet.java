@@ -161,8 +161,6 @@ public class CreateRideSheet extends BottomSheetDialogFragment implements
 
     }
 
-
-
     @Override
     public void onRideRouteChanged(LocationInfo departure, LocationInfo destination) {
         this.routeChangedListener.onRideRouteChanged(departure, destination);
