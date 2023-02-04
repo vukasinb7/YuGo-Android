@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/dateTitleHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="01.01.1970."
+        android:textColor="@color/dark_gray_pewter"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewDriverHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateTitleHistory"
+        app:cardCornerRadius="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/visibleDriverHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePicHistory"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:shapeAppearanceOverlay="@style/roundImageView"
+                tools:ignore="ImageContrastCheck"
+                android:src="@color/blue_gray"/>
+
+            <TextView
+                android:id="@+id/nameLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/profilePicHistory"
+                android:text="Vukasin Bogdanovic"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/sendBtnDriverHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/icon_send"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/send" />
+
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/profilePicHistory"
+                android:layout_marginTop="10dp"
+                android:background="?attr/colorPrimary"
+                android:alpha="0.6"/>
+
+            <ImageView
+                android:id="@+id/startIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_location"
+                android:layout_below="@+id/line"
+                android:layout_marginStart="30dp"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginTop="15dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:contentDescription="@string/start" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/destIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_location"
+                android:layout_below="@+id/startIcon"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:contentDescription="@string/destination" />
+            <TextView
+                android:id="@+id/startText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/startIcon"
+                android:layout_below="@+id/line"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="Kralja Petra I"
+                android:layout_toStartOf="@id/startTime"
+                android:textSize="16sp"
+                android:maxLines="2"/>
+            <TextView
+                android:id="@+id/destText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/destIcon"
+                android:layout_toStartOf="@id/endTime"
+                android:layout_above="@id/bottomLine"
+                android:layout_below="@id/startText"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="Radnicka 54"
+                android:textSize="16sp"
+                android:maxLines="2"/>
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="09:15"
+                android:alpha="0.7"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/startText"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="09:15"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:alpha="0.7"
+                android:layout_above="@id/bottomLine"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+            <View
+                android:id="@+id/bottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/destIcon"
+                android:layout_marginTop="15dp"
+                android:background="?attr/colorPrimary"
+                android:alpha="0.6"/>
+
+
+            <ImageView
+                android:id="@+id/priceIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_dollar_tag"
+                android:layout_below="@+id/bottomLine"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:contentDescription="@string/price" />
+            <TextView
+                android:id="@+id/priceLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottomLine"
+                android:layout_toEndOf="@+id/priceIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="10dp"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="@string/price"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/priceTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottomLine"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="$15.60"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+            <View
+                android:id="@+id/delimiterLine2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/priceTag"
+                android:layout_marginTop="8dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/hiddenDriverHistory"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_below="@+id/visibleDriverHistory"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/durationLb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/durationIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:text="@string/distance"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/distanceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="3.2km"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:alpha="0.7"
+                android:textAlignment="textEnd"
+                android:textSize="20sp" />
+
+
+            <ImageView
+                android:id="@+id/durationIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_distance"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+
+            <View
+                android:id="@+id/delimiterLine3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/durationIcon"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <LinearLayout
+                android:id="@+id/personNumLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/delimiterLine3">
+                <ImageView
+                    android:id="@+id/personIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_person"
+                    app:tint="@color/dark_gray_pewter"
+                    android:contentDescription="@string/person" />
+                <TextView
+                    android:id="@+id/personNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:layout_marginStart="2dp"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:alpha="0.7"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/babyIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_baby"
+                    app:tint="@color/pewter_dark_blue"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/babyIconDriverHistoryTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_baby"
+                    app:tint="@color/yellowish"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/petIconDriverHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_pet"
+                    app:tint="@color/pewter_dark_blue"
+                    android:contentDescription="@string/person" />
+                <ImageView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/petIconDriverHistoryTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_pet"
+                    app:tint="@color/yellowish"
+                    android:contentDescription="@string/person" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/profilesHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/personNumLayout"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+            <View
+                android:id="@+id/delimiterLine4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/profilesHistory"
+                android:layout_marginTop="5dp"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <LinearLayout
+                android:id="@+id/mapHistoryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/delimiterLine4"
+                android:orientation="horizontal">
+            </LinearLayout>
+            <View
+                android:id="@+id/delimiterLine6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mapHistoryLayout"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/delimiterLine6"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+                <ImageButton
+                    android:id="@+id/showRatingsHistory"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_rating" />
+
+
+                <ImageButton
+                    android:id="@+id/createRideHistory"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:src="@drawable/icon_add" />
+                <ImageButton
+                    android:id="@+id/addToFavoritesHistory"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_favorites" />
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/delimiterLine5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mapHistoryLayout"
+                android:alpha="0.6"
+                android:background="?attr/colorPrimary"/>
+
+
+        </RelativeLayout>
+            <ImageButton
+                android:id="@+id/arrowBtnDriverHistory"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                app:srcCompat="@drawable/icon_arrow_down"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_below="@+id/hiddenDriverHistory"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginBottom="-7dp"
+                android:contentDescription="@string/arrow_down" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

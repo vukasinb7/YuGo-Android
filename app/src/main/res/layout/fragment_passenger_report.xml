@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.account.PassengerReportFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".gui.fragments.account.PassengerReportFragment">
+    <GridLayout
+        android:id="@+id/reportGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:columnCount="2">
+        <ImageButton
+            android:id="@+id/startDateReport"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_edit_calendar"
+            android:layout_gravity="center"
+            android:layout_columnWeight="1"
+            />
+        <ImageButton
+            android:id="@+id/endDateReport"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_edit_calendar"
+            android:layout_gravity="center"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+            android:layout_columnWeight="1"/>
+        <TextView
+            android:id="@+id/startDateTextReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023-01-01"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+
+            android:layout_columnWeight="1"/>
+        <TextView
+            android:id="@+id/endDateTextReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023-01-01"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"/>
+
+    </GridLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/diagramSpinnerLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reportGrid"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/diagramTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            tools:ignore="KeyboardInaccessibleWidget"
+            android:text="Rides Per Day"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barchart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/diagramSpinnerLayout"
+        />
+    <TextView
+        android:id="@+id/txtViewData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"/>
 
-</FrameLayout>
+
+
+</RelativeLayout>

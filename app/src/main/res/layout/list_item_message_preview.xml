@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/messageCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/messageSenderIcon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:contentDescription="@string/sender_picture"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:shapeAppearanceOverlay="@style/roundImageView"
+                android:src="@drawable/icon_round_account" />
+
+            <TextView
+                android:id="@+id/senderName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:text="@string/sender_name"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/messageSenderIcon" />
+
+            <TextView android:id="@+id/messageContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message"
+                android:layout_toEndOf="@+id/messageSenderIcon"
+                android:layout_below="@+id/senderName"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/messageTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="09:15"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

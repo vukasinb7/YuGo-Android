@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewFavouritePath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/visibleFavouritePathPart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/favoriteName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Home-To-Work"
+                    android:textColor="@color/dark_gray_pewter"
+                    android:textSize="20sp"/>
+
+
+                <ImageButton
+                    android:id="@+id/createRide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/icon_up_right"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:tint="@color/dark_gray_pewter"
+                    android:contentDescription="@string/create_ride" />
+                <View
+                    android:id="@+id/delimiterLine7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/favoriteName"
+                    android:layout_marginTop="15dp"
+                    android:alpha="0.6"
+                    android:background="?attr/colorPrimary"/>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/hiddenFavouritePathPart"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_below="@+id/visibleFavouritePathPart"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/fromContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/startIco"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        app:tint="@color/dark_gray_pewter"
+                        app:srcCompat="@drawable/icon_location"
+                        android:contentDescription="@string/start" />
+                    <TextView
+                        android:id="@+id/startDest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Zmaj Jovina 54"
+                        android:textColor="@color/dark_gray_pewter"
+                        android:textSize="20sp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/toContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/fromContainer"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/endIco"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        app:tint="@color/dark_gray_pewter"
+                        app:srcCompat="@drawable/icon_location"
+                        android:contentDescription="@string/destination" />
+                    <TextView
+                        android:id="@+id/endDest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bulevar Evrope 30"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/dark_gray_pewter"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+                <View
+                    android:id="@+id/delimiterLine5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/toContainer"
+                    android:alpha="0.6"
+                    android:background="?attr/colorPrimary"/>
+                <LinearLayout
+                    android:id="@+id/distanceContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/delimiterLine5"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/durationIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/icon_distance"
+                        app:tint="@color/dark_gray_pewter"
+                        android:layout_marginStart="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/duration" />
+                    <TextView
+                        android:id="@+id/distanceLb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/dark_gray_pewter"
+                        android:text="@string/distance"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/distanceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/delimiterLine5"
+                    android:text="3.2km"
+                    android:textColor="@color/dark_gray_pewter"
+                    android:alpha="0.7"
+                    android:textAlignment="textEnd"
+                    android:textSize="20sp" />
+
+
+                <View
+                    android:id="@+id/delimiterLine3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/distanceText"
+                    android:layout_marginTop="10dp"
+                    android:alpha="0.6"
+                    android:background="?attr/colorPrimary"/>
+                <LinearLayout
+                    android:id="@+id/personNumLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/delimiterLine3">
+                    <ImageView
+                        android:id="@+id/personIconFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_person"
+                        app:tint="@color/dark_gray_pewter"
+                        android:contentDescription="@string/person" />
+                    <TextView
+                        android:id="@+id/personNumFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:layout_marginStart="2dp"
+                        android:textColor="?attr/colorSecondaryVariant"
+                        android:alpha="0.7"
+                        android:textAlignment="center"
+                        android:textSize="16sp"/>
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/babyIconFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_baby"
+                        app:tint="@color/pewter_dark_blue"
+                        android:contentDescription="@string/person" />
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/babyIconFavoriteTrue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_baby"
+                        app:tint="@color/yellowish"
+                        android:contentDescription="@string/person" />
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/petIconFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_pet"
+                        app:tint="@color/pewter_dark_blue"
+                        android:contentDescription="@string/person" />
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/petIconFavoriteTrue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_pet"
+                        app:tint="@color/yellowish"
+                        android:contentDescription="@string/person" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/profilesFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/personNumLayout"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+                <View
+                    android:id="@+id/delimiterLine4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/profilesFavorite"
+                    android:layout_marginTop="5dp"
+                    android:alpha="0.6"
+                    android:background="?attr/colorPrimary"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/delimiterLine4"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:id="@+id/deleteFavorite"
+                        android:layout_width="120dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/red"
+                        android:text="Delete" />
+
+                </LinearLayout>
+
+
+
+
+
+            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/arrowBtnFavouriteRoute"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                app:srcCompat="@drawable/icon_arrow_down"
+                app:tint="@color/dark_gray_pewter"
+                android:layout_below="@+id/hiddenFavouritePathPart"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginBottom="-7dp"
+                android:contentDescription="@string/arrow_down" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

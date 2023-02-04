@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".gui.account.DriverStatisticsFragment">
+    tools:context=".gui.fragments.account.DriverStatisticsFragment">
 
     <GridLayout
         android:id="@+id/statisticsLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:columnCount="2"
         android:orientation="horizontal"
         android:rowCount="3">
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="3000"
+                    android:text=""
                     android:textSize="46sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
@@ -46,7 +46,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Income"
+                    android:text="@string/income"
                     android:textAlignment="center"
                     android:textSize="24sp" />
             </RelativeLayout>
@@ -73,8 +73,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="5/5"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -87,7 +87,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Rating"
+                    android:text="@string/rating"
                     android:textAlignment="center"
                     android:textSize="24sp" />
             </RelativeLayout>
@@ -114,8 +114,8 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:layout_centerVertical="true"
-                android:text="3"
-                android:textSize="46sp"
+                android:text=""
+                android:textSize="40sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_gray_pewter"/>
 
@@ -128,7 +128,7 @@
                    android:layout_marginTop="5dp"
                    android:layout_marginEnd="5dp"
                    android:layout_marginBottom="5dp"
-                   android:text="Work hours"
+                   android:text="@string/work_hours"
                    android:textAlignment="center"
                    android:textSize="24sp" />
             </RelativeLayout>
@@ -152,8 +152,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="50"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -167,7 +167,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Rides"
+                    android:text="@string/rides"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
@@ -193,8 +193,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="30"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -203,12 +203,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Accepted"
+                    android:text="Distance"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
@@ -234,8 +233,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_centerVertical="true"
-                    android:text="20"
-                    android:textSize="46sp"
+                    android:text=""
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_gray_pewter"/>
 
@@ -244,12 +243,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Rejected"
+                    android:text="Passengers"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 

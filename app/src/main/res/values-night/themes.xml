@@ -15,7 +15,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <!-- popup menu style-->
-        <item name="popupMenuBackground">@drawable/driver_options_menu_bg</item>
+        <item name="popupMenuBackground">@drawable/shape_popup_menu_round</item>
         <item name="android:popupMenuStyle">@style/popupBgStyle</item>
 
         <!-- font style-->

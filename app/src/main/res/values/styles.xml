@@ -24,12 +24,16 @@
     </style>
 
     <style name="popupBgStyle">
-        <item name="android:popupBackground">@drawable/driver_options_menu_bg</item>
+        <item name="android:popupBackground">@drawable/shape_popup_menu_round</item>
         <item name="android:dropDownVerticalOffset">30dp</item>
         <item name="android:colorAccent">?attr/colorPrimary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:colorBackground">?attr/colorPrimary</item>
         <item name="android:divider">@color/yellowish</item>
         <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="VehicleTypeStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/vehicle_type_selected_button_selector</item>
     </style>
 </resources>

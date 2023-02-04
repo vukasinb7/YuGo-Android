@@ -3,23 +3,27 @@ package com.example.uberapp.core.model;
 import android.graphics.Bitmap;
 
 public class VehicleType {
-    private String id;
+    private int id;
     private double pricePerUnit;
     private VehicleCategory vehicleCategory;
-    private int icon;
+    private Bitmap icon;
 
-    public VehicleType(String id, double pricePerUnit, VehicleCategory vehicleCategory, int icon) {
+    public VehicleType(int id, double pricePerUnit, VehicleCategory vehicleCategory, Bitmap icon) {
         this.id = id;
         this.pricePerUnit = pricePerUnit;
         this.vehicleCategory = vehicleCategory;
         this.icon = icon;
     }
 
-    public String getId() {
+    public VehicleType() {
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,11 +43,11 @@ public class VehicleType {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public int getIcon() {
+    public Bitmap getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(Bitmap icon) {
         this.icon = icon;
     }
 }

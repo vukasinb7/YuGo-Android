@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:useDefaultMargins="true">
+    <LinearLayout
+        android:id="@+id/destinationPickerStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/startingLocationIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/icon_circle"
+            android:layout_gravity="center_vertical"
+            app:tint="@color/dark_gray_pewter"
+            android:contentDescription="@string/starting_location_icon" />
+        <EditText
+            android:id="@+id/editTextStartingLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/dark_gray"
+            android:hint="@string/starting_location"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/selector_editview_round"
+            android:autofillHints="starting location"
+            android:inputType="textFilter" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/verticalLineDestinationPicker"
+        android:layout_width="2dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/destinationPickerStart"
+        android:layout_marginTop="-10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="-35dp"
+        android:background="@color/dark_gray_pewter"/>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/verticalLineDestinationPicker">
+        <ImageView
+            android:id="@+id/destinationIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/icon_circle"
+            android:layout_gravity="center_vertical"
+            app:tint="@color/dark_gray_pewter"
+            android:contentDescription="@string/destination_icon"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/editTextDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:background="@drawable/selector_editview_round"
+            android:layout_marginStart="5dp"
+            android:hint="@string/where_to"
+            android:inputType="textFilter"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</RelativeLayout>

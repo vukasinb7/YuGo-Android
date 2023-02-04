@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".gui.fragments.account.UserDocumentsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/driving_licence"
+                android:textSize="15sp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/buttonPickDrivingLicence"
+                    android:backgroundTint="@color/white_dark_gray"
+                    android:textColor="@color/dark_gray_pewter"
+                    android:text="@string/select_from_gallery"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/buttonDrivingLicencePreview"
+                    android:backgroundTint="@color/white_dark_gray"
+                    android:src="@drawable/icon_image"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/drivingLicenceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No driving licence found."
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/registration_licence"
+                android:textSize="15sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:id="@+id/buttonPickRegistrationLicence"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white_dark_gray"
+                android:textColor="@color/dark_gray_pewter"
+                android:text="@string/select_from_gallery"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/buttonRegistrationLicencePreview"
+                android:backgroundTint="@color/white_dark_gray"
+                android:src="@drawable/icon_image"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/registrationLicenceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No registration licence found."
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

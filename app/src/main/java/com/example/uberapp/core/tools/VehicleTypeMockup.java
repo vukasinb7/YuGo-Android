@@ -1,5 +1,8 @@
 package com.example.uberapp.core.tools;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+
 import com.example.uberapp.R;
 import com.example.uberapp.core.model.VehicleCategory;
 import com.example.uberapp.core.model.VehicleType;
@@ -12,11 +15,11 @@ public class VehicleTypeMockup {
         List<VehicleType> vehicleTypes = new ArrayList<>();
 
         //Bitmap icon1 = BitmapFactory.decodeFile("./../../../../../../res/drawable/car_model_01.png");
-        VehicleType vt1 = new VehicleType("001", 5.0, VehicleCategory.Standard, R.drawable.car_model_01);
+        VehicleType vt1 = new VehicleType(1, 5.0, VehicleCategory.STANDARD, null);
 
-        VehicleType vt2 = new VehicleType("002", 7.5, VehicleCategory.Lux, R.drawable.car_model_02);
+        VehicleType vt2 = new VehicleType(2, 7.5, VehicleCategory.LUX, null);
 
-        VehicleType vt3 = new VehicleType("003", 6, VehicleCategory.Van, R.drawable.car_model_03);
+        VehicleType vt3 = new VehicleType(3, 6, VehicleCategory.VAN, null);
 
         vehicleTypes.add(vt1);
         vehicleTypes.add(vt2);
