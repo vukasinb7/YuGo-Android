@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 finish();
             }
-        },500);
+        },5000);
         VideoView videoView = (VideoView) findViewById(R.id.videoView);  //casting to VideoView is not Strictly required above API level 26
         if (getResources().getConfiguration().uiMode== 33)
             videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.splashscreen);

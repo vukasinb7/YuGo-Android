@@ -127,25 +127,25 @@ public class MapFragment extends Fragment implements LocationListener{
         map.invalidate();
     }
 
-    public void createSecondaryMarker(double latitude, double longitude, String title,Integer drawableID){
+    public void createSecondaryMarker(double latitude, double longitude, String title, String Id, Integer drawableID){
         if(map == null || map.getRepository() == null) {
             return;
         }
 
         for(int i=0;i<map.getOverlays().size();i++){
             Overlay overlay=map.getOverlays().get(i);
-            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(title)){
+            if(overlay instanceof Marker && ((Marker) overlay).getId().equals(Id)){
                 map.getOverlays().remove(overlay);
             }
         }
-        if (getActivity().isDestroyed())
+        if (getActivity() == null || getActivity().isDestroyed())
             return;
         Marker marker = new Marker(map);
         GeoPoint geoPoint = new GeoPoint(latitude,longitude);
         marker.setPosition(geoPoint);
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setTitle(title);
-        marker.setId(title);
+        marker.setId(Id);
         marker.setPanToView(true);
         Drawable d = ResourcesCompat.getDrawable(getResources(), drawableID, null);
         marker.setIcon(d);

@@ -200,7 +200,6 @@ public class CurrentRideFragment extends Fragment {
             startActivity(intent);
             return true;
         });
-        menu.add(3 , 3, 3,"Report");
         menu.setGroupDividerEnabled(true);
         popupMenu.show();
     }
