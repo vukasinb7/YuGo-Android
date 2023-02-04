@@ -144,14 +144,24 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                                 @Override
                                 public void onResponse(Call<RideDetailedDTO> call, Response<RideDetailedDTO> response) {
                                     if(response.body() == null){
+                                        if ((currentRide != null && Objects.equals(currentRide.getDriver().getId(), vehicleDTO.getDriverId())) ||
+                                                (nextRide != null && Objects.equals(nextRide.getDriver().getId(), vehicleDTO.getDriverId()))) {
+                                            mapFragment.removeMarker(vehicle.getId().toString());
+                                            return;
+                                        }
+
                                         if(vehicle != null && Objects.equals(vehicle.getId(), vehicleDTO.getId())){
-                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.current_location_pin);
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "Me", vehicleDTO.getId().toString(), R.drawable.current_location_pin);
                                         }else{
-                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.busy_vehicle_pin);
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "Available", vehicleDTO.getId().toString(), R.drawable.available_vehicle_pin);
                                         }
                                     }else{
+                                        if (currentRide != null && Objects.equals(currentRide.getDriver().getId(), vehicleDTO.getDriverId())) {
+                                            return;
+                                        }
+
                                         if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
-                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + vehicleDTO.getId(), R.drawable.available_vehicle_pin);
+                                            mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "In ride", vehicleDTO.getId().toString(), R.drawable.busy_vehicle_pin);
                                         }
                                     }
 
@@ -246,7 +256,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
             }
             activeRide = rideService.getActivePassengerRide(TokenManager.getUserId());
-            mapFragment = MapFragment.newInstance(false);
+            mapFragment = MapFragment.newInstance(true);
 
             mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://" + LocalSettings.localIP + ":9000/api/socket/websocket");
 
