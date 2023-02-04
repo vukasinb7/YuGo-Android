@@ -172,10 +172,6 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
 
                                 }
                             });
-
-//                            if(vehicle == null || !Objects.equals(vehicle.getId(), vehicleDTO.getId())){
-//                                mapFragment.createSecondaryMarker(vehicleDTO.getCurrentLocation().getLatitude(), vehicleDTO.getCurrentLocation().getLongitude(), "vehicle-" + String.valueOf(vehicleDTO.getId()), R.drawable.current_location_pin);
-//                            }
                         }
                     }
 
@@ -250,7 +246,8 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                 }
             });
 
-        } else {
+        }
+        else {
             if (savedInstanceState == null) {
                 createRideSheet = new CreateRideSheet();
                 getChildFragmentManager().beginTransaction().add(R.id.homeFragmentContentHolder, createRideSheet).commit();
@@ -379,13 +376,21 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                     LocationDTO destination = ride.getLocations().get(0).getDestination();
                     mapFragment.createRoute(departure.getLatitude(), departure.getLongitude(),
                             destination.getLatitude(), destination.getLongitude());
+                    if(TokenManager.getRole().equals("DRIVER")){
+                        Call<VehicleDTO> vehicleRequest = driverService.getVehicle(TokenManager.getUserId());
+                        vehicleRequest.enqueue(new Callback<>() {
+                            @Override
+                            public void onResponse(Call<VehicleDTO> call, Response<VehicleDTO> response) {
+                                vehicle = response.body();
+                                LocationDTO departureDTO = ride.getLocations().get(0).getDeparture();
+                                simulateRide(vehicle.getCurrentLocation().getLatitude(), vehicle.getCurrentLocation().getLongitude(), departureDTO.getLatitude(), departureDTO.getLongitude(), vehicle.getId());
+                            }
 
-                }
-                else{
-                    if (TokenManager.getRole().equals("DRIVER")) {
-                        // TODO kada se vozac uloguje proveriti da li ima ACCEPTED voznje, ako ima postaviti start ride dugme na VISIBLE
-                    }
-                    else{
+                            @Override
+                            public void onFailure(Call<VehicleDTO> call, Throwable t) {
+
+                            }
+                        });
                     }
                 }
             }
