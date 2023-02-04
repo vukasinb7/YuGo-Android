@@ -382,7 +382,7 @@ public class HomeFragment extends Fragment implements CurrentRideFragment.OnEndC
                             @Override
                             public void onResponse(Call<VehicleDTO> call, Response<VehicleDTO> response) {
                                 vehicle = response.body();
-                                LocationDTO departureDTO = ride.getLocations().get(0).getDeparture();
+                                LocationDTO departureDTO = ride.getLocations().get(0).getDestination();
                                 simulateRide(vehicle.getCurrentLocation().getLatitude(), vehicle.getCurrentLocation().getLongitude(), departureDTO.getLatitude(), departureDTO.getLongitude(), vehicle.getId());
                             }
 

@@ -2,8 +2,6 @@ package com.example.uberapp.gui.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uberapp.R;
 import com.example.uberapp.core.LocalSettings;
@@ -30,7 +27,7 @@ import com.example.uberapp.gui.dialogs.NewRideDialog;
 import com.example.uberapp.gui.fragments.account.AccountFragment;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
-import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
+import com.example.uberapp.gui.fragments.inbox.UserMessagesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -39,7 +36,6 @@ import com.google.gson.JsonObject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -194,7 +190,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
     }
 
     HomeFragment homeFragment = new HomeFragment();
-    UserInboxFragment userInboxFragment = new UserInboxFragment();
+    UserMessagesFragment userMessagesFragment = new UserMessagesFragment();
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     AccountFragment driverAccountFragment = new AccountFragment();
 
@@ -206,7 +202,7 @@ public class DriverMainActivity extends AppCompatActivity implements NavigationB
                 getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, homeFragment).commit();
                 return true;
             case R.id.driverInbox:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, userInboxFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, userMessagesFragment).commit();
                 return true;
             case R.id.driverHistory:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flDriverFragment, userHistoryFragment).commit();

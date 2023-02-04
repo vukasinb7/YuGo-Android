@@ -7,7 +7,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.Manifest;
-import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,7 +23,7 @@ import com.example.uberapp.R;
 import com.example.uberapp.gui.fragments.account.PassengerFavouritesFragment;
 import com.example.uberapp.gui.fragments.history.UserHistoryFragment;
 import com.example.uberapp.gui.fragments.home.HomeFragment;
-import com.example.uberapp.gui.fragments.inbox.UserInboxFragment;
+import com.example.uberapp.gui.fragments.inbox.UserMessagesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -44,7 +43,7 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
     AccountFragment accountFragment = new AccountFragment();
-    UserInboxFragment inboxFragment = new UserInboxFragment();
+    UserMessagesFragment messagesFragment = new UserMessagesFragment();
     UserHistoryFragment historyFragment = new UserHistoryFragment();
 
     PassengerFavouritesFragment passengerFavouritesFragment = new PassengerFavouritesFragment();
@@ -136,7 +135,7 @@ public class PassengerMainActivity extends AppCompatActivity implements Navigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, accountFragment).commit();
                 break;
             case R.id.passenger_inbox:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, inboxFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, messagesFragment).commit();
                 break;
             case R.id.passanger_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flPassengerMainFragment, historyFragment).commit();
