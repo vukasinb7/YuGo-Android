@@ -2,9 +2,11 @@ package com.example.uberapp.gui.adapters;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import com.example.uberapp.core.services.APIClient;
 import com.example.uberapp.core.services.DriverService;
 import com.example.uberapp.core.services.ImageService;
 import com.example.uberapp.core.services.PassengerService;
+import com.example.uberapp.gui.activities.UserChatChannel;
 import com.example.uberapp.gui.dialogs.AddReviewDialog;
 import com.example.uberapp.gui.dialogs.AddToFavoritesDialog;
 import com.example.uberapp.gui.dialogs.NewRideDialog;
@@ -143,6 +146,7 @@ public class DriverHistoryAdapter extends BaseAdapter {
         ImageButton reviewBtn=(ImageButton) v.findViewById(R.id.showRatingsHistory);
         ImageButton createRideBtn=(ImageButton) v.findViewById(R.id.createRideHistory);
         ImageButton addToFavoritesBtn=(ImageButton) v.findViewById(R.id.addToFavoritesHistory);
+        ImageButton sendMessageBtn=(ImageButton) v.findViewById(R.id.sendBtnDriverHistory);
 
         if (TokenManager.getRole().equals("DRIVER")){
             createRideBtn.setVisibility(View.GONE);
@@ -329,6 +333,21 @@ public class DriverHistoryAdapter extends BaseAdapter {
                 FavoritePathDTO favorite=new FavoritePathDTO("",vht.getLocations(),vht.getPassengers(),vht.getVehicleType(),vht.isBabyTransport(),vht.isPetTransport());
                 Dialog dialog = new AddToFavoritesDialog(activity,favorite);
                 dialog.show();
+            }
+        });
+
+        sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, UserChatChannel.class);
+                Bundle bundle = new Bundle();
+                if(TokenManager.getRole().equals("PASSENGER"))
+                    bundle.putInt("senderId", vht.getDriver().getId());
+                else
+                    bundle.putInt("senderId",vht.getPassengers().get(0).getId());
+                bundle.putInt("rideId", vht.getId());
+                intent.putExtras(bundle);
+                activity.startActivity(intent);
             }
         });
         reviewBtn.setOnClickListener(new View.OnClickListener() {

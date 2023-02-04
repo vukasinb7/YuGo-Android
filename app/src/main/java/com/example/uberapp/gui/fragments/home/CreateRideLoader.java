@@ -45,7 +45,10 @@ public class CreateRideLoader extends Fragment {
             progressBar.setVisibility(View.GONE);
         }else if(ride.getStatus().equals("ACCEPTED")){
             LocalDateTime startTime = LocalDateTime.parse(ride.getStartTime(), DateTimeFormatter.ISO_DATE_TIME);
-            message.setText("Driver is on his way.\nEstimated time of arrival: " + startTime.getHour() + ":" + startTime.getMinute() + "h");
+            String min=startTime.getMinute()+"";
+            if (startTime.getMinute()<10)
+                min="0"+min;
+            message.setText("Driver is on his way.\nEstimated time of arrival: " + startTime.getHour() + ":" + min + "h");
             progressBar.setVisibility(View.GONE);
         }
     }
