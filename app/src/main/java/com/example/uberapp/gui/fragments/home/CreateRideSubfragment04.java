@@ -1,5 +1,6 @@
 package com.example.uberapp.gui.fragments.home;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,11 +16,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.uberapp.R;
+import com.example.uberapp.core.auth.TokenManager;
+import com.example.uberapp.core.dto.FavoritePathDTO;
+import com.example.uberapp.core.dto.LocationDTO;
+import com.example.uberapp.core.dto.PathDTO;
+import com.example.uberapp.core.dto.UserDetailedDTO;
+import com.example.uberapp.core.dto.UserSimpleDTO;
+import com.example.uberapp.core.dto.UserSimplifiedDTO;
 import com.example.uberapp.core.model.LocationInfo;
+import com.example.uberapp.core.model.User;
 import com.example.uberapp.core.model.VehicleType;
+import com.example.uberapp.core.services.APIClient;
+import com.example.uberapp.core.services.UserService;
+import com.example.uberapp.gui.dialogs.AddToFavoritesDialog;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateRideSubfragment04 extends Fragment {
 
@@ -30,6 +47,7 @@ public class CreateRideSubfragment04 extends Fragment {
     double totalPrice;
     boolean isBabyTransport;
     boolean isPetTransport;
+    UserService userService = APIClient.getClient().create(UserService .class);
 
     public CreateRideSubfragment04() {
         // Required empty public constructor
@@ -52,27 +70,28 @@ public class CreateRideSubfragment04 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_ride_subfragment04, container, false);
         ImageButton button = view.findViewById(R.id.buttonReturnBack);
         final Boolean[] clicked = {false};
-        ImageButton favourites=view.findViewById(R.id.addToFavouritesBtn);
+        Button favourites=view.findViewById(R.id.buttonAddToFavorites);
         CreateRideSheet fragment = (CreateRideSheet) getParentFragment();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment.buttonPrevOnClick();
-            }
-        });
-        favourites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!clicked[0]) {
-                    favourites.setImageResource(R.drawable.icon_star_filled);
-                    clicked[0] =true;
-                }
-                else {
-                    favourites.setImageResource(R.drawable.icon_star_outline);
-                    clicked[0] =false;
-                }
+        button.setOnClickListener(view12 -> fragment.buttonPrevOnClick());
+        favourites.setOnClickListener(view1 -> {
+            PathDTO path = new PathDTO();
+            LocationDTO departureDTO = new LocationDTO();
+            departureDTO.setAddress(departure.getAddress());
+            departureDTO.setLatitude(departure.getLatitude());
+            departureDTO.setLongitude(departure.getLongitude());
+            LocationDTO destinationDTO = new LocationDTO();
+            destinationDTO.setAddress(destination.getAddress());
+            destinationDTO.setLatitude(destination.getLatitude());
+            destinationDTO.setLongitude(destination.getLongitude());
+            path.setDeparture(departureDTO);
+            path.setDestination(destinationDTO);
+            UserSimplifiedDTO user = new UserSimplifiedDTO();
+            user.setId(TokenManager.getUserId());
+            user.setEmail(TokenManager.getEmail());
+            FavoritePathDTO favorite = new FavoritePathDTO("", List.of(path), List.of(user), vehicleType.getVehicleCategory().toString(), isBabyTransport, isPetTransport);
+            Dialog dialog = new AddToFavoritesDialog(getActivity(), favorite);
+            dialog.show();
 
-            }
         });
         View vehicleTypeCard = view.findViewById(R.id.vehicleTypeFinal);
 
